@@ -1,6 +1,6 @@
 # pf300-com [![Build Status](https://travis-ci.org/eove/pf300-com.svg?branch=master)](https://travis-ci.org/eove/pf300-com)
 
-Node.js lib to communicate with pf300 devices
+Node.js lib to communicate with pf300 devices through serial port
 
 ## Install
 
