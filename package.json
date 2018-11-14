@@ -1,0 +1,51 @@
+{
+  "name": "pf300-com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tslint": "tslint --fix 'lib/**/*.ts'",
+    "jest": "jest --verbose",
+    "testw": "jest --watch",
+    "prettier": "prettier --write '**/*.{js,json,md,ts}'",
+    "compile": "tsc -p tsconfig.test.json",
+    "test": "run-s -c compile jest tslint",
+    "prebuild": "rm -rf ./build",
+    "build": "tsc",
+    "preversion": "run-s test build",
+    "postversion": "git push && git push --tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eove/pf300-com.git"
+  },
+  "keywords": ["pf300"],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eove/pf300-com/issues"
+  },
+  "homepage": "https://github.com/eove/pf300-com#readme",
+  "devDependencies": {
+    "@types/jest": "23.3.9",
+    "jest": "23.6.0",
+    "npm-run-all": "4.1.3",
+    "prettier": "1.15.2",
+    "ts-jest": "23.10.4",
+    "ts-node": "7.0.1",
+    "tslint": "5.11.0",
+    "tslint-config-prettier": "1.16.0",
+    "typescript": "3.1.6"
+  },
+  "jest": {
+    "transform": {
+      ".ts": "ts-jest"
+    },
+    "testRegex": "/lib/.*\\.spec\\.ts$",
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ]
+  }
+}
