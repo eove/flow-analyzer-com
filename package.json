@@ -1,8 +1,12 @@
 {
-  "name": "pf300-com",
-  "version": "1.0.0",
+  "name": "@eove/pf300-com",
+  "version": "0.1.0-dev",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "tslint": "tslint --fix 'lib/**/*.ts'",
     "jest": "jest --verbose",
@@ -19,7 +23,9 @@
     "type": "git",
     "url": "git+https://github.com/eove/pf300-com.git"
   },
-  "keywords": ["pf300"],
+  "keywords": [
+    "pf300"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
