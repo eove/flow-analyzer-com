@@ -8,6 +8,8 @@ Node.js lib to communicate with pf300 devices through serial port
 
 ## Usage
 
+This lib exposes a communicator which may send commands to the pf300 device and get answers.
+
 ```js
 import { createCommunicator } from  '@eove/pf300-com';
 
