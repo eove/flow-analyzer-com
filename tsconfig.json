@@ -11,5 +11,5 @@
     "noUnusedParameters": true
   },
   "include": ["./lib/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.js"]
+  "exclude": ["node_modules", "build", "**/*.spec.ts", "**/*.spec.js"]
 }
