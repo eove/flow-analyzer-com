@@ -1,4 +1,4 @@
-import { findAnswers, AnswerType } from './findAnswers';
+import { AnswerType, findAnswers } from './findAnswers';
 
 describe('Find answers', () => {
   it('should return answers and no remaining bytes when correct data', () => {
