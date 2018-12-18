@@ -1,16 +1,7 @@
-export enum AnswerType {
-  READ_MEASUREMENT = 'READ MEASUREMENT',
-  READ_SYSTEM_INFO = 'READ SYSTEM INFO',
-  READ_STATE = 'READ STATE',
-  WRITE_SETTING = 'WRITE SETTING',
-  READ_SETTING = 'READ SETTING',
-  EXECUTE_COMMAND = 'EXECUTE COMMAND',
-  INVALID = 'INVALID',
-  UNKOWN = 'UNKNOWN'
-}
+import { FrameType, mapToFrameType } from './FrameType';
 
 export interface Answer {
-  type: AnswerType;
+  type: FrameType;
   id?: string;
   value?: string;
   raw: string;
@@ -31,7 +22,7 @@ export function findAnswers(data: string[]): FindAnswerResult {
   while (index < data.length) {
     if (data[index] === '?') {
       answers.push({
-        type: AnswerType.INVALID,
+        type: FrameType.INVALID,
         raw: '?'
       });
     }
@@ -44,7 +35,7 @@ export function findAnswers(data: string[]): FindAnswerResult {
       if (found) {
         const [raw, type, id, value] = found;
         answers.push({
-          type: mapToAnswerType(type),
+          type: mapToFrameType(type),
           id,
           value,
           raw
@@ -61,23 +52,4 @@ export function findAnswers(data: string[]): FindAnswerResult {
     answers,
     remaining: data.slice(lastFoundEndIndex + 1)
   };
-}
-
-function mapToAnswerType(data: string): AnswerType {
-  switch (data) {
-    case 'RS':
-      return AnswerType.READ_SETTING;
-    case 'WS':
-      return AnswerType.WRITE_SETTING;
-    case 'RM':
-      return AnswerType.READ_MEASUREMENT;
-    case 'RI':
-      return AnswerType.READ_SYSTEM_INFO;
-    case 'ST':
-      return AnswerType.READ_STATE;
-    case 'CM':
-      return AnswerType.EXECUTE_COMMAND;
-    default:
-      return AnswerType.UNKOWN;
-  }
 }

@@ -1,4 +1,5 @@
-import { AnswerType, findAnswers } from './findAnswers';
+import { findAnswers } from './findAnswers';
+import { FrameType } from './FrameType';
 
 describe('Find answers', () => {
   it('should return answers and no remaining bytes when correct data', () => {
@@ -10,13 +11,13 @@ describe('Find answers', () => {
     expect(result).toEqual({
       answers: [
         {
-          type: AnswerType.READ_SETTING,
+          type: FrameType.READ_SETTING,
           id: '12',
           value: '124',
           raw: '%RS#12$124\r'
         },
         {
-          type: AnswerType.READ_MEASUREMENT,
+          type: FrameType.READ_MEASUREMENT,
           id: '25',
           value: '100',
           raw: '%RM#25$100\r'
@@ -36,13 +37,13 @@ describe('Find answers', () => {
     expect(result).toEqual({
       answers: [
         {
-          type: AnswerType.READ_SETTING,
+          type: FrameType.READ_SETTING,
           id: '12',
           value: '124',
           raw: '%RS#12$124\r'
         },
         {
-          type: AnswerType.READ_MEASUREMENT,
+          type: FrameType.READ_MEASUREMENT,
           id: '25',
           value: '100',
           raw: '%RM#25$100\r'
@@ -61,7 +62,7 @@ describe('Find answers', () => {
     expect(result).toEqual({
       answers: [
         {
-          type: AnswerType.READ_SETTING,
+          type: FrameType.READ_SETTING,
           id: '12',
           value: '124',
           raw: '%RS#12$124\r'
@@ -81,17 +82,17 @@ describe('Find answers', () => {
     expect(result).toEqual({
       answers: [
         {
-          type: AnswerType.READ_SETTING,
+          type: FrameType.READ_SETTING,
           id: '12',
           value: '124',
           raw: '%RS#12$124\r'
         },
         {
-          type: AnswerType.INVALID,
+          type: FrameType.INVALID,
           raw: '?'
         },
         {
-          type: AnswerType.WRITE_SETTING,
+          type: FrameType.WRITE_SETTING,
           id: '25',
           value: '100',
           raw: '%WS#25$100\r'
