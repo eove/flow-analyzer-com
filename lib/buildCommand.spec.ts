@@ -13,7 +13,7 @@ describe('Build command', () => {
       type: FrameType.EXECUTE_COMMAND,
       id: '123',
       value: '4567',
-      raw: ['%', 'C', 'M', '#', '1', '2', '3', '$', '4', '5', '6', '7', '\r']
+      raw: '%CM#123$4567\r'
     });
   });
 
@@ -28,7 +28,7 @@ describe('Build command', () => {
       type: FrameType.WRITE_SETTING,
       id: '123',
       value: '4567',
-      raw: ['%', 'W', 'S', '#', '1', '2', '3', '$', '4', '5', '6', '7', '\r']
+      raw: '%WS#123$4567\r'
     });
   });
 
@@ -41,7 +41,7 @@ describe('Build command', () => {
     expect(command).toEqual({
       type: FrameType.READ_SETTING,
       id: '123',
-      raw: ['%', 'R', 'S', '#', '1', '2', '3', '\r']
+      raw: '%RS#123\r'
     });
   });
 
@@ -54,7 +54,7 @@ describe('Build command', () => {
     expect(command).toEqual({
       type: FrameType.READ_MEASUREMENT,
       id: '123',
-      raw: ['%', 'R', 'M', '#', '1', '2', '3', '\r']
+      raw: '%RM#123\r'
     });
   });
 
@@ -67,7 +67,7 @@ describe('Build command', () => {
     expect(command).toEqual({
       type: FrameType.READ_SYSTEM_INFO,
       id: '123',
-      raw: ['%', 'R', 'I', '#', '1', '2', '3', '\r']
+      raw: '%RI#123\r'
     });
   });
 
@@ -80,7 +80,7 @@ describe('Build command', () => {
     expect(command).toEqual({
       type: FrameType.READ_STATE,
       id: '123',
-      raw: ['%', 'S', 'T', '#', '1', '2', '3', '\r']
+      raw: '%ST#123\r'
     });
   });
 });

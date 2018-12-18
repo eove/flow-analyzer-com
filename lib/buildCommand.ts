@@ -7,7 +7,7 @@ interface CommandInput {
 }
 
 interface Command extends CommandInput {
-  raw: string[];
+  raw: string;
 }
 
 export function buildCommand(cmdInput: CommandInput): Command {
@@ -15,5 +15,5 @@ export function buildCommand(cmdInput: CommandInput): Command {
   const raw = value
     ? `%${mapFromFrameType(type)}#${id}$${value}\r`
     : `%${mapFromFrameType(type)}#${id}\r`;
-  return Object.assign({}, cmdInput, { raw: raw.split('') });
+  return Object.assign({}, cmdInput, { raw });
 }
