@@ -23,7 +23,7 @@ export interface FindAnswerResult {
 
 const FRAME_PATTERN = /%(\w{2})#(\w+)\$(\w+)\r/;
 
-export function findAnswer(data: string[]): FindAnswerResult {
+export function findAnswers(data: string[]): FindAnswerResult {
   let index = 0;
   let lastFoundEndIndex = data.length;
   const answers: Answer[] = [];

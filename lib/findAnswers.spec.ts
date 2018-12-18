@@ -1,11 +1,11 @@
-import { findAnswer, AnswerType } from './findAnswer';
+import { findAnswers, AnswerType } from './findAnswers';
 
 describe('Find answers', () => {
   it('should return answers and no remaining bytes when correct data', () => {
     const data = ['%', 'R', 'S', '#', '1', '2', '$', '1', '2', '4', '\r'];
     data.push(...['%', 'R', 'M', '#', '2', '5', '$', '1', '0', '0', '\r']);
 
-    const result = findAnswer(data);
+    const result = findAnswers(data);
 
     expect(result).toEqual({
       answers: [
@@ -31,7 +31,7 @@ describe('Find answers', () => {
     data.push(...['n', 'o', 'i', 's', 'e', ' ', 'c', 'h', 'a', 'r', 's']);
     data.push(...['%', 'R', 'M', '#', '2', '5', '$', '1', '0', '0', '\r']);
 
-    const result = findAnswer(data);
+    const result = findAnswers(data);
 
     expect(result).toEqual({
       answers: [
@@ -56,7 +56,7 @@ describe('Find answers', () => {
     const data = ['%', 'R', 'S', '#', '1', '2', '$', '1', '2', '4', '\r'];
     data.push(...['%', 'R', 'M', '#', '2', '5']);
 
-    const result = findAnswer(data);
+    const result = findAnswers(data);
 
     expect(result).toEqual({
       answers: [
@@ -76,7 +76,7 @@ describe('Find answers', () => {
     data.push('?');
     data.push(...['%', 'W', 'S', '#', '2', '5', '$', '1', '0', '0', '\r']);
 
-    const result = findAnswer(data);
+    const result = findAnswers(data);
 
     expect(result).toEqual({
       answers: [
