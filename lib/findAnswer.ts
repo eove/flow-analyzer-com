@@ -5,13 +5,14 @@ export enum AnswerType {
   WRITE_SETTING = 'WRITE SETTING',
   READ_SETTING = 'READ SETTING',
   EXECUTE_COMMAND = 'EXECUTE COMMAND',
+  INVALID = 'INVALID',
   UNKOWN = 'UNKNOWN'
 }
 
 export interface Answer {
   type: AnswerType;
-  id: string;
-  value: string;
+  id?: string;
+  value?: string;
   raw: string;
 }
 
@@ -24,9 +25,16 @@ const FRAME_PATTERN = /%(\w{2})#(\w+)\$(\w+)\r/;
 
 export function findAnswer(data: string[]): FindAnswerResult {
   let index = 0;
+  let lastFoundEndIndex = data.length;
   const answers: Answer[] = [];
 
   while (index < data.length) {
+    if (data[index] === '?') {
+      answers.push({
+        type: AnswerType.INVALID,
+        raw: '?'
+      });
+    }
     if (data[index] === '%') {
       const found = data
         .slice(index)
@@ -42,6 +50,7 @@ export function findAnswer(data: string[]): FindAnswerResult {
           raw
         });
         index += raw.length - 1;
+        lastFoundEndIndex = index;
       }
       index++;
     } else {
@@ -50,7 +59,7 @@ export function findAnswer(data: string[]): FindAnswerResult {
   }
   return {
     answers,
-    remaining: []
+    remaining: data.slice(lastFoundEndIndex + 1)
   };
 }
 
