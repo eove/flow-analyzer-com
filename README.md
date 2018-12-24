@@ -11,9 +11,13 @@ Node.js lib to communicate with [imtmedical](https://www.imtmedical.com/) gaz fl
 This lib exposes a communicator which may send commands to the gaz flow analyzer device and get answers.
 
 ```js
-import { createCommunicator } from  '@eove/flow-analyzer-com';
+import { createCommunicator } from '@eove/flow-analyzer-com';
 
-const communicator = createCommunicator({ port: '/dev/ttyUSB0' });
-communicator.sendCommand({ type: 'READ_MEASUREMENTS', payload: { measurements: ['flow'] })
-   .then(console.log);
+const communicator = createCommunicator();
+
+communicator.open('/dev/ttyUSB0').then(() => {
+  return communicator
+    .sendCommand({ type: 'GET_O2_MEASUREMENT' })
+    .then(console.log);
+});
 ```
