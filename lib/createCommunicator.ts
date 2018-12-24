@@ -1,7 +1,8 @@
-import { createMessageBus } from '@arpinum/messaging';
 import { Observable } from 'rxjs';
 import { DomainAnswer, DomainCommand } from './domain';
-import { createCommandRunner, createConnectionManager } from './tools';
+import { commandHandlerFactories } from './domain';
+import { buildCommand, findAnswers } from './protocol';
+import { createCommandRunner, createTransport } from './tools';
 
 interface Communicator {
   open: (portName: string) => Promise<void>;
@@ -12,14 +13,20 @@ interface Communicator {
 }
 
 export default function createCommunicator(): Communicator {
-  const connectionManager = createConnectionManager();
-  const commandRunner = createCommandRunner({ messageBus, data$ });
+  const transport = createTransport();
+  const commandRunner = createCommandRunner({
+    buildCommand,
+    findAnswers,
+    handlerFactories: [...commandHandlerFactories.measurements],
+    data$: transport.data$,
+    transport
+  });
 
   return {
     open,
     close,
     get data$() {
-      return connectionManager.data$;
+      return transport.data$;
     },
     get answer$() {
       return commandRunner.answer$;
@@ -28,14 +35,14 @@ export default function createCommunicator(): Communicator {
   };
 
   function open(portName: string): Promise<void> {
-    return connectionManager.connect(portName);
+    return transport.connect(portName);
   }
 
   function close(): Promise<void> {
-    return connectionManager.disconnect();
+    return transport.disconnect();
   }
 
-  function sendCommand(command: DomainCommand): Promise<DomainAnswer> {
-    return messageBus.post(command);
+  function sendCommand(command: DomainCommand): Promise<any> {
+    return commandRunner.postCommand(command);
   }
 }

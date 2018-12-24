@@ -3,14 +3,15 @@ import * as SerialPort from 'serialport';
 
 type UninstallHandler = () => void;
 
-interface ConnectionManager {
+interface Transport {
   connect: (portName: string) => Promise<void>;
   disconnect: () => Promise<void>;
+  write: (bytes: string[]) => Promise<any>;
   data$: Observable<{}>;
   connected: boolean;
 }
 
-export function createConnectionManager(): ConnectionManager {
+export function createTransport(): Transport {
   const dataSource = new Subject();
   let port: SerialPort;
   let uninstallPortListeners: UninstallHandler;
@@ -24,7 +25,8 @@ export function createConnectionManager(): ConnectionManager {
     },
     get connected() {
       return isConnected;
-    }
+    },
+    write
   };
 
   function connect(portName: string): Promise<void> {
@@ -82,5 +84,29 @@ export function createConnectionManager(): ConnectionManager {
         });
       });
     }
+  }
+
+  function write(bytes: string[]): Promise<any> {
+    return new Promise((resolve, reject) => {
+      port.write(Buffer.from(bytes), writeError => {
+        if (writeError) {
+          const err = new Error(
+            `Error when writing data (${writeError.message})`
+          );
+          reject(err);
+        } else {
+          port.drain(flushError => {
+            if (flushError) {
+              const err = new Error(
+                `Error when flushing data (${flushError.message})`
+              );
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+        }
+      });
+    });
   }
 }

@@ -4,5 +4,12 @@ export interface DomainCommand {
 }
 
 export interface DomainAnswer {
-  payload: object;
+  payload: any;
 }
+
+export interface DomainCommandHandler {
+  type: string;
+  handle: (command?: DomainCommand) => Promise<DomainAnswer>;
+}
+
+export type DomainCommandHandlerFatory = () => DomainCommandHandler;
