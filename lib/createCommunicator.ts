@@ -5,7 +5,7 @@ import { commandHandlerFactories } from './domain';
 import { buildCommand, findAnswers } from './protocol';
 import { createCommandRunner, createTransport } from './tools';
 
-interface Communicator {
+export interface Communicator {
   open: (portName: string) => Promise<void>;
   close: () => Promise<void>;
   sendCommand: (command: DomainCommand) => Promise<DomainAnswer>;
@@ -13,7 +13,7 @@ interface Communicator {
   answer$: Observable<{}>;
 }
 
-export default function createCommunicator(): Communicator {
+export function createCommunicator(): Communicator {
   const debug = debugLib('communicator');
   const transport = createTransport();
   const commandRunner = createCommandRunner({
