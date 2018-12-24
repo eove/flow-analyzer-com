@@ -4,12 +4,12 @@ import {
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
 
-export function createGetO2Handler(
+export function createGetO2MeasurementHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
   const { runCommand, buildCommand } = dependencies;
   return {
-    type: 'GET_O2_HANDLER',
+    type: 'GET_O2_MEASUREMENT',
     handle: () => {
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,
