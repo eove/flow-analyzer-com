@@ -1,3 +1,4 @@
+import * as debugLib from 'debug';
 import { Observable } from 'rxjs';
 import { DomainAnswer, DomainCommand } from './domain';
 import { commandHandlerFactories } from './domain';
@@ -13,8 +14,10 @@ interface Communicator {
 }
 
 export default function createCommunicator(): Communicator {
+  const debug = debugLib('communicator');
   const transport = createTransport();
   const commandRunner = createCommandRunner({
+    debug: debug.log,
     buildCommand,
     findAnswers,
     handlerFactories: [...commandHandlerFactories.measurements],

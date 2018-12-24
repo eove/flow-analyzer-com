@@ -1,16 +1,16 @@
 import { FrameType, mapFromFrameType } from './FrameType';
 
-interface CommandInput {
+export interface ProtocolCommandInput {
   type: FrameType;
   id: string;
   value?: string;
 }
 
-interface Command extends CommandInput {
+export interface ProtocolCommand extends ProtocolCommandInput {
   raw: string;
 }
 
-export function buildCommand(cmdInput: CommandInput): Command {
+export function buildCommand(cmdInput: ProtocolCommandInput): ProtocolCommand {
   const { type, value, id } = cmdInput;
   const raw = value
     ? `%${mapFromFrameType(type)}#${id}$${value}\r`

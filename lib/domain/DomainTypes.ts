@@ -1,6 +1,12 @@
+import {
+  ProtocolAnswer,
+  ProtocolCommand,
+  ProtocolCommandInput
+} from '../protocol';
+
 export interface DomainCommand {
   type: string;
-  payload: object;
+  payload?: object;
 }
 
 export interface DomainAnswer {
@@ -12,4 +18,11 @@ export interface DomainCommandHandler {
   handle: (command?: DomainCommand) => Promise<DomainAnswer>;
 }
 
-export type DomainCommandHandlerFatory = () => DomainCommandHandler;
+export interface DomainCommandHandlerFactoryDependencies {
+  runCommand: (command: ProtocolCommand) => Promise<ProtocolAnswer>;
+  buildCommand: (command: ProtocolCommandInput) => ProtocolCommand;
+}
+
+export type DomainCommandHandlerFatory = (
+  dependencies: DomainCommandHandlerFactoryDependencies
+) => DomainCommandHandler;

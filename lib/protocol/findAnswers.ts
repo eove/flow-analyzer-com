@@ -1,6 +1,6 @@
 import { FrameType, mapToFrameType } from './FrameType';
 
-export interface Answer {
+export interface ProtocolAnswer {
   type: FrameType;
   id?: string;
   value?: string;
@@ -8,7 +8,7 @@ export interface Answer {
 }
 
 export interface FindAnswerResult {
-  answers: Answer[];
+  answers: ProtocolAnswer[];
   remaining: string[];
 }
 
@@ -17,7 +17,7 @@ const FRAME_PATTERN = /%(\w{2})#(\w+)\$(\w+)\r/;
 export function findAnswers(data: string[]): FindAnswerResult {
   let index = 0;
   let lastFoundEndIndex = data.length;
-  const answers: Answer[] = [];
+  const answers: ProtocolAnswer[] = [];
 
   while (index < data.length) {
     if (data[index] === '?') {

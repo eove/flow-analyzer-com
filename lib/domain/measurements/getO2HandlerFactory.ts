@@ -1,10 +1,21 @@
-import { DomainCommandHandler } from '../DomainTypes';
+import { FrameType } from '../../protocol';
+import {
+  DomainCommandHandler,
+  DomainCommandHandlerFactoryDependencies
+} from '../DomainTypes';
 
-export function createO2Handler(): DomainCommandHandler {
+export function createGetO2Handler(
+  dependencies: DomainCommandHandlerFactoryDependencies
+): DomainCommandHandler {
+  const { runCommand, buildCommand } = dependencies;
   return {
     type: 'GET_O2_HANDLER',
     handle: () => {
-      return Promise.resolve({ payload: 'coucou' });
+      const command = buildCommand({
+        type: FrameType.READ_MEASUREMENT,
+        id: '2'
+      });
+      return runCommand(command).then(answer => ({ payload: answer.value }));
     }
   };
 }

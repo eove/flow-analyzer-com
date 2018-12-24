@@ -1,2 +1,2 @@
-export * from './createConnectionManager';
+export * from './createTransport';
 export * from './createCommandRunner';

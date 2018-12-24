@@ -3,10 +3,10 @@ import * as SerialPort from 'serialport';
 
 type UninstallHandler = () => void;
 
-interface Transport {
+export interface Transport {
   connect: (portName: string) => Promise<void>;
   disconnect: () => Promise<void>;
-  write: (bytes: string[]) => Promise<any>;
+  write: (bytes: string) => Promise<any>;
   data$: Observable<{}>;
   connected: boolean;
 }
@@ -86,7 +86,7 @@ export function createTransport(): Transport {
     }
   }
 
-  function write(bytes: string[]): Promise<any> {
+  function write(bytes: string): Promise<any> {
     return new Promise((resolve, reject) => {
       port.write(Buffer.from(bytes), writeError => {
         if (writeError) {

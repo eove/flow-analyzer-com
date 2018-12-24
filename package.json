@@ -33,8 +33,9 @@
   },
   "homepage": "https://github.com/eove/flow-analyzer-com#readme",
   "devDependencies": {
+    "@types/debug": "0.0.31",
     "@types/jest": "23.3.10",
-    "@types/node": "10.12.17",
+    "@types/node": "10.12.18",
     "@types/rx": "4.1.1",
     "@types/serialport": "7.0.1",
     "jest": "23.6.0",
@@ -60,7 +61,8 @@
   },
   "dependencies": {
     "@arpinum/messaging": "3.0.0",
+    "debug": "4.1.1",
     "rxjs": "6.3.3",
-    "serialport": "7.1.0"
+    "serialport": "7.1.1"
   }
 }
