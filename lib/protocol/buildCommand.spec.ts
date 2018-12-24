@@ -1,5 +1,5 @@
-import { FrameType } from './FrameType';
 import { buildCommand } from './buildCommand';
+import { FrameType } from './FrameType';
 
 describe('Build command', () => {
   it('should build an execute command', () => {
