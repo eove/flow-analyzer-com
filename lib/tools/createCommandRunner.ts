@@ -12,11 +12,7 @@ import {
   timeout
 } from 'rxjs/operators';
 
-import {
-  DomainAnswer,
-  DomainCommand,
-  DomainCommandHandlerFatory
-} from '../domain';
+import { DomainCommand, DomainCommandHandlerFatory } from '../domain';
 import {
   FindAnswerResult,
   findAnswers,
@@ -81,7 +77,7 @@ export function createCommandRunner(
     answer$
   };
 
-  function postCommand(cmd: DomainCommand): Promise<DomainAnswer> {
+  function postCommand(cmd: DomainCommand): Promise<{}> {
     return commandBus.post(cmd);
   }
 

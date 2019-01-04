@@ -1,6 +1,6 @@
 import * as debugLib from 'debug';
 import { Observable } from 'rxjs';
-import { DomainAnswer, DomainCommand } from './domain';
+import { DomainCommand } from './domain';
 import { commandHandlerFactories } from './domain';
 import { buildCommand, findAnswers } from './protocol';
 import { createCommandRunner, createTransport } from './tools';
@@ -8,8 +8,8 @@ import { createCommandRunner, createTransport } from './tools';
 export interface Communicator {
   open: (portName: string) => Promise<void>;
   close: () => Promise<void>;
-  sendCommand: (command: DomainCommand) => Promise<DomainAnswer>;
-  request: (commandType: string, args: any) => Promise<DomainAnswer>;
+  sendCommand: (command: DomainCommand) => Promise<{}>;
+  request: (commandType: string, args: any) => Promise<{}>;
   data$: Observable<{}>;
   answer$: Observable<{}>;
 }

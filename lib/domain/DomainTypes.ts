@@ -9,11 +9,9 @@ export interface DomainCommand {
   payload?: object;
 }
 
-export interface DomainAnswer {}
-
 export interface DomainCommandHandler {
   type: string;
-  handle: (command?: DomainCommand) => Promise<DomainAnswer>;
+  handle: (command?: DomainCommand) => Promise<{}>;
 }
 
 export interface DomainCommandHandlerFactoryDependencies {
