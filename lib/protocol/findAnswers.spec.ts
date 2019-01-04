@@ -2,6 +2,17 @@ import { findAnswers } from './findAnswers';
 import { FrameType } from './FrameType';
 
 describe('Find answers', () => {
+  it('should return first remaining bytes', () => {
+    const data = ['%', 'W', 'S'];
+
+    const result = findAnswers(data);
+
+    expect(result).toEqual({
+      answers: [],
+      remaining: ['%', 'W', 'S']
+    });
+  });
+
   it('should return answers and no remaining bytes when correct data', () => {
     const data = ['%', 'R', 'S', '#', '1', '2', '$', '1', '2', '4', '\r'];
     data.push(...['%', 'R', 'M', '#', '2', '5', '$', '1', '0', '0', '\r']);
