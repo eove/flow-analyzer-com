@@ -13,7 +13,7 @@ export function createGetO2MeasurementHandler(
     handle: () => {
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,
-        id: '2'
+        id: '9'
       });
       return runCommand(command).then(answer => ({ payload: answer.value }));
     }

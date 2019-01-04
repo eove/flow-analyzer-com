@@ -1,10 +1,10 @@
 import { createMessageBus, MessageBus } from '@arpinum/messaging';
-import { Observable, throwError } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 import {
   catchError,
   filter,
-  flatMap,
   map,
+  mergeMap,
   scan,
   tap,
   timeout
@@ -15,7 +15,12 @@ import {
   DomainCommand,
   DomainCommandHandlerFatory
 } from '../domain';
-import { findAnswers, ProtocolAnswer, ProtocolCommand } from '../protocol';
+import {
+  FindAnswerResult,
+  findAnswers,
+  ProtocolAnswer,
+  ProtocolCommand
+} from '../protocol';
 import { Transport } from './createTransport';
 
 interface CommandRunner {
@@ -44,13 +49,21 @@ export function createCommandRunner(
     debug
   } = dependencies;
   const answer$ = data$.pipe(
-    tap(data => debug('received:', data)),
-    scan((acc, bytes) => acc.concat(bytes), []),
-    map(data => {
-      const result = findAnswers(data);
-      return result.answers;
-    }),
-    flatMap(x => x)
+    scan(
+      (acc: FindAnswerResult, byte: any) => {
+        const { remaining: remainingBytes } = acc;
+        const received = remainingBytes.concat(...byte);
+        const { remaining, answers } = findAnswers(received);
+        return { remaining, answers };
+      },
+      {
+        remaining: [],
+        answers: []
+      }
+    ),
+    filter((result: FindAnswerResult) => result.answers.length !== 0),
+    map((result: FindAnswerResult) => result.answers),
+    mergeMap((x: ProtocolAnswer[]) => from(x))
   );
 
   createAndRegisterHandlers(commandBus, handlerFactories);
