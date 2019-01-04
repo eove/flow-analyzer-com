@@ -18,7 +18,7 @@ export function createCommunicator(): Communicator {
   const debug = debugLib('communicator');
   const transport = createTransport();
   const commandRunner = createCommandRunner({
-    debug: debug.log,
+    debug,
     buildCommand,
     findAnswers,
     handlerFactories: [...commandHandlerFactories.measurements],
@@ -52,9 +52,7 @@ export function createCommunicator(): Communicator {
   }
 
   function request(commandType: string, args: any) {
-    debug.log(
-      `received shell command to run communicator command: ${commandType}`
-    );
+    debug(`received shell command to run communicator command: ${commandType}`);
     return sendCommand({ type: commandType, payload: args });
   }
 }
