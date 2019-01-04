@@ -9,9 +9,7 @@ export interface DomainCommand {
   payload?: object;
 }
 
-export interface DomainAnswer {
-  payload: any;
-}
+export interface DomainAnswer {}
 
 export interface DomainCommandHandler {
   type: string;
@@ -21,6 +19,7 @@ export interface DomainCommandHandler {
 export interface DomainCommandHandlerFactoryDependencies {
   runCommand: (command: ProtocolCommand) => Promise<ProtocolAnswer>;
   buildCommand: (command: ProtocolCommandInput) => ProtocolCommand;
+  debug: (...args: any) => undefined;
 }
 
 export type DomainCommandHandlerFatory = (

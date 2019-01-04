@@ -52,7 +52,7 @@ export function createCommunicator(): Communicator {
   }
 
   function request(commandType: string, args: any) {
-    debug(`received shell command to run communicator command: ${commandType}`);
+    debug(`received shell command to run: ${commandType}`);
     return sendCommand({ type: commandType, payload: args });
   }
 }

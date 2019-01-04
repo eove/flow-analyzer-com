@@ -1,3 +1,4 @@
+import * as debugLib from 'debug';
 import { Observable, Subject } from 'rxjs';
 import * as SerialPort from 'serialport';
 
@@ -11,7 +12,13 @@ export interface Transport {
   connected: boolean;
 }
 
-export function createTransport(): Transport {
+interface TransportCreationOptions {
+  debugEnabled?: boolean;
+}
+
+export function createTransport(options?: TransportCreationOptions): Transport {
+  const { debugEnabled = false } = options || {};
+  const debug = Object.assign(debugLib('transport'), { enabled: debugEnabled });
   const dataSource = new Subject();
   let port: SerialPort;
   let uninstallPortListeners: UninstallHandler;
@@ -50,7 +57,9 @@ export function createTransport(): Transport {
 
     function installPortListeners() {
       const onDataHandler = (data: any) => {
-        dataSource.next(data);
+        const received = data.toString();
+        debug('received:', received);
+        dataSource.next(received);
       };
       port.on('data', onDataHandler);
       return () => {
@@ -102,6 +111,7 @@ export function createTransport(): Transport {
               );
               reject(err);
             } else {
+              debug(`sent: ${bytes}`);
               resolve();
             }
           });

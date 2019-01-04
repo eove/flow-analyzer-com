@@ -4,6 +4,7 @@ import { from, Observable, throwError } from 'rxjs';
 import {
   catchError,
   filter,
+  first,
   map,
   mergeMap,
   scan,
@@ -66,7 +67,8 @@ export function createCommandRunner(
     ),
     filter((result: FindAnswerResult) => result.answers.length !== 0),
     map((result: FindAnswerResult) => result.answers),
-    mergeMap((x: ProtocolAnswer[]) => from(x))
+    mergeMap((x: ProtocolAnswer[]) => from(x)),
+    tap(x => debug('answer', x))
   );
 
   createAndRegisterHandlers(
@@ -91,17 +93,16 @@ export function createCommandRunner(
     function waitAnswer(currentCmd: ProtocolCommand) {
       return commandAnswer$()
         .pipe(
-          tap(
-            () => undefined,
-            error => debug('error when waiting answer', error)
-          ),
-          timeout(1000),
+          timeout(5000),
           catchError(error => throwError(error))
         )
         .toPromise();
 
       function commandAnswer$() {
-        return answer$.pipe(filter(a => a.type === currentCmd.type));
+        return answer$.pipe(
+          filter(a => a.type === currentCmd.type),
+          first()
+        );
       }
     }
   }
@@ -112,7 +113,7 @@ export function createCommandRunner(
   ) {
     const unregisterHandlers: any[] = [];
     for (const factory of factories) {
-      const instance = factory({ runCommand, buildCommand });
+      const instance = factory({ runCommand, buildCommand, debug });
       bus.register(instance.type, instance.handle);
       unregisterHandlers.push(() => bus.unregisterAll(instance.type));
     }
