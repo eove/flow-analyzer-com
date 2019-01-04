@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@arpinum/messaging": "3.0.0",
+    "@arpinum/promising": "2.2.2",
     "debug": "4.1.1",
     "rxjs": "6.3.3",
     "serialport": "7.1.1"

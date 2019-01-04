@@ -15,7 +15,9 @@ export function createGetO2MeasurementHandler(
         type: FrameType.READ_MEASUREMENT,
         id: '9'
       });
-      return runCommand(command).then(answer => ({ payload: answer.value }));
+      return runCommand(command).then(answer => ({
+        payload: { value: answer.value, unit: '%' }
+      }));
     }
   };
 }

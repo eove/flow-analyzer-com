@@ -9,6 +9,7 @@ export interface Communicator {
   open: (portName: string) => Promise<void>;
   close: () => Promise<void>;
   sendCommand: (command: DomainCommand) => Promise<DomainAnswer>;
+  request: (commandType: string, args: any) => Promise<DomainAnswer>;
   data$: Observable<{}>;
   answer$: Observable<{}>;
 }
@@ -34,7 +35,8 @@ export function createCommunicator(): Communicator {
     get answer$() {
       return commandRunner.answer$;
     },
-    sendCommand
+    sendCommand,
+    request
   };
 
   function open(portName: string): Promise<void> {
@@ -47,5 +49,12 @@ export function createCommunicator(): Communicator {
 
   function sendCommand(command: DomainCommand): Promise<any> {
     return commandRunner.postCommand(command);
+  }
+
+  function request(commandType: string, args: any) {
+    debug.log(
+      `received shell command to run communicator command: ${commandType}`
+    );
+    return sendCommand({ type: commandType, payload: args });
   }
 }

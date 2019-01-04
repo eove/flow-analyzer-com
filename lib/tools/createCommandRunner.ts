@@ -1,4 +1,5 @@
 import { createMessageBus, MessageBus } from '@arpinum/messaging';
+import { createQueue } from '@arpinum/promising';
 import { from, Observable, throwError } from 'rxjs';
 import {
   catchError,
@@ -48,6 +49,8 @@ export function createCommandRunner(
     transport,
     debug
   } = dependencies;
+  const commandQueue = createQueue({ capacity: 1 });
+
   const answer$ = data$.pipe(
     scan(
       (acc: FindAnswerResult, byte: any) => {
@@ -66,7 +69,10 @@ export function createCommandRunner(
     mergeMap((x: ProtocolAnswer[]) => from(x))
   );
 
-  createAndRegisterHandlers(commandBus, handlerFactories);
+  createAndRegisterHandlers(
+    commandBus,
+    handlerFactories ? handlerFactories : []
+  );
 
   return {
     postCommand,
@@ -80,7 +86,7 @@ export function createCommandRunner(
   function runCommand(cmd: ProtocolCommand) {
     const { raw } = cmd;
     const answer = waitAnswer(cmd);
-    return transport.write(raw).then(() => answer);
+    return commandQueue.enqueue(() => transport.write(raw).then(() => answer));
 
     function waitAnswer(currentCmd: ProtocolCommand) {
       return commandAnswer$()
@@ -89,7 +95,7 @@ export function createCommandRunner(
             () => undefined,
             error => debug('error when waiting answer', error)
           ),
-          timeout(2000),
+          timeout(1000),
           catchError(error => throwError(error))
         )
         .toPromise();
