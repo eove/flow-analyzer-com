@@ -21,7 +21,10 @@ export function createCommunicator(): Communicator {
     debug,
     buildCommand,
     findAnswers,
-    handlerFactories: [...commandHandlerFactories.measurements],
+    handlerFactories: [
+      ...commandHandlerFactories.measurements,
+      ...commandHandlerFactories.settings
+    ],
     data$: transport.data$,
     transport
   });
