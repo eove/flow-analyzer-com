@@ -1,4 +1,4 @@
-# flow-analyzer-com [![Build Status](https://travis-ci.org/eove/pf300-com.svg?branch=master)](https://travis-ci.org/eove/pf300-com)
+# flow-analyzer-com [![Build Status](https://travis-ci.org/eove/flow-analyzer-com.svg?branch=master)](https://travis-ci.org/eove/flow-analyzer-com) [![npm version](https://badge.fury.io/js/%40eove%2Fflow-analyzer-com.svg)](https://badge.fury.io/js/%40eove%2Fflow-analyzer-com) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Node.js lib to communicate with [imtmedical](https://www.imtmedical.com/) gaz flow analyzers such as pf300 & citrex devices through serial port
 
