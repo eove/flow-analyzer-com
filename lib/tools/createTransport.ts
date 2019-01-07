@@ -61,7 +61,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     function installPortListeners() {
       const onDataHandler = (data: any) => {
         const received = data.toString();
-        debug('received:', received.replace('\r', 'CR'));
+        debug('received:', received.replace('\r', '\\r'));
         dataSource.next(received);
       };
       port.on('data', onDataHandler);
@@ -100,7 +100,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
   }
 
   function write(bytes: string): Promise<any> {
-    const escapedBytes = bytes.replace('\r', 'CR');
+    const escapedBytes = bytes.replace('\r', '\\r');
     debug(`sending: ${escapedBytes}`);
     return new Promise((resolve, reject) => {
       port.write(Buffer.from(bytes), writeError => {
