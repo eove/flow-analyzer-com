@@ -21,3 +21,7 @@ communicator.open('/dev/ttyUSB0').then(() => {
     .then(console.log);
 });
 ```
+
+### Example: TalkToAnalyzer
+
+For those who want a ready to use CLI tool to talk to analyzer device, please check: https://github.com/eove/talk-to-analyzer
