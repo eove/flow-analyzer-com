@@ -1,6 +1,6 @@
 import { DomainCommandHandlerFatory } from '../DomainTypes';
-import { createGetO2MeasurementHandler } from './getO2MeasurementHandlerFactory';
+import { createReadMeasurementHandler } from './readMeasurementHandlerFactory';
 
 export const factories: DomainCommandHandlerFatory[] = [
-  createGetO2MeasurementHandler
+  createReadMeasurementHandler
 ];

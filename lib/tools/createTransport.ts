@@ -42,6 +42,8 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     }
     port = new SerialPort(portName, { autoOpen: false, baudRate: 19200 });
     uninstallPortListeners = installPortListeners();
+    debug(`connecting to: ${portName}`);
+
     return new Promise((resolve, reject) => {
       port.open(error => {
         if (error) {
@@ -51,6 +53,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
           return reject(err);
         }
         isConnected = true;
+        debug('connected.');
         return resolve();
       });
     });
@@ -58,7 +61,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     function installPortListeners() {
       const onDataHandler = (data: any) => {
         const received = data.toString();
-        debug('received:', received);
+        debug('received:', received.replace('\r', 'CR'));
         dataSource.next(received);
       };
       port.on('data', onDataHandler);
@@ -88,6 +91,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
             );
             return reject(err);
           }
+          debug('disconnected.');
           isConnected = false;
           return resolve();
         });
@@ -96,6 +100,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
   }
 
   function write(bytes: string): Promise<any> {
+    debug(`sending: ${bytes}`);
     return new Promise((resolve, reject) => {
       port.write(Buffer.from(bytes), writeError => {
         if (writeError) {
@@ -104,6 +109,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
           );
           reject(err);
         } else {
+          debug(`wrote: ${bytes}`);
           port.drain(flushError => {
             if (flushError) {
               const err = new Error(
@@ -111,7 +117,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
               );
               reject(err);
             } else {
-              debug(`sent: ${bytes}`);
+              debug(`flushed: ${bytes}`);
               resolve();
             }
           });

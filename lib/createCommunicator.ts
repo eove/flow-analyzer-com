@@ -16,7 +16,7 @@ export interface Communicator {
 
 export function createCommunicator(): Communicator {
   const debug = debugLib('communicator');
-  const transport = createTransport();
+  const transport = createTransport({ debugEnabled: true });
   const commandRunner = createCommandRunner({
     debug,
     buildCommand,

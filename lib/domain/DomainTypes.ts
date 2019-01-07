@@ -1,22 +1,36 @@
 import {
   ProtocolAnswer,
   ProtocolCommand,
-  ProtocolCommandInput
+  ProtocolCommandInput,
+  ProtocolCommandOptions
 } from '../protocol';
+
+interface ReadMeasurementPayload {
+  name: string;
+}
+
+interface ReadSettingPayload {
+  name: string;
+}
+
+type DomainCommandPayload = ReadMeasurementPayload | ReadSettingPayload;
 
 export interface DomainCommand {
   type: string;
-  payload?: object;
+  payload: DomainCommandPayload;
 }
 
 export interface DomainCommandHandler {
   type: string;
-  handle: (command?: DomainCommand) => Promise<{}>;
+  handle: (payload: any) => Promise<{}>;
 }
 
 export interface DomainCommandHandlerFactoryDependencies {
   runCommand: (command: ProtocolCommand) => Promise<ProtocolAnswer>;
-  buildCommand: (command: ProtocolCommandInput) => ProtocolCommand;
+  buildCommand: (
+    command: ProtocolCommandInput,
+    options: ProtocolCommandOptions
+  ) => ProtocolCommand;
   debug: (...args: any) => undefined;
 }
 

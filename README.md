@@ -17,7 +17,7 @@ const communicator = createCommunicator();
 
 communicator.open('/dev/ttyUSB0').then(() => {
   return communicator
-    .sendCommand({ type: 'GET_O2_MEASUREMENT' })
+    .sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'o2' } })
     .then(console.log);
 });
 ```

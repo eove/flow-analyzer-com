@@ -38,7 +38,7 @@ interface CommandRunnerDependencies {
 export function createCommandRunner(
   dependencies: CommandRunnerDependencies
 ): CommandRunner {
-  const commandBus = createMessageBus();
+  const commandBus = createMessageBus({ ensureAtLeastOneHandler: true });
   const {
     data$,
     handlerFactories,
@@ -82,14 +82,14 @@ export function createCommandRunner(
   }
 
   function runCommand(cmd: ProtocolCommand) {
-    const { raw } = cmd;
+    const { raw, answerTimeout } = cmd;
     const answer = waitAnswer(cmd);
     return commandQueue.enqueue(() => transport.write(raw).then(() => answer));
 
     function waitAnswer(currentCmd: ProtocolCommand) {
       return commandAnswer$()
         .pipe(
-          timeout(5000),
+          timeout(answerTimeout),
           catchError(error => throwError(error))
         )
         .toPromise();

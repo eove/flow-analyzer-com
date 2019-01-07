@@ -3,7 +3,7 @@ import { FrameType, mapToFrameType } from './FrameType';
 export interface ProtocolAnswer {
   type: FrameType;
   id?: string;
-  value?: string;
+  value?: string | null;
   raw: string;
 }
 
@@ -12,7 +12,7 @@ export interface FindAnswerResult {
   remaining: string[];
 }
 
-const FRAME_PATTERN = /%(\w{2})#(\w+)\$(\w+)\r/;
+const FRAME_PATTERN = /%(\w{2})#(\w+)\$((\-|\w)+)\r/;
 
 export function findAnswers(data: string[]): FindAnswerResult {
   let index = 0;

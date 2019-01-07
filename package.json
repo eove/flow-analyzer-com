@@ -62,7 +62,9 @@
   "dependencies": {
     "@arpinum/messaging": "3.0.0",
     "@arpinum/promising": "2.2.2",
+    "@types/lodash": "4.14.119",
     "debug": "4.1.1",
+    "lodash": "4.17.11",
     "rxjs": "6.3.3",
     "serialport": "7.1.1"
   }
