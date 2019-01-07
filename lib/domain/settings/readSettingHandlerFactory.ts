@@ -4,8 +4,8 @@ import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
-import makeFormatSettingAnswer from './makeFormatSettingAnswer';
 import getSettingInfos from './getSettingInfos';
+import makeFormatSettingAnswer from './makeFormatSettingAnswer';
 
 export function createReadSettingHandler(
   dependencies: DomainCommandHandlerFactoryDependencies

@@ -100,7 +100,8 @@ export function createTransport(options?: TransportCreationOptions): Transport {
   }
 
   function write(bytes: string): Promise<any> {
-    debug(`sending: ${bytes}`);
+    const escapedBytes = bytes.replace('\r', 'CR');
+    debug(`sending: ${escapedBytes}`);
     return new Promise((resolve, reject) => {
       port.write(Buffer.from(bytes), writeError => {
         if (writeError) {
@@ -109,7 +110,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
           );
           reject(err);
         } else {
-          debug(`wrote: ${bytes}`);
+          debug(`wrote: ${escapedBytes}`);
           port.drain(flushError => {
             if (flushError) {
               const err = new Error(
@@ -117,7 +118,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
               );
               reject(err);
             } else {
-              debug(`flushed: ${bytes}`);
+              debug(`flushed: ${escapedBytes}`);
               resolve();
             }
           });

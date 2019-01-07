@@ -4,8 +4,8 @@ import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
-import makeFormatMeasurementAnswer from './makeFormatMeasurementAnswer';
 import getMeasurementInfos from './getMeasurementInfos';
+import makeFormatMeasurementAnswer from './makeFormatMeasurementAnswer';
 
 export function createReadMeasurementHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
