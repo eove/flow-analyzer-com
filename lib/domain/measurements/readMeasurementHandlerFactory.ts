@@ -17,11 +17,12 @@ export function createReadMeasurementHandler(
       debug(`running ${type} command handler...`);
 
       const { name } = payload;
-      const format = makeFormatMeasurementAnswer(name);
+      const { divider, unit, id } = getMeasurementInfos(name);
+      const format = makeFormatMeasurementAnswer(name, divider, unit);
       const command = buildCommand(
         {
           type: FrameType.READ_MEASUREMENT,
-          id: getMeasurementInfos(name).id
+          id
         },
         { answerTimeout: 10000 }
       );

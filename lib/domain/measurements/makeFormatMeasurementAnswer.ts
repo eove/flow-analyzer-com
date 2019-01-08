@@ -1,13 +1,12 @@
 import { ProtocolAnswer } from '../../protocol';
-import getMeasurementInfos from './getMeasurementInfos';
 
 const NULL_VALUE = '-2147483648';
 
 export default function makeFormatMeasurementAnswer(
-  name: string
+  name: string,
+  divider?: number,
+  unit?: string
 ): (answer: ProtocolAnswer) => any {
-  const { divider, unit } = getMeasurementInfos(name);
-
   return (answer: ProtocolAnswer): any => {
     const { id, value } = answer;
     const computedValue =
