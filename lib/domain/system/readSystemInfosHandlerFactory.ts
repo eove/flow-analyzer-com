@@ -14,12 +14,14 @@ export function createReadSystemInfosHandler(
     handle: ({ type }: DomainCommand) => {
       debug(`running ${type} command handler...`);
 
-      return Promise.all([getHardwareVersion(), getSoftwareVersion()]).then(
-        (results: any) => {
-          const [hardwareVersion, softwareVersion] = results;
-          return { hardwareVersion, softwareVersion };
-        }
-      );
+      return Promise.all([
+        getHardwareVersion(),
+        getSoftwareVersion(),
+        getSerialNumber()
+      ]).then((results: any) => {
+        const [hardwareVersion, softwareVersion, serialNumber] = results;
+        return { hardwareVersion, softwareVersion, serialNumber };
+      });
     }
   };
 
@@ -34,13 +36,23 @@ export function createReadSystemInfosHandler(
     return runCommand(command).then(answer => answer.value);
   }
 
+  function getSerialNumber(): Promise<string | undefined | null> {
+    const command = buildCommand(
+      {
+        type: FrameType.READ_SYSTEM_INFO,
+        id: '8'
+      },
+      { answerTimeout: 10000 }
+    );
+    return runCommand(command).then(answer => answer.value);
+  }
+
   function getSoftwareVersion(): Promise<string | undefined | null> {
     return Promise.all([
       getMajorVersion(),
       getMinorVersion(),
       getRelease()
     ]).then((results: any) => {
-      debug('results', results);
       const [major, minor, release] = results;
       return `${major}.${minor}.${release}`;
     });
