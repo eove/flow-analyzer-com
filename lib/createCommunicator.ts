@@ -23,7 +23,8 @@ export function createCommunicator(): Communicator {
     findAnswers,
     handlerFactories: [
       ...commandHandlerFactories.measurements,
-      ...commandHandlerFactories.settings
+      ...commandHandlerFactories.settings,
+      ...commandHandlerFactories.system
     ],
     data$: transport.data$,
     transport
