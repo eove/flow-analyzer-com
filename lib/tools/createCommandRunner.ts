@@ -9,7 +9,9 @@ import {
   mergeMap,
   scan,
   tap,
-  timeout
+  timeout,
+  publish,
+  refCount
 } from 'rxjs/operators';
 
 import { DomainCommand, DomainCommandHandlerFatory } from '../domain';
@@ -46,7 +48,7 @@ export function createCommandRunner(
     transport,
     debug
   } = dependencies;
-  const commandQueue = createQueue({ capacity: 1 });
+  const commandQueue = createQueue({ concurrency: 1 });
 
   const answer$ = data$.pipe(
     scan(
@@ -64,7 +66,7 @@ export function createCommandRunner(
     filter((result: FindAnswerResult) => result.answers.length !== 0),
     map((result: FindAnswerResult) => result.answers),
     mergeMap((x: ProtocolAnswer[]) => from(x)),
-    tap(x => debug('answer', x))
+    tap(x => debug('answer:', x))
   );
 
   createAndRegisterHandlers(
@@ -83,8 +85,10 @@ export function createCommandRunner(
 
   function runCommand(cmd: ProtocolCommand) {
     const { raw, answerTimeout } = cmd;
-    const answer = waitAnswer(cmd);
-    return commandQueue.enqueue(() => transport.write(raw).then(() => answer));
+    return commandQueue.enqueue(() => {
+      const answer = waitAnswer(cmd);
+      return transport.write(raw).then(() => answer);
+    });
 
     function waitAnswer(currentCmd: ProtocolCommand) {
       return commandAnswer$()
@@ -96,6 +100,8 @@ export function createCommandRunner(
 
       function commandAnswer$() {
         return answer$.pipe(
+          publish(),
+          refCount(),
           filter(a => a.type === currentCmd.type),
           first()
         );
