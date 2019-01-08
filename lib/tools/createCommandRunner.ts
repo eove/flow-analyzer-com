@@ -7,11 +7,11 @@ import {
   first,
   map,
   mergeMap,
+  publish,
+  refCount,
   scan,
   tap,
-  timeout,
-  publish,
-  refCount
+  timeout
 } from 'rxjs/operators';
 
 import { DomainCommand, DomainCommandHandlerFatory } from '../domain';
