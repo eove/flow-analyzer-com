@@ -13,7 +13,9 @@ const settingsInfos: any = {
   gazType: {
     id: 1,
     valueToName: (value: string): string => GAZ_TYPE_VALUE_TO_NAME[value],
-    nameToValue: (name: string): string => GAZ_TYPE_NAME_TO_VALUE[name]
+    nameToValue: (name: string): string => GAZ_TYPE_NAME_TO_VALUE[name],
+    allNames: () => _.values(GAZ_TYPE_VALUE_TO_NAME),
+    allValues: () => _.keys(GAZ_TYPE_VALUE_TO_NAME)
   },
   manualOxygenConcentration: {
     id: 2,
@@ -22,24 +24,41 @@ const settingsInfos: any = {
   gazStandards: {
     id: 3,
     valueToName: (value: string): string => GAZ_STANDARDS_VALUE_TO_NAME[value],
-    nameToValue: (name: string): string => GAZ_STANDARDS_NAME_TO_VALUE[name]
+    nameToValue: (name: string): string => GAZ_STANDARDS_NAME_TO_VALUE[name],
+    allNames: () => _.values(GAZ_STANDARDS_VALUE_TO_NAME),
+    allValues: () => _.keys(GAZ_STANDARDS_VALUE_TO_NAME)
   },
   respMode: {
     id: 4,
     valueToName: (value: string): string => RESP_MODE_VALUE_TO_NAME[value],
-    nameToValue: (name: string): string => RESP_MODE_NAME_TO_VALUE[name]
+    nameToValue: (name: string): string => RESP_MODE_NAME_TO_VALUE[name],
+    allNames: () => _.values(RESP_MODE_VALUE_TO_NAME),
+    allValues: () => _.keys(RESP_MODE_VALUE_TO_NAME)
   },
   triggerSource: {
     id: 5,
     valueToName: (value: string): string => TRIGGER_SOURCE_VALUE_TO_NAME[value],
-    nameToValue: (name: string): string => TRIGGER_SOURCE_NAME_TO_VALUE[name]
+    nameToValue: (name: string): string => TRIGGER_SOURCE_NAME_TO_VALUE[name],
+    allNames: () => _.values(TRIGGER_SOURCE_VALUE_TO_NAME),
+    allValues: () => _.keys(TRIGGER_SOURCE_VALUE_TO_NAME)
   },
   startTriggerSignal: {
     id: 6,
     valueToName: (value: string): string =>
       START_TRIGGER_SIGNAL_VALUE_TO_NAME[value],
     nameToValue: (name: string): string =>
-      START_TRIGGER_SIGNAL_NAME_TO_VALUE[name]
+      START_TRIGGER_SIGNAL_NAME_TO_VALUE[name],
+    allNames: () => _.values(START_TRIGGER_SIGNAL_VALUE_TO_NAME),
+    allValues: () => _.keys(START_TRIGGER_SIGNAL_VALUE_TO_NAME)
+  },
+  startTriggerEdge: {
+    id: 7,
+    valueToName: (value: string): string =>
+      START_TRIGGER_EDGE_VALUE_TO_NAME[value],
+    nameToValue: (name: string): string =>
+      START_TRIGGER_EDGE_NAME_TO_VALUE[name],
+    allNames: () => _.values(START_TRIGGER_EDGE_VALUE_TO_NAME),
+    allValues: () => _.keys(START_TRIGGER_EDGE_VALUE_TO_NAME)
   }
 };
 
@@ -54,7 +73,7 @@ const GAZ_TYPE_VALUE_TO_NAME: any = {
   '7': 'He/O2-aut.',
   '8': 'N2',
   '9': 'CO2',
-  '10': 'Custom gas, defined by density and dyn. Viscosity'
+  '10': 'Custom gas'
 };
 const GAZ_TYPE_NAME_TO_VALUE = _.invert(GAZ_TYPE_VALUE_TO_NAME);
 
@@ -69,9 +88,9 @@ const GAZ_STANDARDS_VALUE_TO_NAME: any = {
   '7': '20°C, 1013mbar, Dry',
   '8': '25°C, 991mbar, Dry',
   '9': 'Ambient Pressure 21°, Dry',
-  '10': 'Standard Temperature and Pressure, Humid (21.1°C, 1013.25mbar)',
-  '11': 'Ambient Temperature and Pressure, Dry',
-  '12': 'Ambient Temperature and Pressure, Saturated'
+  '10': 'Standard Temperature and Pressure - Humid',
+  '11': 'Ambient Temperature and Pressure - Dry',
+  '12': 'Ambient Temperature and Pressure - Saturated'
 };
 
 const GAZ_STANDARDS_NAME_TO_VALUE = _.invert(GAZ_STANDARDS_VALUE_TO_NAME);
@@ -97,4 +116,12 @@ const START_TRIGGER_SIGNAL_VALUE_TO_NAME: any = {
 };
 const START_TRIGGER_SIGNAL_NAME_TO_VALUE = _.invert(
   START_TRIGGER_SIGNAL_VALUE_TO_NAME
+);
+
+const START_TRIGGER_EDGE_VALUE_TO_NAME: any = {
+  '0': 'Rising',
+  '1': 'Falling'
+};
+const START_TRIGGER_EDGE_NAME_TO_VALUE = _.invert(
+  START_TRIGGER_EDGE_VALUE_TO_NAME
 );

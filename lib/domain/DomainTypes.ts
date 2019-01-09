@@ -5,15 +5,10 @@ import {
   ProtocolCommandOptions
 } from '../protocol';
 
-interface ReadMeasurementPayload {
+interface DomainCommandPayload {
   name: string;
+  value?: string;
 }
-
-interface ReadSettingPayload {
-  name: string;
-}
-
-type DomainCommandPayload = ReadMeasurementPayload | ReadSettingPayload;
 
 export interface DomainCommand {
   type: string;
