@@ -1,5 +1,7 @@
 import * as debugLib from 'debug';
+import * as _ from 'lodash';
 import { Observable } from 'rxjs';
+
 import { DomainCommand } from './domain';
 import { commandHandlerFactories } from './domain';
 import { buildCommand, findAnswers } from './protocol';
@@ -14,9 +16,18 @@ export interface Communicator {
   answer$: Observable<{}>;
 }
 
-export function createCommunicator(): Communicator {
+interface CommunicatiorOptions {
+  debugEnabled?: boolean;
+}
+
+export function createCommunicator(
+  options?: CommunicatiorOptions
+): Communicator {
   const debug = debugLib('communicator');
-  const transport = createTransport({ debugEnabled: true });
+  const { debugEnabled } = _.defaults(options, { debugEnabled: false });
+  debug.enabled = debugEnabled;
+
+  const transport = createTransport({ debugEnabled });
   const commandRunner = createCommandRunner({
     debug,
     buildCommand,

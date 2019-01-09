@@ -2,11 +2,16 @@ import { ProtocolAnswer } from '../../protocol';
 
 const NULL_VALUE = '-2147483648';
 
+interface FormatCreation {
+  name: string;
+  divider?: number;
+  unit?: string;
+}
+
 export default function makeFormatMeasurementAnswer(
-  name: string,
-  divider?: number,
-  unit?: string
+  creation: FormatCreation
 ): (answer: ProtocolAnswer) => any {
+  const { divider, unit, name } = creation;
   return (answer: ProtocolAnswer): any => {
     const { id, value } = answer;
     const computedValue =

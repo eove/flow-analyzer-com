@@ -18,7 +18,7 @@ export function createReadMeasurementHandler(
 
       const { name } = payload;
       const { divider, unit, id } = getMeasurementInfos(name);
-      const format = makeFormatMeasurementAnswer(name, divider, unit);
+      const format = makeFormatMeasurementAnswer({ name, divider, unit });
       const command = buildCommand(
         {
           type: FrameType.READ_MEASUREMENT,

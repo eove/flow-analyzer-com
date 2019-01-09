@@ -1,15 +1,20 @@
 import { ProtocolAnswer } from '../../protocol';
-import getSettingInfos from './getSettingInfos';
+
+interface FormatCreation {
+  name: string;
+  id: string;
+  valueToName: (name: string) => string;
+  unit: string;
+}
 
 export default function makeFormatSettingAnswer(
-  name: string
+  creation: FormatCreation
 ): (answer: ProtocolAnswer) => any {
-  const { unit, toUnderstandable } = getSettingInfos(name);
+  const { valueToName, name, unit } = creation;
 
   return (answer: ProtocolAnswer): any => {
     const { id, value } = answer;
-    const computedValue =
-      toUnderstandable && value ? toUnderstandable(value) : value;
+    const computedValue = valueToName && value ? valueToName(value) : value;
     const displayValue = unit ? `${computedValue} ${unit}` : `${computedValue}`;
     return {
       id,

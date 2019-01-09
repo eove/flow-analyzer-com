@@ -17,11 +17,13 @@ export function createReadSettingHandler(
       debug(`running ${type} command handler...`);
 
       const { name } = payload;
-      const format = makeFormatSettingAnswer(name);
+      const { unit, id, valueToName } = getSettingInfos(name);
+      const format = makeFormatSettingAnswer({ name, unit, id, valueToName });
+
       const command = buildCommand(
         {
           type: FrameType.READ_SETTING,
-          id: getSettingInfos(name).id
+          id
         },
         { answerTimeout: 10000 }
       );
