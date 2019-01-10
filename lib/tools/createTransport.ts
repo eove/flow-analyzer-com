@@ -40,9 +40,10 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     if (isConnected) {
       return Promise.reject(new Error('already connected'));
     }
-    port = new SerialPort(portName, { autoOpen: false, baudRate: 19200 });
+    const baudRate = 19200;
+    port = new SerialPort(portName, { autoOpen: false, baudRate });
     uninstallPortListeners = installPortListeners();
-    debug(`connecting to: ${portName}`);
+    debug(`connecting to: ${portName}, baud rate: ${baudRate}`);
 
     return new Promise((resolve, reject) => {
       port.open(error => {
