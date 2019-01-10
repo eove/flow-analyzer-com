@@ -24,7 +24,7 @@ export interface DomainCommandHandlerFactoryDependencies {
   runCommand: (command: ProtocolCommand) => Promise<ProtocolAnswer>;
   buildCommand: (
     command: ProtocolCommandInput,
-    options: ProtocolCommandOptions
+    options?: ProtocolCommandOptions
   ) => ProtocolCommand;
   debug: (...args: any) => undefined;
 }

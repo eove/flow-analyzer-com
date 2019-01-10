@@ -7,7 +7,7 @@ import {
 import getMeasurementInfos from './getMeasurementInfos';
 import makeFormatMeasurementAnswer from './makeFormatMeasurementAnswer';
 
-export function createReadMeasurementHandler(
+export default function createReadMeasurementHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
   const { runCommand, buildCommand, debug } = dependencies;
@@ -19,13 +19,10 @@ export function createReadMeasurementHandler(
       const { name } = payload;
       const { divider, unit, id } = getMeasurementInfos(name);
       const format = makeFormatMeasurementAnswer({ name, divider, unit });
-      const command = buildCommand(
-        {
-          type: FrameType.READ_MEASUREMENT,
-          id
-        },
-        { answerTimeout: 10000 }
-      );
+      const command = buildCommand({
+        type: FrameType.READ_MEASUREMENT,
+        id
+      });
 
       return runCommand(command).then(answer => format(answer));
     }

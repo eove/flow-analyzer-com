@@ -1,6 +1,6 @@
 import { DomainCommandHandlerFatory } from '../DomainTypes';
-import { createReadSettingHandler } from './readSettingHandlerFactory';
-import { createWriteSettingHandler } from './writeSettingHandlerFactory';
+import createReadSettingHandler from './createReadSettingHandler';
+import createWriteSettingHandler from './createWriteSettingHandler';
 
 export const factories: DomainCommandHandlerFatory[] = [
   createReadSettingHandler,

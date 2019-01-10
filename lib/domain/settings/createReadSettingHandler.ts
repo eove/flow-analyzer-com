@@ -7,7 +7,7 @@ import {
 import getSettingInfos from './getSettingInfos';
 import makeFormatSettingAnswer from './makeFormatSettingAnswer';
 
-export function createReadSettingHandler(
+export default function createReadSettingHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
   const { runCommand, buildCommand, debug } = dependencies;
@@ -20,13 +20,10 @@ export function createReadSettingHandler(
       const { unit, id, valueToName } = getSettingInfos(name);
       const format = makeFormatSettingAnswer({ name, unit, id, valueToName });
 
-      const command = buildCommand(
-        {
-          type: FrameType.READ_SETTING,
-          id
-        },
-        { answerTimeout: 10000 }
-      );
+      const command = buildCommand({
+        type: FrameType.READ_SETTING,
+        id
+      });
 
       return runCommand(command).then(answer => format(answer));
     }

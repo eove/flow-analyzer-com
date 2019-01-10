@@ -7,7 +7,7 @@ import {
 } from '../DomainTypes';
 import getSettingInfos from './getSettingInfos';
 
-export function createWriteSettingHandler(
+export default function createWriteSettingHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
   const { runCommand, buildCommand, debug } = dependencies;
@@ -25,14 +25,11 @@ export function createWriteSettingHandler(
         allValues
       } = getSettingInfos(name);
 
-      const command = buildCommand(
-        {
-          type: FrameType.WRITE_SETTING,
-          id,
-          value: buildValue(value)
-        },
-        { answerTimeout: 10000 }
-      );
+      const command = buildCommand({
+        type: FrameType.WRITE_SETTING,
+        id,
+        value: buildValue(value)
+      });
 
       return runCommand(command).then(answer => {
         return isAnswerOk(answer, command)
