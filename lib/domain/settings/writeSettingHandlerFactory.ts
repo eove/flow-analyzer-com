@@ -19,8 +19,8 @@ export function createWriteSettingHandler(
       const { name, value } = payload;
       const {
         id,
-        nameToValue,
-        valueToName,
+        nameToValue = (v: any) => v,
+        valueToName = (v: any) => v,
         allNames,
         allValues
       } = getSettingInfos(name);

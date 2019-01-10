@@ -10,16 +10,16 @@ interface FormatCreation {
 export default function makeFormatSettingAnswer(
   creation: FormatCreation
 ): (answer: ProtocolAnswer) => any {
-  const { valueToName, name, unit } = creation;
+  const { valueToName = (v: any) => v, name, unit } = creation;
 
   return (answer: ProtocolAnswer): any => {
     const { id, value } = answer;
-    const computedValue = valueToName && value ? valueToName(value) : value;
+    const computedValue = value ? valueToName(value) : value;
     const displayValue = unit ? `${computedValue} ${unit}` : `${computedValue}`;
     return {
       id,
       name,
-      value,
+      value: !value || isNaN(<any>value) ? value : Number(value),
       unit,
       displayValue
     };
