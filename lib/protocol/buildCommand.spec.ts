@@ -1,8 +1,8 @@
 import { buildCommand } from './buildCommand';
-import { FrameType } from './FrameType';
+import { FrameType } from './types';
 
-describe('Build command', () => {
-  it('should build an execute command', () => {
+describe('Building commands', () => {
+  it('should build an "execute" command', () => {
     const command = buildCommand({
       type: FrameType.EXECUTE_COMMAND,
       id: '123',
@@ -18,7 +18,7 @@ describe('Build command', () => {
     });
   });
 
-  it('should build a write setting command', () => {
+  it('should build a "write setting" command', () => {
     const command = buildCommand({
       type: FrameType.WRITE_SETTING,
       id: '123',
@@ -34,7 +34,7 @@ describe('Build command', () => {
     });
   });
 
-  it('should build a read setting command', () => {
+  it('should build a "read setting" command', () => {
     const command = buildCommand({
       type: FrameType.READ_SETTING,
       id: '123'
@@ -48,7 +48,7 @@ describe('Build command', () => {
     });
   });
 
-  it('should build a read measurement command', () => {
+  it('should build a "read measurement" command', () => {
     const command = buildCommand({
       type: FrameType.READ_MEASUREMENT,
       id: '123'
@@ -62,7 +62,7 @@ describe('Build command', () => {
     });
   });
 
-  it('should build a read system info', () => {
+  it('should build a "read system info" command', () => {
     const command = buildCommand({
       type: FrameType.READ_SYSTEM_INFO,
       id: '123'
@@ -76,7 +76,7 @@ describe('Build command', () => {
     });
   });
 
-  it('should build a read state', () => {
+  it('should build a "read state" command', () => {
     const command = buildCommand({
       type: FrameType.READ_STATE,
       id: '123'
@@ -90,7 +90,7 @@ describe('Build command', () => {
     });
   });
 
-  it('should take options', () => {
+  it('should take options such as answer timeout', () => {
     const command = buildCommand(
       {
         type: FrameType.READ_STATE,

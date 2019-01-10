@@ -1,7 +1,7 @@
 import { findAnswers } from './findAnswers';
-import { FrameType } from './FrameType';
+import { FrameType } from './types';
 
-describe('Find answers', () => {
+describe('Finding answers', () => {
   it('should return first remaining bytes', () => {
     const data = ['%', 'W', 'S'];
 

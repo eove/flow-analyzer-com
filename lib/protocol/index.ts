@@ -1,3 +1,4 @@
 export * from './buildCommand';
 export * from './findAnswers';
-export * from './FrameType';
+export * from './types';
+export * from './isAnswerValid';

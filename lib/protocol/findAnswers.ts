@@ -1,11 +1,5 @@
-import { FrameType, mapToFrameType } from './FrameType';
-
-export interface ProtocolAnswer {
-  type: FrameType;
-  id?: string;
-  value?: string | null;
-  raw: string;
-}
+import mapToFrameType from './mapToFrameType';
+import { FrameType, ProtocolAnswer } from './types';
 
 export interface FindAnswerResult {
   answers: ProtocolAnswer[];

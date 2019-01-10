@@ -1,4 +1,5 @@
-import { FrameType, mapFromFrameType } from './FrameType';
+import mapFromFrameType from './mapFromFrameType';
+import { FrameType } from './types';
 
 export interface ProtocolCommandInput {
   type: FrameType;

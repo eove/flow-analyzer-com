@@ -19,7 +19,7 @@ export default function makeFormatSettingAnswer(
     return {
       id,
       name,
-      value: !value || isNaN(<any>value) ? value : Number(value),
+      value: !value || isNaN(value as any) ? value : Number(value),
       unit,
       displayValue
     };

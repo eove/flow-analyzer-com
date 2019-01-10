@@ -18,6 +18,7 @@ import { DomainCommand, DomainCommandHandlerFatory } from '../domain';
 import {
   FindAnswerResult,
   findAnswers,
+  isAnswerValid,
   ProtocolAnswer,
   ProtocolCommand
 } from '../protocol';
@@ -103,6 +104,11 @@ export function createCommandRunner(
           publish(),
           refCount(),
           filter(a => a.type === currentCmd.type),
+          map(a =>
+            isAnswerValid(a)
+              ? a
+              : throwError(new Error('device answer says: invalid! :('))
+          ),
           first()
         );
       }
