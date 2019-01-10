@@ -111,7 +111,6 @@ export function createTransport(options?: TransportCreationOptions): Transport {
           );
           reject(err);
         } else {
-          debug(`wrote: ${escapedBytes}`);
           port.drain(flushError => {
             if (flushError) {
               const err = new Error(
@@ -119,7 +118,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
               );
               reject(err);
             } else {
-              debug(`flushed: ${escapedBytes}`);
+              debug(`wrote: ${escapedBytes}`);
               resolve();
             }
           });

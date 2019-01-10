@@ -18,13 +18,17 @@ export interface Communicator {
 
 interface CommunicatiorOptions {
   debugEnabled?: boolean;
+  rs232echoOn?: boolean;
 }
 
 export function createCommunicator(
   options?: CommunicatiorOptions
 ): Communicator {
   const debug = debugLib('communicator');
-  const { debugEnabled } = _.defaults(options, { debugEnabled: false });
+  const { debugEnabled, rs232echoOn } = _.defaults(options, {
+    debugEnabled: false,
+    rs232echoOn: false
+  });
   debug.enabled = debugEnabled;
 
   const transport = createTransport({ debugEnabled });
@@ -35,7 +39,8 @@ export function createCommunicator(
     handlerFactories: [
       ...commandHandlerFactories.measurements,
       ...commandHandlerFactories.settings,
-      ...commandHandlerFactories.system
+      ...commandHandlerFactories.system,
+      ...commandHandlerFactories.execute
     ],
     data$: transport.data$,
     transport
@@ -55,7 +60,13 @@ export function createCommunicator(
   };
 
   function open(portName: string): Promise<void> {
-    return transport.connect(portName);
+    debug('rs232 echo', rs232echoOn);
+    return transport.connect(portName).then(result =>
+      sendCommand({
+        type: 'EXEC_SET_RS232_ECHO',
+        payload: { echoOn: rs232echoOn }
+      }).then(() => result)
+    );
   }
 
   function close(): Promise<void> {

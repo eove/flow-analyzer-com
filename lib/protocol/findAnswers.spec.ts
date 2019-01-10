@@ -38,6 +38,24 @@ describe('Finding answers', () => {
     });
   });
 
+  it('should return answers with no payload', () => {
+    const data = ['%', 'C', 'M', '#', '5', '\r'];
+
+    const result = findAnswers(data);
+
+    expect(result).toEqual({
+      answers: [
+        {
+          type: FrameType.EXECUTE_COMMAND,
+          id: '5',
+          value: undefined,
+          raw: '%CM#5\r'
+        }
+      ],
+      remaining: []
+    });
+  });
+
   it('should ignore noise between answers', () => {
     const data = ['%', 'R', 'S', '#', '1', '2', '$', '1', '2', '4', '\r'];
     data.push(...['n', 'o', 'i', 's', 'e', ' ', 'c', 'h', 'a', 'r', 's']);

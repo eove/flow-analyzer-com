@@ -1,6 +1,6 @@
 import { DomainCommandHandlerFatory } from '../DomainTypes';
-import createReadMeasurementHandler from './createReadMeasurementHandler';
+import createSetRs232EchoHandler from './createSetRs232EchoHandler';
 
 export const factories: DomainCommandHandlerFatory[] = [
-  createReadMeasurementHandler
+  createSetRs232EchoHandler
 ];

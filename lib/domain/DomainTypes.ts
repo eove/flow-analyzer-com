@@ -5,14 +5,11 @@ import {
   ProtocolCommandOptions
 } from '../protocol';
 
-interface DomainCommandPayload {
-  name: string;
-  value?: string;
-}
+type DomainCommandPayload = any;
 
 export interface DomainCommand {
   type: string;
-  payload: DomainCommandPayload;
+  payload?: DomainCommandPayload;
 }
 
 export interface DomainCommandHandler {

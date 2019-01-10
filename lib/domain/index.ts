@@ -1,10 +1,12 @@
 export * from './DomainTypes';
+import { factories as executeFactories } from './execute';
 import { factories as measurementFactories } from './measurements';
 import { factories as settingsFactories } from './settings';
-import { factories as systemInfosFactories } from './system';
+import { factories as systemFactories } from './system';
 
 export const commandHandlerFactories = {
   measurements: measurementFactories,
   settings: settingsFactories,
-  system: systemInfosFactories
+  system: systemFactories,
+  execute: executeFactories
 };

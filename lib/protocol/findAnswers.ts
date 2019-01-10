@@ -6,7 +6,8 @@ export interface FindAnswerResult {
   remaining: string[];
 }
 
-const FRAME_PATTERN = /%(\w{2})#(\w+)\$((\-|\w)+)\r/;
+const ANSWER_PATTERN_WITH_PAYLOAD = /%(\w{2})#(\w+)\$((\-|\w)+)\r/;
+const ANSWER_PATTERN_WITHOUT_PAYLOAD = /%(\w{2})#(\w+)\r/;
 
 export function findAnswers(data: string[]): FindAnswerResult {
   let index = 0;
@@ -22,10 +23,7 @@ export function findAnswers(data: string[]): FindAnswerResult {
       lastFoundEndIndex = index;
     }
     if (data[index] === '%') {
-      const found = data
-        .slice(index)
-        .join('')
-        .match(FRAME_PATTERN);
+      const found = findAnswerAtIndex(data, index);
 
       if (found) {
         const [raw, type, id, value] = found;
@@ -47,4 +45,20 @@ export function findAnswers(data: string[]): FindAnswerResult {
     answers,
     remaining: data.slice(lastFoundEndIndex + 1)
   };
+
+  function findAnswerAtIndex(d: string[], i: number) {
+    const foundWithPayload = d
+      .slice(i)
+      .join('')
+      .match(ANSWER_PATTERN_WITH_PAYLOAD);
+    if (foundWithPayload) {
+      return foundWithPayload;
+    }
+    const foundWithoutPayload = d
+      .slice(i)
+      .join('')
+      .match(ANSWER_PATTERN_WITHOUT_PAYLOAD);
+
+    return foundWithoutPayload;
+  }
 }
