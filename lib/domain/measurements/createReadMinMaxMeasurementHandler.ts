@@ -18,13 +18,22 @@ export default function createReadMinMaxMeasurementHandler(
     type: 'READ_MIN_MAX_MEASUREMENT',
     handle: ({ type, payload }: DomainCommand) => {
       debug(`running ${type} command handler...`);
-      const { sampleDelayMS, samplesNb, name } = extractFromPayload(payload);
+      const {
+        sampleDelayMS,
+        samplesNb,
+        name,
+        durationMS,
+        sampleRate
+      } = extractFromPayload(payload);
       const { divider, unit, id } = getMeasurementInfos(name);
       const format = makeFormatMeasurementAnswer({ name, divider, unit });
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,
         id
       });
+      debug(
+        `will read '${name}' ${samplesNb} times over ${durationMS} ms (sample delay: ${sampleDelayMS} ms, sample rate: ${sampleRate}/s)`
+      );
       return Promise.all(
         _.range(samplesNb).map(i =>
           delay(sampleDelayMS * i).then(() => readMeasurement())
@@ -42,7 +51,6 @@ export default function createReadMinMaxMeasurementHandler(
       });
 
       function readMeasurement(): any {
-        debug(`reading measurement: ${name}`);
         return runCommand(command).then(answer => format(answer));
       }
     }
@@ -62,5 +70,6 @@ function extractFromPayload(payload: any) {
       `samplesNb (${samplesNb}) and durationMS (${durationMS}) result in a sampleDelayMS (${sampleDelayMS}) < 20 ms`
     );
   }
-  return { name, sampleDelayMS, samplesNb };
+  const sampleRate = 1000 / sampleDelayMS;
+  return { name, sampleDelayMS, samplesNb, durationMS, sampleRate };
 }
