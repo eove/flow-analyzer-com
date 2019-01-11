@@ -25,29 +25,23 @@ export function createReadSystemInfosHandler(
     }
   };
 
-  function getHardwareVersion(): Promise<string | undefined | null> {
-    const command = buildCommand(
-      {
-        type: FrameType.READ_SYSTEM_INFO,
-        id: '1'
-      },
-      { answerTimeout: 10000 }
-    );
+  function getHardwareVersion(): Promise<any> {
+    const command = buildCommand({
+      type: FrameType.READ_SYSTEM_INFO,
+      id: '1'
+    });
     return runCommand(command).then(answer => answer.value);
   }
 
-  function getSerialNumber(): Promise<string | undefined | null> {
-    const command = buildCommand(
-      {
-        type: FrameType.READ_SYSTEM_INFO,
-        id: '8'
-      },
-      { answerTimeout: 10000 }
-    );
+  function getSerialNumber(): Promise<any> {
+    const command = buildCommand({
+      type: FrameType.READ_SYSTEM_INFO,
+      id: '8'
+    });
     return runCommand(command).then(answer => answer.value);
   }
 
-  function getSoftwareVersion(): Promise<string | undefined | null> {
+  function getSoftwareVersion(): Promise<any> {
     return Promise.all([
       getMajorVersion(),
       getMinorVersion(),
@@ -57,36 +51,27 @@ export function createReadSystemInfosHandler(
       return `${major}.${minor}.${release}`;
     });
 
-    function getMajorVersion(): Promise<string | undefined | null> {
-      const command = buildCommand(
-        {
-          type: FrameType.READ_SYSTEM_INFO,
-          id: '2'
-        },
-        { answerTimeout: 10000 }
-      );
+    function getMajorVersion(): Promise<any> {
+      const command = buildCommand({
+        type: FrameType.READ_SYSTEM_INFO,
+        id: '2'
+      });
       return runCommand(command).then(answer => answer.value);
     }
 
-    function getMinorVersion(): Promise<string | undefined | null> {
-      const command = buildCommand(
-        {
-          type: FrameType.READ_SYSTEM_INFO,
-          id: '3'
-        },
-        { answerTimeout: 10000 }
-      );
+    function getMinorVersion(): Promise<any> {
+      const command = buildCommand({
+        type: FrameType.READ_SYSTEM_INFO,
+        id: '3'
+      });
       return runCommand(command).then(answer => answer.value);
     }
 
-    function getRelease(): Promise<string | undefined | null> {
-      const command = buildCommand(
-        {
-          type: FrameType.READ_SYSTEM_INFO,
-          id: '4'
-        },
-        { answerTimeout: 10000 }
-      );
+    function getRelease(): Promise<any> {
+      const command = buildCommand({
+        type: FrameType.READ_SYSTEM_INFO,
+        id: '4'
+      });
       return runCommand(command).then(answer => answer.value);
     }
   }
