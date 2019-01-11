@@ -5,7 +5,7 @@ import {
 } from '../DomainTypes';
 import createReadMinMaxMeasurementHandler from './createReadMinMaxMeasurementHandler';
 
-describe('Read measurement handler', () => {
+describe('Read min/max measurement handler', () => {
   let handler: DomainCommandHandler;
 
   beforeEach(() => {
@@ -32,7 +32,7 @@ describe('Read measurement handler', () => {
     } as DomainCommandHandlerFactoryDependencies);
   });
 
-  it('should resolve a formatted min max measurement', async () => {
+  it('should return a formatted min max measurement', async () => {
     const result = await handler.handle({
       type: 'A_TYPE',
       payload: { name: 'o2', durationMS: 50, samplesNb: 2 }
@@ -47,12 +47,14 @@ describe('Read measurement handler', () => {
     });
   });
 
-  // it('should throw an error if unknown measurement', () => {
-  //   return expect(() => {
-  //     handler.handle({
-  //       type: 'A_TYPE',
-  //       payload: { name: 'unknown' }
-  //     });
-  //   }).toThrow('Invalid unknown measurement');
-  // });
+  it('should throw an error if sample rate it too high', () => {
+    return expect(() => {
+      handler.handle({
+        type: 'A_TYPE',
+        payload: { name: 'o2', durationMS: 50, samplesNb: 20 }
+      });
+    }).toThrow(
+      'samplesNb (20) and durationMS (50) result in a sampleDelayMS (2.5) < 20 ms'
+    );
+  });
 });

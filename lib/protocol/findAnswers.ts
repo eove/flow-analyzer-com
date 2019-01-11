@@ -46,6 +46,7 @@ export function findAnswers(data: string[]): FindAnswerResult {
     remaining: data.slice(lastFoundEndIndex + 1)
   };
 }
+
 const NULL_VALUE = '-2147483648';
 
 function formatValue(value: string): number | string | undefined | null {

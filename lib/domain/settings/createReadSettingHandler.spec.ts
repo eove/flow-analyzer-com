@@ -3,49 +3,48 @@ import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
-import createReadMeasurementHandler from './createReadMeasurementHandler';
+import createReadSettingHandler from './createReadSettingHandler';
 
-describe('Read measurement handler', () => {
+describe('Read setting handler', () => {
   let handler: DomainCommandHandler;
 
   beforeEach(() => {
     const runCommand = stub().resolves({
       id: 3,
-      type: 'RM',
-      value: 100,
+      type: 'RS',
+      value: 1,
       raw: 'RRRRRRR'
     });
     const buildCommand = stub().returns({});
     const debug = (msg: any) => msg;
 
-    handler = createReadMeasurementHandler({
+    handler = createReadSettingHandler({
       runCommand,
       buildCommand,
       debug
     } as DomainCommandHandlerFactoryDependencies);
   });
 
-  it('should return a formatted measurement', async () => {
+  it('should return a formatted setting', async () => {
     const result = await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'o2' }
+      payload: { name: 'gazType' }
     });
 
     expect(result).toEqual({
-      displayValue: '10 %',
-      id: 9,
-      name: 'o2',
-      unit: '%',
-      value: 10
+      displayValue: 'Air/O2-man.',
+      id: 3,
+      name: 'gazType',
+      value: 1
     });
   });
 
-  it('should throw an error if unknown measurement', () => {
+  it('should throw an error if unknown setting', () => {
     return expect(() => {
       handler.handle({
         type: 'A_TYPE',
         payload: { name: 'unknown' }
       });
-    }).toThrow('Invalid unknown measurement');
+    }).toThrow('Invalid unknown setting');
   });
 });

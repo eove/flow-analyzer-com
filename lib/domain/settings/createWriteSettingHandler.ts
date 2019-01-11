@@ -25,19 +25,20 @@ export default function createWriteSettingHandler(
         allValues
       } = getSettingInfos(name);
 
+      const builtValue = buildValue(value);
       const command = buildCommand({
         type: FrameType.WRITE_SETTING,
         id,
-        value: buildValue(value)
+        value: builtValue
       });
 
-      return runCommand(command).then(answer => {
-        return isAnswerOk(answer, command)
+      return runCommand(command).then(answer =>
+        isAnswerOk(answer, command)
           ? Promise.resolve(answer)
           : Promise.reject(
-              new Error(`Failed to write ${command.value} to ${command.id}`)
-            );
-      });
+              new Error(`Failed to write value: ${builtValue} to id: ${name}`)
+            )
+      );
 
       function buildValue(v: any): string {
         const computed = isNaN(v)

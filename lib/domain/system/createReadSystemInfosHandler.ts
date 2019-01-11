@@ -5,7 +5,7 @@ import {
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
 
-export function createReadSystemInfosHandler(
+export default function createReadSystemInfosHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
   const { runCommand, buildCommand, debug } = dependencies;
@@ -30,7 +30,7 @@ export function createReadSystemInfosHandler(
       type: FrameType.READ_SYSTEM_INFO,
       id: '1'
     });
-    return runCommand(command).then(answer => answer.value);
+    return runCommand(command).then(answer => `${answer.value}`);
   }
 
   function getSerialNumber(): Promise<any> {
@@ -38,7 +38,7 @@ export function createReadSystemInfosHandler(
       type: FrameType.READ_SYSTEM_INFO,
       id: '8'
     });
-    return runCommand(command).then(answer => answer.value);
+    return runCommand(command).then(answer => `${answer.value}`);
   }
 
   function getSoftwareVersion(): Promise<any> {
