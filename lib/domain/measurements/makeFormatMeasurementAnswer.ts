@@ -1,7 +1,5 @@
 import { ProtocolAnswer } from '../../protocol';
 
-const NULL_VALUE = '-2147483648';
-
 interface FormatCreation {
   name: string;
   divider?: number;
@@ -12,14 +10,11 @@ export default function makeFormatMeasurementAnswer(
   creation: FormatCreation
 ): (answer: ProtocolAnswer) => any {
   const { divider, unit, name } = creation;
+
   return (answer: ProtocolAnswer): any => {
     const { id, value } = answer;
-    const computedValue =
-      value && value !== NULL_VALUE
-        ? divider
-          ? Number(value) / divider
-          : Number(value)
-        : null;
+    const computedValue = formatValue(value, divider);
+
     return {
       id,
       name,
@@ -28,4 +23,10 @@ export default function makeFormatMeasurementAnswer(
       displayValue: computedValue ? `${computedValue} ${unit}` : '-'
     };
   };
+}
+
+function formatValue(value: any, divider: any): any {
+  return value && typeof value === 'number' && divider
+    ? value / divider
+    : value;
 }

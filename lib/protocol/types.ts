@@ -11,7 +11,7 @@ export enum FrameType {
 
 export interface ProtocolAnswer {
   type: FrameType;
-  id?: string;
-  value?: string | null;
+  id?: number;
+  value?: number | string | null;
   raw: string;
 }

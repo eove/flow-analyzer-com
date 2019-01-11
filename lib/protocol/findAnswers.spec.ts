@@ -23,14 +23,14 @@ describe('Finding answers', () => {
       answers: [
         {
           type: FrameType.READ_SETTING,
-          id: '12',
-          value: '124',
+          id: 12,
+          value: 124,
           raw: '%RS#12$124\r'
         },
         {
           type: FrameType.READ_MEASUREMENT,
-          id: '25',
-          value: '100',
+          id: 25,
+          value: 100,
           raw: '%RM#25$100\r'
         }
       ],
@@ -47,7 +47,7 @@ describe('Finding answers', () => {
       answers: [
         {
           type: FrameType.EXECUTE_COMMAND,
-          id: '5',
+          id: 5,
           value: undefined,
           raw: '%CM#5\r'
         }
@@ -67,14 +67,14 @@ describe('Finding answers', () => {
       answers: [
         {
           type: FrameType.READ_SETTING,
-          id: '12',
-          value: '124',
+          id: 12,
+          value: 124,
           raw: '%RS#12$124\r'
         },
         {
           type: FrameType.READ_MEASUREMENT,
-          id: '25',
-          value: '100',
+          id: 25,
+          value: 100,
           raw: '%RM#25$100\r'
         }
       ],
@@ -92,8 +92,8 @@ describe('Finding answers', () => {
       answers: [
         {
           type: FrameType.READ_SETTING,
-          id: '12',
-          value: '124',
+          id: 12,
+          value: 124,
           raw: '%RS#12$124\r'
         }
       ],
@@ -112,8 +112,8 @@ describe('Finding answers', () => {
       answers: [
         {
           type: FrameType.READ_SETTING,
-          id: '12',
-          value: '124',
+          id: 12,
+          value: 124,
           raw: '%RS#12$124\r'
         },
         {
@@ -122,8 +122,8 @@ describe('Finding answers', () => {
         },
         {
           type: FrameType.WRITE_SETTING,
-          id: '25',
-          value: '100',
+          id: 25,
+          value: 100,
           raw: '%WS#25$100\r'
         }
       ],

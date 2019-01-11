@@ -2,7 +2,7 @@ import { ProtocolAnswer } from '../../protocol';
 
 interface FormatCreation {
   name: string;
-  id: string;
+  id: number;
   valueToName: (name: string) => string;
   unit: string;
 }
@@ -14,12 +14,12 @@ export default function makeFormatSettingAnswer(
 
   return (answer: ProtocolAnswer): any => {
     const { id, value } = answer;
-    const computedValue = value ? valueToName(value) : value;
+    const computedValue = value ? valueToName(`${value}`) : value;
     const displayValue = unit ? `${computedValue} ${unit}` : `${computedValue}`;
     return {
       id,
       name,
-      value: !value || isNaN(value as any) ? value : Number(value),
+      value,
       unit,
       displayValue
     };
