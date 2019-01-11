@@ -148,4 +148,25 @@ describe('Finding answers', () => {
       remaining: []
     });
   });
+
+  it('should return null value answer', () => {
+    const data = ['%', 'R', 'M', '#', '1', '2'];
+    data.push(
+      ...['$', '-', '2', '1', '4', '7', '4', '8', '3', '6', '4', '8', '\r']
+    );
+
+    const result = findAnswers(data);
+
+    expect(result).toEqual({
+      answers: [
+        {
+          type: FrameType.READ_MEASUREMENT,
+          id: 12,
+          value: null,
+          raw: '%RM#12$-2147483648\r'
+        }
+      ],
+      remaining: []
+    });
+  });
 });
