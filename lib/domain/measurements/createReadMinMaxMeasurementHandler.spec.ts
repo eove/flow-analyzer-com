@@ -1,9 +1,9 @@
 import { stub } from 'sinon';
-import createReadMinMaxMeasurementHandler from './createReadMinMaxMeasurementHandler';
 import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
+import createReadMinMaxMeasurementHandler from './createReadMinMaxMeasurementHandler';
 
 describe('Read measurement handler', () => {
   let handler: DomainCommandHandler;
@@ -23,7 +23,7 @@ describe('Read measurement handler', () => {
       raw: 'RRRRRRR'
     });
     const buildCommand = stub().returns({});
-    const debug = () => {};
+    const debug = (msg: any) => msg;
 
     handler = createReadMinMaxMeasurementHandler({
       runCommand,
