@@ -38,6 +38,24 @@ describe('Finding answers', () => {
     });
   });
 
+  it('should return negative values', () => {
+    const data = ['%', 'R', 'S', '#', '1', '2', '$', '-', '1', '2', '4', '\r'];
+
+    const result = findAnswers(data);
+
+    expect(result).toEqual({
+      answers: [
+        {
+          type: FrameType.READ_SETTING,
+          id: 12,
+          value: -124,
+          raw: '%RS#12$-124\r'
+        }
+      ],
+      remaining: []
+    });
+  });
+
   it('should return answers with no payload', () => {
     const data = ['%', 'C', 'M', '#', '5', '\r'];
 
