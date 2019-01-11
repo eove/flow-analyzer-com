@@ -80,3 +80,47 @@ Available commands:
   }
 }
 ```
+
+## answer\$
+
+`answer$: Observable<ProtocolAnswer>`
+
+Exposes an [Observable](http://reactivex.io/documentation/observable.html) pushing received answers.
+
+Example:
+
+```javascript
+const { createCommunicator } = require('@eove/flow-analyzer-com');
+
+const communicator = createCommunicator();
+
+communicator.answer$.subscribe(answer => console.log(answer));
+
+communicator
+  .connect('/dev/ttyUSB1')
+  .then(() =>
+    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+  );
+```
+
+## data\$
+
+`data$: Observable<Byte[]>`
+
+Exposes an [Observable](http://reactivex.io/documentation/observable.html) pushing received raw data.
+
+Example:
+
+```javascript
+const { createCommunicator } = require('@eove/flow-analyzer-com');
+
+const communicator = createCommunicator();
+
+communicator.data$.subscribe(data => console.log(data));
+
+communicator
+  .connect('/dev/ttyUSB1')
+  .then(() =>
+    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+  );
+```
