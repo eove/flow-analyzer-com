@@ -1,4 +1,4 @@
-import { stub, SinonStub } from 'sinon';
+import { SinonStub, stub } from 'sinon';
 import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
