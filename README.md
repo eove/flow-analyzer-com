@@ -1,6 +1,11 @@
 # flow-analyzer-com [![Build Status](https://travis-ci.org/eove/flow-analyzer-com.svg?branch=master)](https://travis-ci.org/eove/flow-analyzer-com) [![npm version](https://badge.fury.io/js/%40eove%2Fflow-analyzer-com.svg)](https://badge.fury.io/js/%40eove%2Fflow-analyzer-com) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Node.js lib to communicate with [imtmedical](https://www.imtmedical.com/) gaz flow analyzers such as pf300 & citrex devices through serial port
+Node.js lib to communicate with [imtmedical](https://www.imtmedical.com/) gaz flow analyzers such as pf300 & citrex devices through serial port.
+
+## Supported devices
+
+- PF300
+- Citrex H4
 
 ## Install
 
@@ -28,4 +33,4 @@ Check the [API details](docs/api.md)
 
 ### Example: TalkToAnalyzer
 
-For those who want a ready to use CLI tool to talk to analyzer device, please check: https://github.com/eove/talk-to-analyzer
+For those who want a ready to use CLI tool to talk to analyzer devices, please check: https://github.com/eove/talk-to-analyzer

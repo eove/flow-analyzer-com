@@ -24,9 +24,14 @@
     "url": "git+https://github.com/eove/flow-analyzer-com.git"
   },
   "keywords": [
-    "pf300"
+    "pf300",
+    "citrex",
+    "h4",
+    "gaz",
+    "flow",
+    "analyzer"
   ],
-  "author": "",
+  "author": "Peio ROTH <pierreroth64@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/eove/flow-analyzer-com/issues"
