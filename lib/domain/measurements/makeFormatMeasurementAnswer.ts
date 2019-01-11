@@ -1,4 +1,5 @@
 import { ProtocolAnswer } from '../../protocol';
+import { formatValue } from '../common';
 
 interface FormatCreation {
   name: string;
@@ -24,10 +25,4 @@ export default function makeFormatMeasurementAnswer(
       displayValue: computedValue ? `${computedValue} ${unit}` : '-'
     };
   };
-}
-
-function formatValue(value: any, divider: any): any {
-  return value && typeof value === 'number' && divider
-    ? value / divider
-    : value;
 }

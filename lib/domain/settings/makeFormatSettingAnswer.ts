@@ -4,7 +4,7 @@ interface FormatCreation {
   name: string;
   id: number;
   valueToName: (name: string) => string;
-  unit: string;
+  unit?: string;
 }
 
 export default function makeFormatSettingAnswer(
@@ -15,7 +15,11 @@ export default function makeFormatSettingAnswer(
   return (answer: ProtocolAnswer): any => {
     const { id, value } = answer;
     const computedValue = value ? valueToName(`${value}`) : value;
-    const displayValue = unit ? `${computedValue} ${unit}` : `${computedValue}`;
+    const displayValue = computedValue
+      ? unit
+        ? `${computedValue} ${unit}`
+        : `${computedValue}`
+      : '-';
     return {
       id,
       name,
