@@ -2,6 +2,7 @@ import { ProtocolAnswer } from '../../protocol';
 
 interface FormatCreation {
   name: string;
+  id: number;
   divider?: number;
   unit?: string;
 }
@@ -9,10 +10,10 @@ interface FormatCreation {
 export default function makeFormatMeasurementAnswer(
   creation: FormatCreation
 ): (answer: ProtocolAnswer) => any {
-  const { divider, unit, name } = creation;
+  const { divider, unit, name, id } = creation;
 
   return (answer: ProtocolAnswer): any => {
-    const { id, value } = answer;
+    const { value } = answer;
     const computedValue = formatValue(value, divider);
 
     return {

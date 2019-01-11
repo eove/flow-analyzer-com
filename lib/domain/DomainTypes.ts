@@ -26,6 +26,6 @@ export interface DomainCommandHandlerFactoryDependencies {
   debug: (...args: any) => undefined;
 }
 
-export type DomainCommandHandlerFatory = (
+export type DomainCommandHandlerFactory = (
   dependencies: DomainCommandHandlerFactoryDependencies
 ) => DomainCommandHandler;

@@ -1,6 +1,6 @@
-import { DomainCommandHandlerFatory } from '../DomainTypes';
+import { DomainCommandHandlerFactory } from '../DomainTypes';
 import { createReadSystemInfosHandler } from './readSystemInfosHandlerFactory';
 
-export const factories: DomainCommandHandlerFatory[] = [
+export const factories: DomainCommandHandlerFactory[] = [
   createReadSystemInfosHandler
 ];

@@ -26,7 +26,7 @@ export default function createReadMinMaxMeasurementHandler(
         sampleRate
       } = extractFromPayload(payload);
       const { divider, unit, id } = getMeasurementInfos(name);
-      const format = makeFormatMeasurementAnswer({ name, divider, unit });
+      const format = makeFormatMeasurementAnswer({ name, id, divider, unit });
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,
         id
