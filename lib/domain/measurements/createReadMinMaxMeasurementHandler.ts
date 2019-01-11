@@ -8,6 +8,22 @@ import {
 import getMeasurementInfos from './getMeasurementInfos';
 import makeFormatMeasurementAnswer from './makeFormatMeasurementAnswer';
 
+/* Note on sample delay limitation
+
+communication is 19200 bauds => 1900 Byte/s => ~0.53 ms/Byte
+
+For big exchanges (command and corresponding null-value answer):
+  - command: '%RM#12$\r'
+  - answer: '%RM#12$-2147483648\r'
+      => total: 27 bytes < 30 bytes
+
+ 30 bytes <=> 30 * 0.53 ms = 15.9 ms
+
+ So minimal inter-command delay should be set to 20 ms
+*/
+
+const MIN_SAMPLE_DELAY_MS = 20;
+
 const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
 
 export default function createReadMinMaxMeasurementHandler(
@@ -65,7 +81,7 @@ function extractFromPayload(payload: any) {
     );
   }
   const sampleDelayMS = durationMS / samplesNb;
-  if (sampleDelayMS < 20) {
+  if (sampleDelayMS < MIN_SAMPLE_DELAY_MS) {
     throw new Error(
       `samplesNb (${samplesNb}) and durationMS (${durationMS}) result in a sampleDelayMS (${sampleDelayMS}) < 20 ms`
     );
