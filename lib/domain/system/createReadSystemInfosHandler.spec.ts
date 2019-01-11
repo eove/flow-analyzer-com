@@ -1,4 +1,4 @@
-import { stub } from 'sinon';
+import { stub, SinonStub } from 'sinon';
 import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
@@ -7,9 +7,10 @@ import createReadSystemInfosHandler from './createReadSystemInfosHandler';
 
 describe('Read system infos handler', () => {
   let handler: DomainCommandHandler;
+  let runCommand: SinonStub;
 
   beforeEach(() => {
-    const runCommand = stub();
+    runCommand = stub();
     runCommand.onCall(0).resolves({
       value: 6
     });
@@ -41,6 +42,7 @@ describe('Read system infos handler', () => {
       type: 'A_TYPE'
     });
 
+    expect(runCommand.callCount).toEqual(5);
     expect(result).toEqual({
       hardwareVersion: '6',
       serialNumber: '898',
