@@ -65,7 +65,6 @@ export function createCommunicator(
   };
 
   function open(portName: string): Promise<void> {
-    debug('rs232 echo', rs232echoOn);
     return transport.connect(portName).then(result =>
       sendCommand({
         type: 'EXEC_SET_RS232_ECHO',
