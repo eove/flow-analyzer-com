@@ -33,4 +33,4 @@ Check the [API details](docs/api.md)
 
 ### Example: TalkToAnalyzer
 
-For those who want a ready to use CLI tool to talk to analyzer devices, please check: https://github.com/eove/talk-to-analyzer
+For those who want a ready to use [CLI](https://en.wikipedia.org/wiki/Command-line_interface) tool to talk to analyzer devices, please check: https://github.com/eove/talk-to-analyzer
