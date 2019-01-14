@@ -135,13 +135,15 @@ export function createTransport(options?: TransportCreationOptions): Transport {
 
   function discover(): Promise<Device[]> {
     return new Promise((resolve, reject) => {
-      SerialPort.list((error, ports) => {
+      SerialPort.list((error, serialPorts) => {
         if (error) {
           return reject(
             new Error(`Error when discovering ports (${error.message})`)
           );
         }
-        return resolve(ports.map(port => ({ name: port.comName })));
+        return resolve(
+          serialPorts.map((serialPort: any) => ({ name: serialPort.comName }))
+        );
       });
     });
   }
