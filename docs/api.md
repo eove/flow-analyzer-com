@@ -1,8 +1,16 @@
 # Communicator API
 
-## connect
+## open
 
-`connect(portName: string): Promise<{}>`
+`open(portName: string): Promise<void>`
+
+## close
+
+`close(): Promise<void>`
+
+## listPorts
+
+`listPorts(): Promise<Device[]>`
 
 ## sendCommand
 
