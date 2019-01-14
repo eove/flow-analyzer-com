@@ -51,7 +51,7 @@
     "sinon": "7.2.2",
     "ts-jest": "23.10.5",
     "ts-node": "7.0.1",
-    "tslint": "5.12.0",
+    "tslint": "5.12.1",
     "tslint-config-prettier": "1.17.0",
     "typescript": "3.2.2"
   },
@@ -73,6 +73,6 @@
     "debug": "4.1.1",
     "lodash": "4.17.11",
     "rxjs": "6.3.3",
-    "serialport": "6.2.2"
+    "serialport": "7.1.3"
   }
 }
