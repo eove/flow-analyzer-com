@@ -14,7 +14,8 @@ export default function makeFormatSettingAnswer(
 
   return (answer: ProtocolAnswer): any => {
     const { id, value } = answer;
-    const computedValue = value ? valueToName(`${value}`) : value;
+    const computedValue =
+      typeof value === 'number' ? valueToName(`${value}`) : value;
     const displayValue = computedValue
       ? unit
         ? `${computedValue} ${unit}`
