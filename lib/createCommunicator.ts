@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 import { DomainCommand } from './domain';
 import { commandHandlerFactories } from './domain';
 import { buildCommand, findAnswers } from './protocol';
-import { createCommandRunner, createTransport } from './tools';
+import { createCommandRunner, createTransport, Device } from './tools';
 
 export interface Communicator {
   open: (portName: string) => Promise<void>;
   close: () => Promise<void>;
+  listPorts: () => Promise<Device[]>;
   sendCommand: (command: DomainCommand) => Promise<{}>;
   request: (commandType: string, args: any) => Promise<{}>;
   data$: Observable<{}>;
@@ -54,6 +55,7 @@ export function createCommunicator(
   return {
     open,
     close,
+    listPorts,
     get data$() {
       return transport.data$;
     },
@@ -84,5 +86,9 @@ export function createCommunicator(
   function request(commandType: string, args: any) {
     debug(`received shell command to run: ${commandType}`);
     return sendCommand({ type: commandType, payload: args });
+  }
+
+  function listPorts(): Promise<Device[]> {
+    return transport.discover();
   }
 }

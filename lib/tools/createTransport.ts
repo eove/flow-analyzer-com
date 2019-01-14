@@ -8,12 +8,17 @@ export interface Transport {
   connect: (portName: string) => Promise<void>;
   disconnect: () => Promise<void>;
   write: (bytes: string) => Promise<any>;
+  discover: () => Promise<Device[]>;
   data$: Observable<{}>;
   connected: boolean;
 }
 
 interface TransportCreationOptions {
   debugEnabled?: boolean;
+}
+
+export interface Device {
+  name: string;
 }
 
 export function createTransport(options?: TransportCreationOptions): Transport {
@@ -33,7 +38,8 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     get connected() {
       return isConnected;
     },
-    write
+    write,
+    discover
   };
 
   function connect(portName: string): Promise<void> {
@@ -123,6 +129,19 @@ export function createTransport(options?: TransportCreationOptions): Transport {
             }
           });
         }
+      });
+    });
+  }
+
+  function discover(): Promise<Device[]> {
+    return new Promise((resolve, reject) => {
+      SerialPort.list((error, ports) => {
+        if (error) {
+          return reject(
+            new Error(`Error when discovering ports (${error.message})`)
+          );
+        }
+        return resolve(ports.map(port => ({ name: port.comName })));
       });
     });
   }
