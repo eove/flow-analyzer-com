@@ -41,6 +41,7 @@
   "devDependencies": {
     "@types/debug": "0.0.31",
     "@types/jest": "23.3.12",
+    "@types/lodash": "4.14.119",
     "@types/node": "10.12.18",
     "@types/rx": "4.1.1",
     "@types/serialport": "7.0.1",
@@ -69,7 +70,6 @@
   "dependencies": {
     "@arpinum/messaging": "3.0.0",
     "@arpinum/promising": "2.2.2",
-    "@types/lodash": "4.14.119",
     "debug": "4.1.1",
     "lodash": "4.17.11",
     "rxjs": "6.3.3",
