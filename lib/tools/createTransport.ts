@@ -10,6 +10,7 @@ export interface Transport {
   write: (bytes: string) => Promise<any>;
   discover: () => Promise<Device[]>;
   data$: Observable<{}>;
+  event$: Observable<{}>;
   connected: boolean;
 }
 
@@ -25,6 +26,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
   const { debugEnabled = false } = options || {};
   const debug = Object.assign(debugLib('transport'), { enabled: debugEnabled });
   const dataSource = new Subject();
+  const eventSource = new Subject();
   let port: SerialPort;
   let uninstallPortListeners: UninstallHandler;
   let isConnected = false;
@@ -34,6 +36,9 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     disconnect,
     get data$() {
       return dataSource.asObservable();
+    },
+    get event$() {
+      return eventSource.asObservable();
     },
     get connected() {
       return isConnected;
@@ -59,21 +64,36 @@ export function createTransport(options?: TransportCreationOptions): Transport {
           );
           return reject(err);
         }
-        isConnected = true;
-        debug('connected.');
         return resolve();
       });
     });
 
     function installPortListeners() {
+      const onOpenHandler = () => {
+        isConnected = true;
+        debug('connected.');
+        _sendEvent({ type: 'TRANSPORT_CONNECTED', payload: undefined });
+      };
+
       const onDataHandler = (data: any) => {
         const received = data.toString();
         debug('received:', received.replace('\r', '\\r'));
-        dataSource.next(received);
+        _sendData(received);
       };
+
+      const onCloseHandler = () => {
+        isConnected = false;
+        debug('disconnected.');
+        _sendEvent({ type: 'TRANSPORT_DISCONNECTED', payload: undefined });
+      };
+
+      port.on('open', onOpenHandler);
       port.on('data', onDataHandler);
+      port.on('close', onCloseHandler);
       return () => {
+        port.removeListener('open', onOpenHandler);
         port.removeListener('data', onDataHandler);
+        port.removeListener('close', onCloseHandler);
       };
     }
   }
@@ -98,8 +118,6 @@ export function createTransport(options?: TransportCreationOptions): Transport {
             );
             return reject(err);
           }
-          debug('disconnected.');
-          isConnected = false;
           return resolve();
         });
       });
@@ -146,5 +164,13 @@ export function createTransport(options?: TransportCreationOptions): Transport {
         );
       });
     });
+  }
+
+  function _sendEvent(event: { type: string; payload: any }) {
+    eventSource.next(event);
+  }
+
+  function _sendData(data: any) {
+    dataSource.next(data);
   }
 }

@@ -1,6 +1,6 @@
 import * as debugLib from 'debug';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+import { merge, Observable, Subject } from 'rxjs';
 
 import { DomainCommand } from './domain';
 import { commandHandlerFactories } from './domain';
@@ -14,6 +14,7 @@ export interface Communicator {
   sendCommand: (command: DomainCommand) => Promise<{}>;
   request: (commandType: string, args: any) => Promise<{}>;
   data$: Observable<{}>;
+  event$: Observable<{}>;
   answer$: Observable<{}>;
 }
 
@@ -36,6 +37,7 @@ export function createCommunicator(
     }
   );
   debug.enabled = debugEnabled;
+  const eventSource = new Subject();
 
   const transport = createTransport({ debugEnabled: transportDebugEnabled });
   const commandRunner = createCommandRunner({
@@ -62,6 +64,9 @@ export function createCommunicator(
     get answer$() {
       return commandRunner.answer$;
     },
+    get event$() {
+      return merge(transport.event$, eventSource.asObservable());
+    },
     sendCommand,
     request
   };
@@ -71,12 +76,23 @@ export function createCommunicator(
       sendCommand({
         type: 'EXEC_SET_RS232_ECHO',
         payload: { echoOn: rs232echoOn }
-      }).then(() => result)
+      }).then(() => {
+        _sendEvent({
+          type: 'COMMUNICATION_STARTED',
+          payload: {
+            portName
+          }
+        });
+        return result;
+      })
     );
   }
 
   function close(): Promise<void> {
-    return transport.disconnect();
+    return transport.disconnect().then(result => {
+      _sendEvent({ type: 'COMMUNICATION_STOPPED', payload: undefined });
+      return result;
+    });
   }
 
   function sendCommand(command: DomainCommand): Promise<any> {
@@ -90,5 +106,9 @@ export function createCommunicator(
 
   function listPorts(): Promise<Device[]> {
     return transport.discover();
+  }
+
+  function _sendEvent(event: { type: string; payload: any }) {
+    eventSource.next(event);
   }
 }
