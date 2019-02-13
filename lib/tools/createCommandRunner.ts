@@ -41,7 +41,10 @@ interface CommandRunnerDependencies {
 export function createCommandRunner(
   dependencies: CommandRunnerDependencies
 ): CommandRunner {
-  const commandBus = createMessageBus({ ensureAtLeastOneHandler: true });
+  const commandBus = createMessageBus({
+    ensureAtLeastOneHandler: true,
+    exclusiveHandlers: true
+  });
   const {
     data$,
     handlerFactories,
