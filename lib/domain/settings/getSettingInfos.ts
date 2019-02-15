@@ -59,6 +59,23 @@ const settingsInfos: any = {
       START_TRIGGER_EDGE_NAME_TO_VALUE[name],
     allNames: () => _.values(START_TRIGGER_EDGE_VALUE_TO_NAME),
     allValues: () => _.keys(START_TRIGGER_EDGE_VALUE_TO_NAME)
+  },
+  endTriggerSignal: {
+    id: 9,
+    valueToName: (value: string): string =>
+      END_TRIGGER_SIGNAL_VALUE_TO_NAME[value],
+    nameToValue: (name: string): string =>
+      END_TRIGGER_SIGNAL_NAME_TO_VALUE[name],
+    allNames: () => _.values(END_TRIGGER_SIGNAL_VALUE_TO_NAME),
+    allValues: () => _.keys(END_TRIGGER_SIGNAL_VALUE_TO_NAME)
+  },
+  endTriggerEdge: {
+    id: 10,
+    valueToName: (value: string): string =>
+      END_TRIGGER_EDGE_VALUE_TO_NAME[value],
+    nameToValue: (name: string): string => END_TRIGGER_EDGE_NAME_TO_VALUE[name],
+    allNames: () => _.values(END_TRIGGER_EDGE_VALUE_TO_NAME),
+    allValues: () => _.keys(END_TRIGGER_EDGE_VALUE_TO_NAME)
   }
 };
 
@@ -125,3 +142,17 @@ const START_TRIGGER_EDGE_VALUE_TO_NAME: any = {
 const START_TRIGGER_EDGE_NAME_TO_VALUE = _.invert(
   START_TRIGGER_EDGE_VALUE_TO_NAME
 );
+
+const END_TRIGGER_SIGNAL_VALUE_TO_NAME: any = {
+  '0': 'Flow',
+  '1': 'Pressure'
+};
+const END_TRIGGER_SIGNAL_NAME_TO_VALUE = _.invert(
+  END_TRIGGER_SIGNAL_VALUE_TO_NAME
+);
+
+const END_TRIGGER_EDGE_VALUE_TO_NAME: any = {
+  '0': 'Rising',
+  '1': 'Falling'
+};
+const END_TRIGGER_EDGE_NAME_TO_VALUE = _.invert(END_TRIGGER_EDGE_VALUE_TO_NAME);
