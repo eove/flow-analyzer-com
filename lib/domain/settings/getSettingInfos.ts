@@ -60,6 +60,9 @@ const settingsInfos: any = {
     allNames: () => _.values(START_TRIGGER_EDGE_VALUE_TO_NAME),
     allValues: () => _.keys(START_TRIGGER_EDGE_VALUE_TO_NAME)
   },
+  startTriggerSignalValue: {
+    id: 8
+  },
   endTriggerSignal: {
     id: 9,
     valueToName: (value: string): string =>
@@ -76,6 +79,43 @@ const settingsInfos: any = {
     nameToValue: (name: string): string => END_TRIGGER_EDGE_NAME_TO_VALUE[name],
     allNames: () => _.values(END_TRIGGER_EDGE_VALUE_TO_NAME),
     allValues: () => _.keys(END_TRIGGER_EDGE_VALUE_TO_NAME)
+  },
+  endTriggerSignalValue: {
+    id: 11
+  },
+  triggerDelay: {
+    id: 12
+  },
+  baseFlowEnabled: {
+    id: 13,
+    valueToName: (value: string): string =>
+      BASE_FLOW_ENABLED_VALUE_TO_NAME[value],
+    nameToValue: (name: string): string =>
+      BASE_FLOW_ENABLED_NAME_TO_VALUE[name],
+    allNames: () => _.values(BASE_FLOW_ENABLED_VALUE_TO_NAME),
+    allValues: () => _.keys(BASE_FLOW_ENABLED_VALUE_TO_NAME)
+  },
+  baseFlowValue: {
+    id: 14
+  },
+  filterType: {
+    id: 15,
+    valueToName: (value: string): string => FILTER_TYPE_VALUE_TO_NAME[value],
+    nameToValue: (name: string): string => FILTER_TYPE_NAME_TO_VALUE[name],
+    allNames: () => _.values(FILTER_TYPE_VALUE_TO_NAME),
+    allValues: () => _.keys(FILTER_TYPE_VALUE_TO_NAME)
+  },
+  startTriggerDelay: {
+    id: 19
+  },
+  endTriggerDelay: {
+    id: 20
+  },
+  gazHumidity: {
+    id: 21
+  },
+  respParamPressureSource: {
+    id: 22
   }
 };
 
@@ -156,3 +196,19 @@ const END_TRIGGER_EDGE_VALUE_TO_NAME: any = {
   '1': 'Falling'
 };
 const END_TRIGGER_EDGE_NAME_TO_VALUE = _.invert(END_TRIGGER_EDGE_VALUE_TO_NAME);
+
+const BASE_FLOW_ENABLED_VALUE_TO_NAME: any = {
+  '0': 'False',
+  '1': 'True'
+};
+const BASE_FLOW_ENABLED_NAME_TO_VALUE = _.invert(
+  BASE_FLOW_ENABLED_VALUE_TO_NAME
+);
+
+const FILTER_TYPE_VALUE_TO_NAME: any = {
+  '0': 'None',
+  '1': 'Filter Low',
+  '2': 'Filter Medium',
+  '3': 'Filter High'
+};
+const FILTER_TYPE_NAME_TO_VALUE = _.invert(FILTER_TYPE_VALUE_TO_NAME);

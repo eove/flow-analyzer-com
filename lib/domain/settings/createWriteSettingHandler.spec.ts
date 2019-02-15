@@ -8,6 +8,7 @@ import createWriteSettingHandler from './createWriteSettingHandler';
 describe('Write setting handler', () => {
   let handler: DomainCommandHandler;
   let runCommand: SinonStub;
+  let buildCommand: SinonStub;
 
   beforeEach(() => {
     runCommand = stub();
@@ -17,7 +18,8 @@ describe('Write setting handler', () => {
       value: 1,
       raw: 'RRRRRRR'
     });
-    const buildCommand = stub().returns({ id: 3, value: 1, raw: 'RRRRRRR' });
+    buildCommand = stub();
+    buildCommand.returns({ id: 3, value: 1, raw: 'RRRRRRR' });
     const debug = (msg: any) => msg;
 
     handler = createWriteSettingHandler({
@@ -27,22 +29,44 @@ describe('Write setting handler', () => {
     } as DomainCommandHandlerFactoryDependencies);
   });
 
-  it('should return answer when value is a number', async () => {
-    const result = await handler.handle({
+  it('should build command when value is a positive number', async () => {
+    await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'gazType', value: 1 }
+      payload: { name: 'startTriggerSignalValue', value: 60 }
     });
-
-    expect(result).toEqual({ id: 3, raw: 'RRRRRRR', type: 'WS', value: 1 });
+    expect(buildCommand.called).toEqual(true);
+    expect(buildCommand.getCall(0).args[0]).toEqual({
+      id: 8,
+      type: 'WRITE SETTING',
+      value: '60'
+    });
   });
 
-  it('should return answer when value is a string', async () => {
-    const result = await handler.handle({
+  it('should build command when value is a negative number', async () => {
+    await handler.handle({
+      type: 'A_TYPE',
+      payload: { name: 'startTriggerSignalValue', value: -60 }
+    });
+    expect(buildCommand.called).toEqual(true);
+    expect(buildCommand.getCall(0).args[0]).toEqual({
+      id: 8,
+      type: 'WRITE SETTING',
+      value: '-60'
+    });
+  });
+
+  it('should build command when value is a string', async () => {
+    await handler.handle({
       type: 'A_TYPE',
       payload: { name: 'gazType', value: 'Air/O2-man.' }
     });
 
-    expect(result).toEqual({ id: 3, raw: 'RRRRRRR', type: 'WS', value: 1 });
+    expect(buildCommand.called).toEqual(true);
+    expect(buildCommand.getCall(0).args[0]).toEqual({
+      id: 1,
+      type: 'WRITE SETTING',
+      value: '1'
+    });
   });
 
   it('should reject if returned value is not the written one', () => {

@@ -21,8 +21,8 @@ export default function createWriteSettingHandler(
         id,
         nameToValue = (v: any) => v,
         valueToName = (v: any) => v,
-        allNames,
-        allValues
+        allNames = () => [],
+        allValues = () => []
       } = getSettingInfos(name);
 
       const builtValue = buildValue(value);
