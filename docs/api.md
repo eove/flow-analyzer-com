@@ -132,3 +132,25 @@ communicator
     sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
   );
 ```
+
+## event\$
+
+`event$: Observable<Byte[]>`
+
+Exposes an [Observable](http://reactivex.io/documentation/observable.html) pushing received events from transport layer and communicator layor (such as connection events).
+
+Example:
+
+```javascript
+const { createCommunicator } = require('@eove/flow-analyzer-com');
+
+const communicator = createCommunicator();
+
+communicator.event$.subscribe(data => console.log(data));
+
+communicator
+  .connect('/dev/ttyUSB1')
+  .then(() =>
+    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+  );
+```
