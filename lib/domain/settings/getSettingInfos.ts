@@ -1,123 +1,189 @@
 import * as _ from 'lodash';
+import { DeviceTypes } from '../DeviceTypes';
 
-export default function getSettingInfos(name: string): any {
-  if (_.has(settingsInfos, name)) {
-    return settingsInfos[name];
+export default function getSettingInfos(
+  name: string,
+  deviceType: DeviceTypes
+): SettingInfo {
+  const supportedSettings = getSupportedSettingInfos(deviceType);
+
+  const found = supportedSettings.filter(s => s.name === name);
+  if (found.length) {
+    return found[0];
   }
   throw new Error(
-    `Invalid ${name} setting, supported ones: ${_.keys(settingsInfos)}`
+    `Invalid ${name} setting, supported ones: ${supportedSettings.map(
+      (s: any) => s.name
+    )}`
   );
 }
 
-const settingsInfos: any = {
-  gazType: {
+export function getAllSettingInfos(deviceType: string): SettingInfo[] {
+  return getSupportedSettingInfos(deviceType);
+}
+
+function getSupportedSettingInfos(deviceType: string): SettingInfo[] {
+  return settingsInfos.filter(s => _.includes(s.supportedBy, deviceType));
+}
+
+interface SettingInfo {
+  name: string;
+  id: number;
+  unit?: string;
+  valueToName?: (value: string) => string;
+  nameToValue?: (value: string) => string;
+  allNames?: () => string[];
+  allValues?: () => string[];
+  supportedBy: string[];
+}
+
+const settingsInfos: SettingInfo[] = [
+  {
+    name: 'gazType',
     id: 1,
     valueToName: (value: string): string => GAZ_TYPE_VALUE_TO_NAME[value],
     nameToValue: (name: string): string => GAZ_TYPE_NAME_TO_VALUE[name],
-    allNames: () => _.values(GAZ_TYPE_VALUE_TO_NAME),
-    allValues: () => _.keys(GAZ_TYPE_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(GAZ_TYPE_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(GAZ_TYPE_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  manualOxygenConcentration: {
+  {
+    name: 'manualOxygenConcentration',
     id: 2,
-    unit: '%'
+    unit: '%',
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  gazStandards: {
+  {
+    name: 'gazStandards',
     id: 3,
     valueToName: (value: string): string => GAZ_STANDARDS_VALUE_TO_NAME[value],
     nameToValue: (name: string): string => GAZ_STANDARDS_NAME_TO_VALUE[name],
-    allNames: () => _.values(GAZ_STANDARDS_VALUE_TO_NAME),
-    allValues: () => _.keys(GAZ_STANDARDS_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(GAZ_STANDARDS_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(GAZ_STANDARDS_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  respMode: {
+  {
+    name: 'respMode',
     id: 4,
     valueToName: (value: string): string => RESP_MODE_VALUE_TO_NAME[value],
     nameToValue: (name: string): string => RESP_MODE_NAME_TO_VALUE[name],
-    allNames: () => _.values(RESP_MODE_VALUE_TO_NAME),
-    allValues: () => _.keys(RESP_MODE_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(RESP_MODE_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(RESP_MODE_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  triggerSource: {
+  {
+    name: 'triggerSource',
     id: 5,
     valueToName: (value: string): string => TRIGGER_SOURCE_VALUE_TO_NAME[value],
     nameToValue: (name: string): string => TRIGGER_SOURCE_NAME_TO_VALUE[name],
-    allNames: () => _.values(TRIGGER_SOURCE_VALUE_TO_NAME),
-    allValues: () => _.keys(TRIGGER_SOURCE_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(TRIGGER_SOURCE_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(TRIGGER_SOURCE_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  startTriggerSignal: {
+  {
+    name: 'startTriggerSignal',
     id: 6,
     valueToName: (value: string): string =>
       START_TRIGGER_SIGNAL_VALUE_TO_NAME[value],
     nameToValue: (name: string): string =>
       START_TRIGGER_SIGNAL_NAME_TO_VALUE[name],
-    allNames: () => _.values(START_TRIGGER_SIGNAL_VALUE_TO_NAME),
-    allValues: () => _.keys(START_TRIGGER_SIGNAL_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(START_TRIGGER_SIGNAL_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(START_TRIGGER_SIGNAL_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  startTriggerEdge: {
+  {
+    name: 'startTriggerEdge',
     id: 7,
     valueToName: (value: string): string =>
       START_TRIGGER_EDGE_VALUE_TO_NAME[value],
     nameToValue: (name: string): string =>
       START_TRIGGER_EDGE_NAME_TO_VALUE[name],
-    allNames: () => _.values(START_TRIGGER_EDGE_VALUE_TO_NAME),
-    allValues: () => _.keys(START_TRIGGER_EDGE_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(START_TRIGGER_EDGE_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(START_TRIGGER_EDGE_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  startTriggerSignalValue: {
-    id: 8
+  {
+    name: 'startTriggerSignalValue',
+    id: 8,
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  endTriggerSignal: {
+  {
+    name: 'endTriggerSignal',
     id: 9,
     valueToName: (value: string): string =>
       END_TRIGGER_SIGNAL_VALUE_TO_NAME[value],
     nameToValue: (name: string): string =>
       END_TRIGGER_SIGNAL_NAME_TO_VALUE[name],
-    allNames: () => _.values(END_TRIGGER_SIGNAL_VALUE_TO_NAME),
-    allValues: () => _.keys(END_TRIGGER_SIGNAL_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(END_TRIGGER_SIGNAL_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(END_TRIGGER_SIGNAL_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  endTriggerEdge: {
+  {
+    name: 'endTriggerEdge',
     id: 10,
     valueToName: (value: string): string =>
       END_TRIGGER_EDGE_VALUE_TO_NAME[value],
     nameToValue: (name: string): string => END_TRIGGER_EDGE_NAME_TO_VALUE[name],
-    allNames: () => _.values(END_TRIGGER_EDGE_VALUE_TO_NAME),
-    allValues: () => _.keys(END_TRIGGER_EDGE_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(END_TRIGGER_EDGE_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(END_TRIGGER_EDGE_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  endTriggerSignalValue: {
-    id: 11
+  {
+    name: 'endTriggerSignalValue',
+    id: 11,
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  triggerDelay: {
-    id: 12
+  {
+    name: 'triggerDelay',
+    id: 12,
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  baseFlowEnabled: {
+  {
+    name: 'baseFlowEnabled',
     id: 13,
     valueToName: (value: string): string =>
       BASE_FLOW_ENABLED_VALUE_TO_NAME[value],
     nameToValue: (name: string): string =>
       BASE_FLOW_ENABLED_NAME_TO_VALUE[name],
-    allNames: () => _.values(BASE_FLOW_ENABLED_VALUE_TO_NAME),
-    allValues: () => _.keys(BASE_FLOW_ENABLED_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(BASE_FLOW_ENABLED_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(BASE_FLOW_ENABLED_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  baseFlowValue: {
-    id: 14
+  {
+    name: 'baseFlowValue',
+    id: 14,
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  filterType: {
+  {
+    name: 'filterType',
     id: 15,
     valueToName: (value: string): string => FILTER_TYPE_VALUE_TO_NAME[value],
     nameToValue: (name: string): string => FILTER_TYPE_NAME_TO_VALUE[name],
-    allNames: () => _.values(FILTER_TYPE_VALUE_TO_NAME),
-    allValues: () => _.keys(FILTER_TYPE_VALUE_TO_NAME)
+    allNames: (): string[] => _.values(FILTER_TYPE_VALUE_TO_NAME),
+    allValues: (): string[] => _.keys(FILTER_TYPE_VALUE_TO_NAME),
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
   },
-  startTriggerDelay: {
-    id: 19
+  {
+    name: 'startTriggerDelay',
+    id: 19,
+    supportedBy: [DeviceTypes.CITREX_H4]
   },
-  endTriggerDelay: {
-    id: 20
+  {
+    name: 'endTriggerDelay',
+    id: 20,
+    supportedBy: [DeviceTypes.CITREX_H4]
   },
-  gazHumidity: {
-    id: 21
+  {
+    name: 'gazHumidity',
+    id: 21,
+    supportedBy: [DeviceTypes.CITREX_H4]
   },
-  respParamPressureSource: {
-    id: 22
+  {
+    name: 'respParamPressureSource',
+    id: 22,
+    supportedBy: [DeviceTypes.CITREX_H4]
   }
-};
+];
 
 const GAZ_TYPE_VALUE_TO_NAME: any = {
   '0': 'Air',

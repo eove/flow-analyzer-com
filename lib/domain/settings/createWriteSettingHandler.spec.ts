@@ -23,6 +23,7 @@ describe('Write setting handler', () => {
     const debug = (msg: any) => msg;
 
     handler = createWriteSettingHandler({
+      deviceType: 'h4',
       runCommand,
       buildCommand,
       debug
@@ -36,7 +37,7 @@ describe('Write setting handler', () => {
     });
     expect(buildCommand.called).toEqual(true);
     expect(buildCommand.getCall(0).args[0]).toEqual({
-      id: 8,
+      id: '8',
       type: 'WRITE SETTING',
       value: '60'
     });
@@ -49,7 +50,7 @@ describe('Write setting handler', () => {
     });
     expect(buildCommand.called).toEqual(true);
     expect(buildCommand.getCall(0).args[0]).toEqual({
-      id: 8,
+      id: '8',
       type: 'WRITE SETTING',
       value: '-60'
     });
@@ -63,7 +64,7 @@ describe('Write setting handler', () => {
 
     expect(buildCommand.called).toEqual(true);
     expect(buildCommand.getCall(0).args[0]).toEqual({
-      id: 1,
+      id: '1',
       type: 'WRITE SETTING',
       value: '1'
     });

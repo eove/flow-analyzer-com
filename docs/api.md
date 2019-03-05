@@ -65,6 +65,12 @@ Available commands:
 ```
 
 ```javascript
+{
+  type: 'READ_ALL_SETTINGS',
+}
+```
+
+```javascript
 { 
   type: 'WRITE_SETTING',
   payload: {

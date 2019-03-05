@@ -1,165 +1,216 @@
 import * as _ from 'lodash';
 
-export default function getMeasurementInfos(name: string): any {
-  if (_.has(measurementsInfos, name)) {
-    return measurementsInfos[name];
+export default function getMeasurementInfos(name: string): MeasurementInfo {
+  const supportedMeasurements = getSupportedMeasurementInfos();
+
+  const found = supportedMeasurements.filter(s => s.name === name);
+  if (found.length) {
+    return found[0];
   }
   throw new Error(
-    `Invalid ${name} measurement, supported ones: ${_.keys(measurementsInfos)}`
+    `Invalid ${name} measurement, supported ones: ${supportedMeasurements.map(
+      (s: any) => s.name
+    )}`
   );
 }
 
-const measurementsInfos: any = {
-  highFlow: {
+export function getAllMeasurementInfos(): MeasurementInfo[] {
+  return getSupportedMeasurementInfos();
+}
+
+function getSupportedMeasurementInfos(): MeasurementInfo[] {
+  return measurementsInfos;
+}
+
+interface MeasurementInfo {
+  name: string;
+  id: number;
+  unit?: string;
+  divider?: number;
+}
+
+const measurementsInfos: MeasurementInfo[] = [
+  {
+    name: 'highFlow',
     id: 0,
     unit: 'l/min',
     divider: 10
   },
-  lowFlow: {
+  {
+    name: 'lowFlow',
     id: 1,
     unit: 'l/min',
     divider: 100
   },
-  pressureLow: {
+  {
+    name: 'pressureLow',
     id: 2,
     unit: 'mbar',
     divider: 1000
   },
-  differentialPressure: {
+  {
+    name: 'differentialPressure',
     id: 3,
     unit: 'mbar',
     divider: 100
   },
-  pressureHF: {
+  {
+    name: 'pressureHF',
     id: 4,
     unit: 'mbar',
     divider: 100
   },
-  pressureVac: {
+  {
+    name: 'pressureVac',
     id: 5,
     unit: 'mbar',
     divider: 10
   },
-  volumeHF: {
+  {
+    name: 'volumeHF',
     id: 6,
     unit: 'ml',
     divider: 10
   },
-  volumeLF: {
+  {
+    name: 'volumeLF',
     id: 7,
     unit: 'l/min',
     divider: 100
   },
-  currentBreathPhase: {
+  {
+    name: 'currentBreathPhase',
     id: 8
   },
-  o2: {
+  {
+    name: 'o2',
     id: 9,
     unit: '%',
     divider: 10
   },
-  humidity: {
+  {
+    name: 'humidity',
     id: 10,
     unit: '%',
     divider: 1
   },
-  temperature: {
+  {
+    name: 'temperature',
     id: 11,
     unit: '°C',
     divider: 10
   },
-  dewPoint: {
+  {
+    name: 'dewPoint',
     id: 12,
     unit: '°C',
     divider: 10
   },
-  highPressure: {
+  {
+    name: 'highPressure',
     id: 13,
     unit: 'mbar',
     divider: 1
   },
-  ambiantPressure: {
+  {
+    name: 'ambiantPressure',
     id: 14,
     unit: 'mbar',
     divider: 1
   },
-  inspirationTime: {
+  {
+    name: 'inspirationTime',
     id: 19,
     unit: 's',
     divider: 100
   },
-  expirationTime: {
+  {
+    name: 'expirationTime',
     id: 20,
     unit: 's',
     divider: 100
   },
-  ieRatio: {
+  {
+    name: 'ieRatio',
     id: 21,
     divider: 10
   },
-  breathRate: {
+  {
+    name: 'breathRate',
     id: 22,
     unit: 'breath/min',
     divider: 10
   },
-  vti: {
+  {
+    name: 'vti',
     id: 23,
     unit: 'ml',
     divider: 1
   },
-  vte: {
+  {
+    name: 'vte',
     id: 24,
     unit: 'ml',
     divider: 1
   },
-  vi: {
+  {
+    name: 'vi',
     id: 25,
     unit: 'ml',
     divider: 10
   },
-  ve: {
+  {
+    name: 've',
     id: 26,
     unit: 'ml',
     divider: 10
   },
-  peakPressure: {
+  {
+    name: 'peakPressure',
     id: 27,
     unit: 'mbar',
     divider: 10
   },
-  meanPressure: {
+  {
+    name: 'meanPressure',
     id: 28,
     unit: 'mbar',
     divider: 10
   },
-  peep: {
+  {
+    name: 'peep',
     id: 29,
     unit: 'mbar',
     divider: 10
   },
-  tiTCycle: {
+  {
+    name: 'tiTCycle',
     id: 30,
     unit: '%',
     divider: 10
   },
-  peakFlowInsp: {
+  {
+    name: 'peakFlowInsp',
     id: 31,
     unit: 'l/min',
     divider: 10
   },
-  peakFlowExp: {
+  {
+    name: 'peakFlowExp',
     id: 32,
     unit: 'l/min',
     divider: 10
   },
-  plateauPressure: {
+  {
+    name: 'plateauPressure',
     id: 41,
     unit: 'mbar',
     divider: 10
   },
-  compliance: {
+  {
+    name: 'compliance',
     id: 42,
     unit: 'ml/mbar',
     divider: 10
   }
-};
+];

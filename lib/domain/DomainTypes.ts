@@ -4,6 +4,7 @@ import {
   ProtocolCommandInput,
   ProtocolCommandOptions
 } from '../protocol';
+import { DeviceTypes } from './DeviceTypes';
 
 type DomainCommandPayload = any;
 
@@ -18,6 +19,7 @@ export interface DomainCommandHandler {
 }
 
 export interface DomainCommandHandlerFactoryDependencies {
+  deviceType: DeviceTypes;
   runCommand: (command: ProtocolCommand) => Promise<ProtocolAnswer>;
   buildCommand: (
     command: ProtocolCommandInput,

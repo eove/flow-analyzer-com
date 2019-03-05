@@ -21,7 +21,7 @@ export default function createReadMeasurementHandler(
       const format = makeFormatMeasurementAnswer({ name, id, divider, unit });
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,
-        id
+        id: `${id}`
       });
 
       return runCommand(command).then(answer => format(answer));

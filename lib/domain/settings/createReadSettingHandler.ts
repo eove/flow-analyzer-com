@@ -10,19 +10,19 @@ import makeFormatSettingAnswer from './makeFormatSettingAnswer';
 export default function createReadSettingHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
-  const { runCommand, buildCommand, debug } = dependencies;
+  const { runCommand, buildCommand, debug, deviceType } = dependencies;
   return {
     type: 'READ_SETTING',
     handle: ({ type, payload }: DomainCommand) => {
       debug(`running ${type} command handler...`);
 
       const { name } = payload;
-      const { unit, id, valueToName } = getSettingInfos(name);
+      const { unit, id, valueToName } = getSettingInfos(name, deviceType);
       const format = makeFormatSettingAnswer({ name, unit, id, valueToName });
 
       const command = buildCommand({
         type: FrameType.READ_SETTING,
-        id
+        id: `${id}`
       });
 
       return runCommand(command).then(answer => format(answer));
