@@ -45,7 +45,23 @@ describe('Read min/max measurement handler', () => {
       name: 'o2',
       unit: '%',
       max: 10,
-      min: -1
+      min: -1,
+      values: [
+        {
+          name: 'o2',
+          id: 9,
+          unit: '%',
+          value: 10,
+          displayValue: '10 %'
+        },
+        {
+          name: 'o2',
+          id: 9,
+          unit: '%',
+          value: -1,
+          displayValue: '-1 %'
+        }
+      ]
     });
   });
 

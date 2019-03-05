@@ -62,7 +62,8 @@ export default function createReadMinMaxMeasurementHandler(
           name,
           min,
           max,
-          unit
+          unit,
+          values: answers
         };
       });
 
