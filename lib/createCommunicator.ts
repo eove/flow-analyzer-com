@@ -19,7 +19,6 @@ export interface Communicator {
 }
 
 interface CommunicatiorOptions {
-  name?: string;
   debugEnabled?: boolean;
   transportDebugEnabled?: boolean;
   rs232echoOn?: boolean;
@@ -28,16 +27,15 @@ interface CommunicatiorOptions {
 export function createCommunicator(
   options?: CommunicatiorOptions
 ): Communicator {
-  const { name, debugEnabled, transportDebugEnabled, rs232echoOn } = _.defaults(
+  const debug = debugLib('communicator');
+  const { debugEnabled, transportDebugEnabled, rs232echoOn } = _.defaults(
     options,
     {
-      name: 'communicator',
       debugEnabled: false,
       transportDebugEnabled: false,
       rs232echoOn: false
     }
   );
-  const debug = debugLib(name);
   debug.enabled = debugEnabled;
   const eventSource = new Subject();
 
