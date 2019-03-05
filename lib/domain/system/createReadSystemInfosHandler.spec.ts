@@ -4,6 +4,7 @@ import {
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
 import createReadSystemInfosHandler from './createReadSystemInfosHandler';
+import { DeviceTypes } from '../DeviceTypes';
 
 describe('Read system infos handler', () => {
   let handler: DomainCommandHandler;
@@ -31,6 +32,7 @@ describe('Read system infos handler', () => {
     const debug = (msg: any) => msg;
 
     handler = createReadSystemInfosHandler({
+      deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
       debug

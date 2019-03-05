@@ -4,6 +4,7 @@ import {
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
 import createReadMeasurementHandler from './createReadMeasurementHandler';
+import { DeviceTypes } from '../DeviceTypes';
 
 describe('Read measurement handler', () => {
   let handler: DomainCommandHandler;
@@ -19,6 +20,7 @@ describe('Read measurement handler', () => {
     const debug = (msg: any) => msg;
 
     handler = createReadMeasurementHandler({
+      deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
       debug

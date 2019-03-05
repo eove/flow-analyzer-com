@@ -4,6 +4,7 @@ import {
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
 import createReadMinMaxMeasurementHandler from './createReadMinMaxMeasurementHandler';
+import { DeviceTypes } from '../DeviceTypes';
 
 describe('Read min/max measurement handler', () => {
   let handler: DomainCommandHandler;
@@ -26,6 +27,7 @@ describe('Read min/max measurement handler', () => {
     const debug = (msg: any) => msg;
 
     handler = createReadMinMaxMeasurementHandler({
+      deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
       debug

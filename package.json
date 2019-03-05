@@ -17,7 +17,7 @@
     "test": "run-s -c jest tslint",
     "prebuild": "rm -rf ./build",
     "build": "tsc",
-    "preversion": "run-s test build",
+    "preversion": "run-s test compile build",
     "postversion": "git push && git push --tags && npm publish --access=public"
   },
   "repository": {
