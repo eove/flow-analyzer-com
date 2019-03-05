@@ -19,6 +19,7 @@ describe('Read setting handler', () => {
     const debug = (msg: any) => msg;
 
     handler = createReadSettingHandler({
+      deviceType: 'h4',
       runCommand,
       buildCommand,
       debug

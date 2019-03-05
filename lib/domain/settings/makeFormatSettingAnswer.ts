@@ -3,7 +3,7 @@ import { ProtocolAnswer } from '../../protocol';
 interface FormatCreation {
   name: string;
   id: number;
-  valueToName: (name: string) => string;
+  valueToName?: (name: string) => string;
   unit?: string;
 }
 

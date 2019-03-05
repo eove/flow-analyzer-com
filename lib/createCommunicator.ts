@@ -2,7 +2,7 @@ import * as debugLib from 'debug';
 import * as _ from 'lodash';
 import { merge, Observable, Subject } from 'rxjs';
 
-import { DomainCommand } from './domain';
+import { DeviceTypes, DomainCommand } from './domain';
 import { commandHandlerFactories } from './domain';
 import { buildCommand, findAnswers } from './protocol';
 import { createCommandRunner, createTransport, Device } from './tools';
@@ -19,6 +19,7 @@ export interface Communicator {
 }
 
 interface CommunicatiorOptions {
+  deviceType?: DeviceTypes;
   debugEnabled?: boolean;
   transportDebugEnabled?: boolean;
   rs232echoOn?: boolean;
@@ -27,20 +28,24 @@ interface CommunicatiorOptions {
 export function createCommunicator(
   options?: CommunicatiorOptions
 ): Communicator {
-  const debug = debugLib('communicator');
-  const { debugEnabled, transportDebugEnabled, rs232echoOn } = _.defaults(
-    options,
-    {
-      debugEnabled: false,
-      transportDebugEnabled: false,
-      rs232echoOn: false
-    }
-  );
+  const debug = debugLib('analyzer');
+  const {
+    debugEnabled,
+    transportDebugEnabled,
+    rs232echoOn,
+    deviceType
+  } = _.defaults(options, {
+    debugEnabled: false,
+    transportDebugEnabled: false,
+    rs232echoOn: false,
+    deviceType: DeviceTypes.PF300
+  });
   debug.enabled = debugEnabled;
   const eventSource = new Subject();
 
   const transport = createTransport({ debugEnabled: transportDebugEnabled });
   const commandRunner = createCommandRunner({
+    deviceType,
     debug,
     buildCommand,
     findAnswers,

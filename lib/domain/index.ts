@@ -1,4 +1,6 @@
 export * from './DomainTypes';
+export * from './DeviceTypes';
+
 import { factories as executeFactories } from './execute';
 import { factories as measurementFactories } from './measurements';
 import { factories as settingsFactories } from './settings';

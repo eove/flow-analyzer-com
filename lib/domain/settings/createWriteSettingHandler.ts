@@ -10,7 +10,7 @@ import getSettingInfos from './getSettingInfos';
 export default function createWriteSettingHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
-  const { runCommand, buildCommand, debug } = dependencies;
+  const { runCommand, buildCommand, debug, deviceType } = dependencies;
   return {
     type: 'WRITE_SETTING',
     handle: ({ type, payload }: DomainCommand) => {
@@ -23,12 +23,12 @@ export default function createWriteSettingHandler(
         valueToName = (v: any) => v,
         allNames = () => [],
         allValues = () => []
-      } = getSettingInfos(name);
+      } = getSettingInfos(name, deviceType);
 
       const builtValue = buildValue(value);
       const command = buildCommand({
         type: FrameType.WRITE_SETTING,
-        id,
+        id: `${id}`,
         value: builtValue
       });
 

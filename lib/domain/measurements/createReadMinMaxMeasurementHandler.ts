@@ -45,7 +45,7 @@ export default function createReadMinMaxMeasurementHandler(
       const format = makeFormatMeasurementAnswer({ name, id, divider, unit });
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,
-        id
+        id: `${id}`
       });
       debug(
         `will read '${name}' ${samplesNb} times over ${durationMS} ms (sample delay: ${sampleDelayMS} ms, sample rate: ${sampleRate}/s)`

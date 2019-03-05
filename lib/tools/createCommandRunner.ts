@@ -14,7 +14,11 @@ import {
   timeout
 } from 'rxjs/operators';
 
-import { DomainCommand, DomainCommandHandlerFactory } from '../domain';
+import {
+  DeviceTypes,
+  DomainCommand,
+  DomainCommandHandlerFactory
+} from '../domain';
 import {
   FindAnswerResult,
   findAnswers,
@@ -30,6 +34,7 @@ interface CommandRunner {
 }
 
 interface CommandRunnerDependencies {
+  deviceType: DeviceTypes;
   handlerFactories: DomainCommandHandlerFactory[];
   buildCommand: any;
   debug: any;
@@ -46,6 +51,7 @@ export function createCommandRunner(
     exclusiveHandlers: true
   });
   const {
+    deviceType,
     data$,
     handlerFactories,
     buildCommand,
@@ -124,7 +130,7 @@ export function createCommandRunner(
   ) {
     const unregisterHandlers: any[] = [];
     for (const factory of factories) {
-      const instance = factory({ runCommand, buildCommand, debug });
+      const instance = factory({ runCommand, buildCommand, debug, deviceType });
       bus.register(instance.type, instance.handle);
       unregisterHandlers.push(() => bus.unregisterAll(instance.type));
     }

@@ -23,6 +23,7 @@ describe('Write setting handler', () => {
     const debug = (msg: any) => msg;
 
     handler = createWriteSettingHandler({
+      deviceType: 'h4',
       runCommand,
       buildCommand,
       debug
