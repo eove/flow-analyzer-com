@@ -1,10 +1,10 @@
 import { SinonStub, stub } from 'sinon';
+import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
 import createReadSystemInfosHandler from './createReadSystemInfosHandler';
-import { DeviceTypes } from '../DeviceTypes';
 
 describe('Read system infos handler', () => {
   let handler: DomainCommandHandler;

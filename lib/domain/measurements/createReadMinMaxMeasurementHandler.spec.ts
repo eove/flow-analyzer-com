@@ -1,10 +1,10 @@
 import { stub } from 'sinon';
+import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
 import createReadMinMaxMeasurementHandler from './createReadMinMaxMeasurementHandler';
-import { DeviceTypes } from '../DeviceTypes';
 
 describe('Read min/max measurement handler', () => {
   let handler: DomainCommandHandler;

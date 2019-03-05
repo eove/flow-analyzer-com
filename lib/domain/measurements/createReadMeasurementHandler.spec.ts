@@ -1,10 +1,10 @@
 import { stub } from 'sinon';
+import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
 import createReadMeasurementHandler from './createReadMeasurementHandler';
-import { DeviceTypes } from '../DeviceTypes';
 
 describe('Read measurement handler', () => {
   let handler: DomainCommandHandler;
