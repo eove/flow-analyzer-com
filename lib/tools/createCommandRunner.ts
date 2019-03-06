@@ -127,10 +127,7 @@ export function createCommandRunner(
       }
 
       function isAnswerRelatedToCommand(a: ProtocolAnswer) {
-        if (a.type === currentCmd.type && a.id && a.id === currentCmd.id) {
-          return true;
-        }
-        return false;
+        return a.type === currentCmd.type && a.id === currentCmd.id;
       }
     }
   }
