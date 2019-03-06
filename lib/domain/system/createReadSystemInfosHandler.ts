@@ -28,7 +28,7 @@ export default function createReadSystemInfosHandler(
   function getHardwareVersion(): Promise<any> {
     const command = buildCommand({
       type: FrameType.READ_SYSTEM_INFO,
-      id: '1'
+      id: 1
     });
     return runCommand(command).then(answer => `${answer.value}`);
   }
@@ -36,7 +36,7 @@ export default function createReadSystemInfosHandler(
   function getSerialNumber(): Promise<any> {
     const command = buildCommand({
       type: FrameType.READ_SYSTEM_INFO,
-      id: '8'
+      id: 8
     });
     return runCommand(command).then(answer => `${answer.value}`);
   }
@@ -54,7 +54,7 @@ export default function createReadSystemInfosHandler(
     function getMajorVersion(): Promise<any> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: '2'
+        id: 2
       });
       return runCommand(command).then(answer => answer.value);
     }
@@ -62,7 +62,7 @@ export default function createReadSystemInfosHandler(
     function getMinorVersion(): Promise<any> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: '3'
+        id: 3
       });
       return runCommand(command).then(answer => answer.value);
     }
@@ -70,7 +70,7 @@ export default function createReadSystemInfosHandler(
     function getRelease(): Promise<any> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: '4'
+        id: 4
       });
       return runCommand(command).then(answer => answer.value);
     }

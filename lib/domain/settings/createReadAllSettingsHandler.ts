@@ -28,7 +28,7 @@ export default function createReadSettingHandler(
 
           const command = buildCommand({
             type: FrameType.READ_SETTING,
-            id: `${id}`
+            id
           });
           return runCommand(command).then(answer => format(answer));
         })

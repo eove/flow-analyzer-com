@@ -95,6 +95,28 @@ Available commands:
 }
 ```
 
+## command\$
+
+`command$: Observable<ProtocolCommand>`
+
+Exposes an [Observable](http://reactivex.io/documentation/observable.html) pushing sent commands.
+
+Example:
+
+```javascript
+const { createCommunicator } = require('@eove/flow-analyzer-com');
+
+const communicator = createCommunicator();
+
+communicator.command$.subscribe(command => console.log(command));
+
+communicator
+  .connect('/dev/ttyUSB1')
+  .then(() =>
+    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+  );
+```
+
 ## answer\$
 
 `answer$: Observable<ProtocolAnswer>`

@@ -3,12 +3,13 @@ import { FrameType } from './types';
 
 export interface ProtocolCommandInput {
   type: FrameType;
-  id: string;
+  id: number;
   value?: string;
 }
 
 export interface ProtocolCommand extends ProtocolCommandInput {
   raw: string;
+  id: number;
   answerTimeout: number;
 }
 

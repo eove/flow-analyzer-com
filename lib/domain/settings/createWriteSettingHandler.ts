@@ -28,7 +28,7 @@ export default function createWriteSettingHandler(
       const builtValue = buildValue(value);
       const command = buildCommand({
         type: FrameType.WRITE_SETTING,
-        id: `${id}`,
+        id,
         value: builtValue
       });
 

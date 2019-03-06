@@ -1,6 +1,6 @@
 import { createMessageBus, MessageBus } from '@arpinum/messaging';
 import { createQueue } from '@arpinum/promising';
-import { from, Observable, throwError } from 'rxjs';
+import { from, Observable, Subject, throwError } from 'rxjs';
 import {
   catchError,
   filter,
@@ -10,7 +10,6 @@ import {
   publish,
   refCount,
   scan,
-  tap,
   timeout
 } from 'rxjs/operators';
 
@@ -31,6 +30,7 @@ import { Transport } from './createTransport';
 interface CommandRunner {
   postCommand: (cmd: DomainCommand) => Promise<{}>;
   answer$: Observable<ProtocolAnswer>;
+  command$: Observable<{}>;
 }
 
 interface CommandRunnerDependencies {
@@ -59,6 +59,7 @@ export function createCommandRunner(
     debug
   } = dependencies;
   const commandQueue = createQueue({ concurrency: 1 });
+  const commandSource = new Subject();
 
   const answer$ = data$.pipe(
     scan(
@@ -75,8 +76,7 @@ export function createCommandRunner(
     ),
     filter((result: FindAnswerResult) => result.answers.length !== 0),
     map((result: FindAnswerResult) => result.answers),
-    mergeMap((x: ProtocolAnswer[]) => from(x)),
-    tap(x => debug('answer:', x))
+    mergeMap((x: ProtocolAnswer[]) => from(x))
   );
 
   createAndRegisterHandlers(
@@ -86,7 +86,10 @@ export function createCommandRunner(
 
   return {
     postCommand,
-    answer$
+    answer$,
+    get command$() {
+      return commandSource.asObservable();
+    }
   };
 
   function postCommand(cmd: DomainCommand): Promise<{}> {
@@ -96,6 +99,7 @@ export function createCommandRunner(
   function runCommand(cmd: ProtocolCommand) {
     const { raw, answerTimeout } = cmd;
     return commandQueue.enqueue(() => {
+      commandSource.next(cmd);
       const answer = waitAnswer(cmd);
       return transport.write(raw).then(() => answer);
     });
@@ -112,7 +116,7 @@ export function createCommandRunner(
         return answer$.pipe(
           publish(),
           refCount(),
-          filter(a => a.type === currentCmd.type),
+          filter(isAnswerRelatedToCommand),
           map(a =>
             isAnswerValid(a)
               ? a
@@ -120,6 +124,13 @@ export function createCommandRunner(
           ),
           first()
         );
+      }
+
+      function isAnswerRelatedToCommand(a: ProtocolAnswer) {
+        if (a.type === currentCmd.type && a.id && a.id === currentCmd.id) {
+          return true;
+        }
+        return false;
       }
     }
   }

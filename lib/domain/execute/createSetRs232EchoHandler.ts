@@ -18,7 +18,7 @@ export default function createSetRs232EchoHandler(
 
       const command = buildCommand({
         type: FrameType.EXECUTE_COMMAND,
-        id: '5',
+        id: 5,
         value: echoOn ? '1' : '0'
       });
 

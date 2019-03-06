@@ -16,6 +16,7 @@ export interface Communicator {
   data$: Observable<{}>;
   event$: Observable<{}>;
   answer$: Observable<{}>;
+  command$: Observable<{}>;
 }
 
 interface CommunicatiorOptions {
@@ -68,6 +69,9 @@ export function createCommunicator(
     },
     get answer$() {
       return commandRunner.answer$;
+    },
+    get command$() {
+      return commandRunner.command$;
     },
     get event$() {
       return merge(transport.event$, eventSource.asObservable());

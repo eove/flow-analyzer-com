@@ -39,7 +39,7 @@ describe('Read system infos handler', () => {
     } as DomainCommandHandlerFactoryDependencies);
   });
 
-  it.only('should run many commands before returning', async () => {
+  it('should run many commands before returning', async () => {
     const result = await handler.handle({
       type: 'A_TYPE'
     });
