@@ -54,21 +54,27 @@ export default function createReadMinMaxMeasurementHandler(
         _.range(samplesNb).map(i =>
           delay(sampleDelayMS * i).then(() => readMeasurement())
         )
-      ).then(answers => {
-        const { value: min } = _.minBy(answers, 'value');
-        const { value: max } = _.maxBy(answers, 'value');
-        return {
-          id,
-          name,
-          min,
-          max,
-          unit,
-          values: answers
-        };
-      });
+      ).then(answers => ({
+        id,
+        name,
+        min: minFrom(answers),
+        max: maxFrom(answers),
+        unit,
+        values: answers
+      }));
 
       function readMeasurement(): any {
         return runCommand(command).then(answer => format(answer));
+      }
+
+      function minFrom(answers: any[]) {
+        const min = _.minBy(answers, 'value');
+        return min ? min.value : undefined;
+      }
+
+      function maxFrom(answers: any[]) {
+        const max = _.maxBy(answers, 'value');
+        return max ? max.value : undefined;
       }
     }
   };
