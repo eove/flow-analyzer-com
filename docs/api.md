@@ -46,6 +46,15 @@ Available commands:
 
 ```javascript
 {
+  type: 'READ_MEASUREMENTS',
+  payload: {
+    names: ['humidity', 'peep']
+  }
+},
+```
+
+```javascript
+{
   type: 'READ_MIN_MAX_MEASUREMENT',
   payload: {
     name: 'humidity',

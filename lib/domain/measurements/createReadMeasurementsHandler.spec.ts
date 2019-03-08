@@ -4,9 +4,9 @@ import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
-import createReadMeasurementHandler from './createReadMeasurementHandler';
+import createReadMeasurementsHandler from './createReadMeasurementsHandler';
 
-describe('Read measurement handler', () => {
+describe('Read measurements handler', () => {
   let handler: DomainCommandHandler;
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('Read measurement handler', () => {
     const buildCommand = stub().returns({});
     const debug = (msg: any) => msg;
 
-    handler = createReadMeasurementHandler({
+    handler = createReadMeasurementsHandler({
       deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
@@ -27,26 +27,29 @@ describe('Read measurement handler', () => {
     } as DomainCommandHandlerFactoryDependencies);
   });
 
-  it('should return a formatted measurement', async () => {
+  it('should return formatted measurements', async () => {
     const result = await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'o2' }
+      payload: { names: ['o2', 'peep'] }
     });
 
-    expect(result).toEqual({
-      valueAsString: '10 %',
-      id: 9,
-      name: 'o2',
-      unit: '%',
-      value: 10
-    });
+    expect(result).toEqual([
+      {
+        valueAsString: '10 %',
+        id: 9,
+        name: 'o2',
+        unit: '%',
+        value: 10
+      },
+      { valueAsString: '10 mbar', id: 29, name: 'peep', unit: 'mbar', value: 10 }
+    ]);
   });
 
   it('should throw an error if unknown measurement', () => {
     return expect(() => {
       handler.handle({
         type: 'A_TYPE',
-        payload: { name: 'unknown' }
+        payload: { names: ['o2', 'unknown'] }
       });
     }).toThrow('Invalid unknown measurement');
   });

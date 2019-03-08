@@ -33,7 +33,7 @@ describe('Read setting handler', () => {
     });
 
     expect(result).toEqual({
-      displayValue: 'Air/O2-man.',
+      valueAsString: 'Air/O2-man.',
       id: 3,
       name: 'gazType',
       value: 1

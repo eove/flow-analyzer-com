@@ -16,7 +16,7 @@ export default function makeFormatSettingAnswer(
     const { id, value } = answer;
     const computedValue =
       typeof value === 'number' ? valueToName(`${value}`) : value;
-    const displayValue = computedValue
+    const valueAsString = computedValue
       ? unit
         ? `${computedValue} ${unit}`
         : `${computedValue}`
@@ -26,7 +26,7 @@ export default function makeFormatSettingAnswer(
       name,
       value,
       unit,
-      displayValue
+      valueAsString
     };
   };
 }

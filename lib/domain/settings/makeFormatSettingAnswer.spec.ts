@@ -15,7 +15,7 @@ describe('Format setting answser', () => {
         raw: 'RRRRRRR'
       })
     ).toEqual({
-      displayValue: '100',
+      valueAsString: '100',
       id: 8,
       name: 'o2',
       value: 100
@@ -38,7 +38,7 @@ describe('Format setting answser', () => {
         raw: 'RRRRRRR'
       })
     ).toEqual({
-      displayValue: '100 %',
+      valueAsString: '100 %',
       id: 8,
       name: 'o2',
       value: 100,
@@ -62,7 +62,7 @@ describe('Format setting answser', () => {
         raw: 'RRRRRRR'
       })
     ).toEqual({
-      displayValue: '-',
+      valueAsString: '-',
       id: 8,
       name: 'o2',
       value: null,
