@@ -35,13 +35,13 @@ describe('Read measurements handler', () => {
 
     expect(result).toEqual([
       {
-        valueAsString: '10 %',
+        valueAsString: '10',
         id: 9,
         name: 'o2',
         unit: '%',
         value: 10
       },
-      { valueAsString: '10 mbar', id: 29, name: 'peep', unit: 'mbar', value: 10 }
+      { valueAsString: '10', id: 29, name: 'peep', unit: 'mbar', value: 10 }
     ]);
   });
 

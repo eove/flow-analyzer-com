@@ -16,11 +16,7 @@ export default function makeFormatSettingAnswer(
     const { id, value } = answer;
     const computedValue =
       typeof value === 'number' ? valueToName(`${value}`) : value;
-    const valueAsString = computedValue
-      ? unit
-        ? `${computedValue} ${unit}`
-        : `${computedValue}`
-      : '-';
+    const valueAsString = computedValue ? `${computedValue}` : '-';
     return {
       id,
       name,

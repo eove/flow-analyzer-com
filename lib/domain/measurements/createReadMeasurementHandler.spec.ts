@@ -34,7 +34,7 @@ describe('Read measurement handler', () => {
     });
 
     expect(result).toEqual({
-      valueAsString: '10 %',
+      valueAsString: '10',
       id: 9,
       name: 'o2',
       unit: '%',

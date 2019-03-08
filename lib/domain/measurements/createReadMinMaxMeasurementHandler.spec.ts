@@ -52,14 +52,14 @@ describe('Read min/max measurement handler', () => {
           id: 9,
           unit: '%',
           value: 10,
-          valueAsString: '10 %'
+          valueAsString: '10'
         },
         {
           name: 'o2',
           id: 9,
           unit: '%',
           value: -1,
-          valueAsString: '-1 %'
+          valueAsString: '-1'
         }
       ]
     });
