@@ -28,7 +28,10 @@ const communicator = createCommunicator();
 communicator
   .connect('/dev/ttyUSB1')
   .then(() =>
-    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+    communicator.sendCommand({
+      type: 'READ_MEASUREMENT',
+      payload: { name: 'humidity' }
+    })
   )
   .then(result => console.log(result));
 ```
@@ -122,7 +125,10 @@ communicator.command$.subscribe(command => console.log(command));
 communicator
   .connect('/dev/ttyUSB1')
   .then(() =>
-    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+    communicator.sendCommand({
+      type: 'READ_MEASUREMENT',
+      payload: { name: 'humidity' }
+    })
   );
 ```
 
@@ -144,7 +150,10 @@ communicator.answer$.subscribe(answer => console.log(answer));
 communicator
   .connect('/dev/ttyUSB1')
   .then(() =>
-    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+    communicator.sendCommand({
+      type: 'READ_MEASUREMENT',
+      payload: { name: 'humidity' }
+    })
   );
 ```
 
@@ -166,7 +175,10 @@ communicator.data$.subscribe(data => console.log(data));
 communicator
   .connect('/dev/ttyUSB1')
   .then(() =>
-    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+    communicator.sendCommand({
+      type: 'READ_MEASUREMENT',
+      payload: { name: 'humidity' }
+    })
   );
 ```
 
@@ -188,6 +200,9 @@ communicator.event$.subscribe(data => console.log(data));
 communicator
   .connect('/dev/ttyUSB1')
   .then(() =>
-    sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'humidity' } })
+    communicator.sendCommand({
+      type: 'READ_MEASUREMENT',
+      payload: { name: 'humidity' }
+    })
   );
 ```
