@@ -30,7 +30,7 @@ import { Transport } from './createTransport';
 interface CommandRunner {
   postCommand: (cmd: DomainCommand) => Promise<{}>;
   answer$: Observable<ProtocolAnswer>;
-  command$: Observable<{}>;
+  command$: Observable<unknown>;
 }
 
 interface CommandRunnerDependencies {
@@ -40,7 +40,7 @@ interface CommandRunnerDependencies {
   debug: any;
   findAnswers: any;
   transport: Transport;
-  data$: Observable<any>;
+  data$: Observable<unknown>;
 }
 
 export function createCommandRunner(

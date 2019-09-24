@@ -13,10 +13,10 @@ export interface Communicator {
   listPorts: () => Promise<Device[]>;
   sendCommand: (command: DomainCommand) => Promise<{}>;
   request: (commandType: string, args: any) => Promise<{}>;
-  data$: Observable<{}>;
-  event$: Observable<{}>;
-  answer$: Observable<{}>;
-  command$: Observable<{}>;
+  data$: Observable<unknown>;
+  event$: Observable<unknown>;
+  answer$: Observable<unknown>;
+  command$: Observable<unknown>;
 }
 
 interface CommunicatiorOptions {

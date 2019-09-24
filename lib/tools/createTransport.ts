@@ -9,8 +9,8 @@ export interface Transport {
   disconnect: () => Promise<void>;
   write: (bytes: string) => Promise<any>;
   discover: () => Promise<Device[]>;
-  data$: Observable<{}>;
-  event$: Observable<{}>;
+  data$: Observable<unknown>;
+  event$: Observable<unknown>;
   connected: boolean;
 }
 
