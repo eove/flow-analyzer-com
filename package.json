@@ -7,6 +7,9 @@
   "files": [
     "build"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "tslint": "tslint --fix 'lib/**/*.ts'",
     "jest": "jest --verbose",
