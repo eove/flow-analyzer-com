@@ -1,0 +1,82 @@
+{
+  "name": "@eove/flow-analyzer-com-communicator",
+  "version": "1.1.10",
+  "description": "Communicator to communicate to flow analyzer",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "author": "EOVE",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/eove/flow-analyzer-com.git",
+    "directory": "packages/flow-analyzer-com-communicator"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "scripts": {
+    "tslint": "tslint --fix 'lib/**/*.ts'",
+    "jest": "jest --verbose",
+    "testw": "jest --watch",
+    "coverage": "jest --coverage",
+    "prettier": "prettier --write '**/*.{js,json,md,ts}'",
+    "compile": "tsc -p tsconfig.test.json",
+    "test": "run-s -c jest tslint",
+    "prebuild": "rm -rf ./build",
+    "build": "tsc",
+    "preversion": "run-s test compile build",
+    "postversion": "git push && git push --tags && npm publish --access=public"
+  },
+  "keywords": [
+    "pf300",
+    "citrex",
+    "h4",
+    "gaz",
+    "flow",
+    "analyzer"
+  ],
+  "bugs": {
+    "url": "https://github.com/eove/flow-analyzer-com/issues"
+  },
+  "homepage": "https://github.com/eove/flow-analyzer-com#readme",
+  "devDependencies": {
+    "@types/debug": "4.1.5",
+    "@types/jest": "25.1.3",
+    "@types/lodash": "4.14.149",
+    "@types/node": "13.7.4",
+    "@types/rx": "4.1.1",
+    "@types/serialport": "7.0.4",
+    "@types/sinon": "7.5.1",
+    "jest": "25.1.0",
+    "npm-run-all": "4.1.5",
+    "prettier": "1.19.1",
+    "sinon": "9.0.0",
+    "ts-jest": "25.2.1",
+    "ts-node": "8.6.2",
+    "tslint": "6.0.0",
+    "tslint-config-prettier": "1.18.0",
+    "typescript": "3.8.2"
+  },
+  "jest": {
+    "transform": {
+      ".ts": "ts-jest"
+    },
+    "testRegex": "/lib/.*\\.spec\\.ts$",
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ]
+  },
+  "dependencies": {
+    "@arpinum/messaging": "3.0.0",
+    "@arpinum/promising": "2.2.3",
+    "debug": "4.1.1",
+    "lodash": "4.17.15",
+    "rxjs": "6.5.4",
+    "serialport": "7.1.5"
+  }
+}

@@ -1,36 +1,101 @@
-# flow-analyzer-com [![Build Status](https://github.com/eove/flow-analyzer-com/workflows/CI/badge.svg)](https://github.com/eove/flow-analyzer-com/actions?query=workflow%3ACI) [![npm version](https://badge.fury.io/js/%40eove%2Fflow-analyzer-com.svg)](https://badge.fury.io/js/%40eove%2Fflow-analyzer-com) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+# flow-analyzer-com 
 
-Node.js lib to communicate with [imtmedical](https://www.imtmedical.com/) gaz flow analyzers such as pf300 & citrex devices through serial port.
+[![Build Status](https://github.com/eove/flow-analyzer-com/workflows/CI/badge.svg)](https://github.com/eove/flow-analyzer-com/actions?query=workflow%3ACI)
 
-## Supported devices
+Collection of packages to communicate with gaz flow analyzers such as pf300 & citrex devices through serial port.
 
-- PF300
-- Citrex H4
+This is a monorepository, subprojects are in [packages](/packages) directory.
 
-## Install
+## Installation
 
-`npm install`
+### Requirements
 
-## Usage
+You have to log to Eove private registry following the guide available at [Github](https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages#authenticating-to-github-packages).
 
-This lib exposes a communicator which may send commands to the gaz flow analyzer device and get answers.
+In summary:
 
-```js
-import { createCommunicator } from '@eove/flow-analyzer-com';
-
-const communicator = createCommunicator();
-
-communicator.open('/dev/ttyUSB0').then(() => {
-  return communicator
-    .sendCommand({ type: 'READ_MEASUREMENT', payload: { name: 'o2' } })
-    .then(console.log);
-});
+```
+$ npm login --registry=https://npm.pkg.github.com
+> Username: GITHUB_USERNAME
+> Password: GITHUB_TOKEN
+> Email: EOVE_EMAIL_ADDRESS
 ```
 
-### API
+### Bootstrap project
 
-Check the [API details](docs/api.md)
+Just clone repository:
 
-### Example: TalkToAnalyzer
+```
+git clone git@github.com:eove/flow-analyzer-com.git
+```
 
-For those who want a ready to use [CLI](https://en.wikipedia.org/wiki/Command-line_interface) tool to talk to analyzer devices, please check: https://github.com/eove/talk-to-analyzer
+Then [bootstrap](https://github.com/lerna/lerna/tree/master/commands/bootstrap#readme) with [lerna](https://github.com/lerna/lerna):
+
+```
+npm install
+npm run bootstrap
+```
+
+## Packages
+
+Available packages:
+
+- [flow-analyzer-com-communicator](/packages/flow-analyzer-com-communicator): Facade to communicate with device
+
+## Publishing
+
+### Registry
+
+Packages are published in Eove private npm registry hosted by Github.
+
+All packages are associated to this repository. See [packages](https://github.com/eove/flow-analyzer-com/packages) page.
+
+### How to publish
+
+Versioning and publishing are handled by lerna with [publish](https://github.com/lerna/lerna/tree/master/commands/publish#readme) command.
+
+We use [fixed version mode](https://github.com/lerna/lerna#fixedlocked-mode-default), in other words all packages are on the same version line.
+
+For instance if version is `1.2.0`, use:
+
+- `npx lerna publish patch`: to bump version to `1.2.1` and publish it
+- `npx lerna publish major`: to bump version to `2.0.0` and publish it
+- `npx lerna publish 1.2.0-dev.1`: to bump version to `1.2.0-dev.1` and publish it
+
+## Development
+
+### `npx lerna run` to run npm script in packages
+
+Keep a terminal opened at project root to quickly run some lerna commands.
+
+You can then use some commands targeting all projects:
+
+- test all: `npx lerna run test` (or `npm test` thanks to a custom script)
+- build all: `npx lerna run build`(or `npm build` thanks to a custom script)
+
+### Tests
+
+To run tests:
+
+```
+npm test
+```
+
+This can be used in any package or in root directory (which will run tests in all packages).
+
+To run test in an isolated docker container:
+
+```
+DOCKER_BUILDKIT=1 docker build -f ci/Dockerfile --build-arg CI_TOKEN=<your_token> .
+```
+
+Replace `<your_token>` by your github one.
+
+Sometimes tests work on your computer but not on CI.
+Running tests in a container is close enough to CI and helps debug a slight variation between different envs.
+
+### Link packages to speed up feedbacks
+
+You can use `npx lerna link` to create symlinks for all packages so you can modify a dependency and use it without publishing it (or modifying your `node_modules` by hand).
+
+Beware that when you install any dependency a symlink can be broken, so run link command again if any doubt.
