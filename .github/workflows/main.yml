@@ -21,10 +21,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: npm install
+      - name: install
         run: |
-          npm install
-      - name: npm test
-        run: |
-          npm test
+          ./ci/install.sh "${{ secrets.CI_TOKEN }}"
 
+      - name: test
+        run: |
+          npm run build
+          npm test
