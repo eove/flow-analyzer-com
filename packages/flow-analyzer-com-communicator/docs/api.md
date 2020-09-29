@@ -33,7 +33,7 @@ communicator
       payload: { name: 'humidity' }
     })
   )
-  .then(result => console.log(result));
+  .then(console.log);
 ```
 
 Available commands:
