@@ -11,7 +11,7 @@
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/eove/flow-analyzer-com.git",
+    "url": "https://github.com/eove/flow-analyzer-com.git",
     "directory": "packages/flow-analyzer-com-communicator"
   },
   "publishConfig": {
