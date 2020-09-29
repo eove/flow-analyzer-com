@@ -6,12 +6,21 @@ Collection of packages to communicate with gaz flow analyzers such as pf300 & ci
 
 This is a monorepository, subprojects are in [packages](/packages) directory.
 
-## Installation
+## Packages
+
+Available packages:
+
+- [flow-analyzer-com-communicator](/packages/flow-analyzer-com-communicator): Facade to communicate with device
+- [flow-analyzer-com-talk](/packages/flow-analyzer-com-talk): CLI to communicate with device
+
+## For developers
+
+### Installation
 
 Just clone repository:
 
 ```
-git clone git@github.com:eove/flow-analyzer-com.git
+git clone https://github.com/eove/javascript.git
 ```
 
 Then [bootstrap](https://github.com/lerna/lerna/tree/master/commands/bootstrap#readme) with [lerna](https://github.com/lerna/lerna):
@@ -21,43 +30,24 @@ npm install
 npm run bootstrap
 ```
 
-## Packages
+### Publishing
 
-Available packages:
+Packges are published on:
 
-- [flow-analyzer-com-communicator](/packages/flow-analyzer-com-communicator): Facade to communicate with device
-- [flow-analyzer-com-talk](/packages/flow-analyzer-com-talk): CLI to communicate with device
+- [npmjs.org](https://www.npmjs.com/settings/eove/packages)
+- [github.com](https://github.com/orgs/eove/packages?repo_name=javascript)
 
-## Publishing
+Use the following command to publish to npmjs.org:
 
-### Registry
+```
+npx lerna publish <version>
+```
 
-Packages are published in Eove private npm registry hosted by Github.
+Then publish packages to github.com with:
 
-All packages are associated to this repository. See [packages](https://github.com/eove/flow-analyzer-com/packages) page.
-
-### How to publish
-
-Versioning and publishing are handled by lerna with [publish](https://github.com/lerna/lerna/tree/master/commands/publish#readme) command.
-
-We use [fixed version mode](https://github.com/lerna/lerna#fixedlocked-mode-default), in other words all packages are on the same version line.
-
-For instance if version is `1.2.0`, use:
-
-- `npx lerna publish patch`: to bump version to `1.2.1` and publish it
-- `npx lerna publish major`: to bump version to `2.0.0` and publish it
-- `npx lerna publish 1.2.0-dev.1`: to bump version to `1.2.0-dev.1` and publish it
-
-## Development
-
-### `npx lerna run` to run npm script in packages
-
-Keep a terminal opened at project root to quickly run some lerna commands.
-
-You can then use some commands targeting all projects:
-
-- test all: `npx lerna run test` (or `npm test` thanks to a custom script)
-- build all: `npx lerna run build`(or `npm build` thanks to a custom script)
+```
+npx lerna publish from-package --registry https://npm.pkg.github.com
+```
 
 ### Tests
 
