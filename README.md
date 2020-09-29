@@ -20,7 +20,7 @@ Available packages:
 Just clone repository:
 
 ```
-git clone https://github.com/eove/javascript.git
+git clone https://github.com/eove/flow-analyzer-com.git
 ```
 
 Then [bootstrap](https://github.com/lerna/lerna/tree/master/commands/bootstrap#readme) with [lerna](https://github.com/lerna/lerna):
