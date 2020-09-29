@@ -8,21 +8,6 @@ This is a monorepository, subprojects are in [packages](/packages) directory.
 
 ## Installation
 
-### Requirements
-
-You have to log to Eove private registry following the guide available at [Github](https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages#authenticating-to-github-packages).
-
-In summary:
-
-```
-$ npm login --registry=https://npm.pkg.github.com
-> Username: GITHUB_USERNAME
-> Password: GITHUB_TOKEN
-> Email: EOVE_EMAIL_ADDRESS
-```
-
-### Bootstrap project
-
 Just clone repository:
 
 ```
@@ -86,10 +71,8 @@ This can be used in any package or in root directory (which will run tests in al
 To run test in an isolated docker container:
 
 ```
-DOCKER_BUILDKIT=1 docker build -f ci/Dockerfile --build-arg CI_TOKEN=<your_token> .
+DOCKER_BUILDKIT=1 docker build -f ci/Dockerfile .
 ```
-
-Replace `<your_token>` by your github one.
 
 Sometimes tests work on your computer but not on CI.
 Running tests in a container is close enough to CI and helps debug a slight variation between different envs.
