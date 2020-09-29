@@ -14,6 +14,9 @@
     "url": "https://github.com/eove/flow-analyzer-com.git",
     "directory": "packages/flow-analyzer-com-communicator"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "tslint": "tslint --fix 'lib/**/*.ts'",
     "jest": "jest --verbose",
