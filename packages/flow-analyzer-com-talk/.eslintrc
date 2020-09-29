@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "arpinum/configurations/backend"
+  ]
+}

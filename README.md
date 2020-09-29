@@ -26,6 +26,7 @@ npm run bootstrap
 Available packages:
 
 - [flow-analyzer-com-communicator](/packages/flow-analyzer-com-communicator): Facade to communicate with device
+- [flow-analyzer-com-talk](/packages/flow-analyzer-com-talk): CLI to communicate with device
 
 ## Publishing
 
