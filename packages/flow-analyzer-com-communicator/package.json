@@ -8,14 +8,11 @@
     "build"
   ],
   "author": "EOVE",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/eove/flow-analyzer-com.git",
     "directory": "packages/flow-analyzer-com-communicator"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
     "tslint": "tslint --fix 'lib/**/*.ts'",
