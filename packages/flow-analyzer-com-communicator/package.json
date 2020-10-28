@@ -1,6 +1,6 @@
 {
   "name": "@eove/flow-analyzer-com-communicator",
-  "version": "2.0.0",
+  "version": "2.0.2-dev.1",
   "description": "Communicator to communicate to flow analyzer",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -47,7 +47,7 @@
     "@types/lodash": "4.14.149",
     "@types/node": "13.7.4",
     "@types/rx": "4.1.1",
-    "@types/serialport": "7.0.4",
+    "@types/serialport": "8.0.1",
     "@types/sinon": "7.5.1",
     "jest": "25.1.0",
     "npm-run-all": "4.1.5",
@@ -76,6 +76,6 @@
     "debug": "4.1.1",
     "lodash": "4.17.15",
     "rxjs": "6.5.4",
-    "serialport": "7.1.5"
+    "serialport": "8.0.5"
   }
 }
