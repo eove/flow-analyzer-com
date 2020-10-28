@@ -151,19 +151,13 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     });
   }
 
-  function discover(): Promise<Device[]> {
-    return new Promise((resolve, reject) => {
-      SerialPort.list((error, serialPorts) => {
-        if (error) {
-          return reject(
-            new Error(`Error when discovering ports (${error.message})`)
-          );
-        }
-        return resolve(
-          serialPorts.map((serialPort: any) => ({ name: serialPort.comName }))
-        );
-      });
-    });
+  async function discover(): Promise<Device[]> {
+    try {
+      const devices = await SerialPort.list();
+      return devices.map((serialPort: any) => ({ name: serialPort.comName }));
+    } catch (error) {
+      throw new Error(`Error when discovering ports (${error.message})`);
+    }
   }
 
   function _sendEvent(event: { type: string; payload: any }) {
