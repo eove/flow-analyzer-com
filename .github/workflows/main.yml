@@ -23,7 +23,7 @@ jobs:
 
       - name: install
         run: |
-          ./ci/install.sh
+          ./ci/install.sh "${{ secrets.CI_TOKEN }}"
 
       - name: test
         run: |
