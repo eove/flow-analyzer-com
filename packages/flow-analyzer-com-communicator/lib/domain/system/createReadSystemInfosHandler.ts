@@ -1,78 +1,30 @@
-import { FrameType } from '../../protocol';
 import {
   DomainCommand,
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies
 } from '../DomainTypes';
+import { makeGetHardwareVersion } from './makeGetHardwareVersion';
+import { makeGetSerialNumber } from './makeGetSerialNumber';
+import { makeGetSoftwareVersion } from './makeGetSoftwareVersion';
 
 export default function createReadSystemInfosHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
-  const { runCommand, buildCommand, debug } = dependencies;
+  const { debug } = dependencies;
+
+  const getSerialNumber = makeGetSerialNumber(dependencies);
+  const getHardwareVersion = makeGetHardwareVersion(dependencies);
+  const getSoftwareVersion = makeGetSoftwareVersion(dependencies);
+
   return {
     type: 'READ_SYSTEM_INFOS',
-    handle: ({ type }: DomainCommand) => {
+    handle: async ({ type }: DomainCommand) => {
       debug(`running ${type} command handler...`);
 
-      return Promise.all([
-        getHardwareVersion(),
-        getSoftwareVersion(),
-        getSerialNumber()
-      ]).then((results: any) => {
-        const [hardwareVersion, softwareVersion, serialNumber] = results;
-        return { hardwareVersion, softwareVersion, serialNumber };
-      });
+      const hardwareVersion = await getHardwareVersion();
+      const softwareVersion = await getSoftwareVersion();
+      const serialNumber = await getSerialNumber();
+      return { hardwareVersion, softwareVersion, serialNumber };
     }
   };
-
-  function getHardwareVersion(): Promise<any> {
-    const command = buildCommand({
-      type: FrameType.READ_SYSTEM_INFO,
-      id: 1
-    });
-    return runCommand(command).then(answer => `${answer.value}`);
-  }
-
-  function getSerialNumber(): Promise<any> {
-    const command = buildCommand({
-      type: FrameType.READ_SYSTEM_INFO,
-      id: 8
-    });
-    return runCommand(command).then(answer => `${answer.value}`);
-  }
-
-  function getSoftwareVersion(): Promise<any> {
-    return Promise.all([
-      getMajorVersion(),
-      getMinorVersion(),
-      getRelease()
-    ]).then((results: any) => {
-      const [major, minor, release] = results;
-      return `${major}.${minor}.${release}`;
-    });
-
-    function getMajorVersion(): Promise<any> {
-      const command = buildCommand({
-        type: FrameType.READ_SYSTEM_INFO,
-        id: 2
-      });
-      return runCommand(command).then(answer => answer.value);
-    }
-
-    function getMinorVersion(): Promise<any> {
-      const command = buildCommand({
-        type: FrameType.READ_SYSTEM_INFO,
-        id: 3
-      });
-      return runCommand(command).then(answer => answer.value);
-    }
-
-    function getRelease(): Promise<any> {
-      const command = buildCommand({
-        type: FrameType.READ_SYSTEM_INFO,
-        id: 4
-      });
-      return runCommand(command).then(answer => answer.value);
-    }
-  }
 }
