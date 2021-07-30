@@ -100,6 +100,12 @@ Available commands:
 
 ```javascript
 {
+  type: 'READ_SERIAL_NUMBER';
+}
+```
+
+```javascript
+{
   type: 'EXEC_SET_RS232_ECHO',
   payload: {
     echoOn: true
@@ -122,14 +128,12 @@ const communicator = createCommunicator();
 
 communicator.command$.subscribe(command => console.log(command));
 
-communicator
-  .connect('/dev/ttyUSB1')
-  .then(() =>
-    communicator.sendCommand({
-      type: 'READ_MEASUREMENT',
-      payload: { name: 'humidity' }
-    })
-  );
+communicator.connect('/dev/ttyUSB1').then(() =>
+  communicator.sendCommand({
+    type: 'READ_MEASUREMENT',
+    payload: { name: 'humidity' }
+  })
+);
 ```
 
 ## answer\$
@@ -147,14 +151,12 @@ const communicator = createCommunicator();
 
 communicator.answer$.subscribe(answer => console.log(answer));
 
-communicator
-  .connect('/dev/ttyUSB1')
-  .then(() =>
-    communicator.sendCommand({
-      type: 'READ_MEASUREMENT',
-      payload: { name: 'humidity' }
-    })
-  );
+communicator.connect('/dev/ttyUSB1').then(() =>
+  communicator.sendCommand({
+    type: 'READ_MEASUREMENT',
+    payload: { name: 'humidity' }
+  })
+);
 ```
 
 ## data\$
@@ -172,14 +174,12 @@ const communicator = createCommunicator();
 
 communicator.data$.subscribe(data => console.log(data));
 
-communicator
-  .connect('/dev/ttyUSB1')
-  .then(() =>
-    communicator.sendCommand({
-      type: 'READ_MEASUREMENT',
-      payload: { name: 'humidity' }
-    })
-  );
+communicator.connect('/dev/ttyUSB1').then(() =>
+  communicator.sendCommand({
+    type: 'READ_MEASUREMENT',
+    payload: { name: 'humidity' }
+  })
+);
 ```
 
 ## event\$
@@ -197,12 +197,10 @@ const communicator = createCommunicator();
 
 communicator.event$.subscribe(data => console.log(data));
 
-communicator
-  .connect('/dev/ttyUSB1')
-  .then(() =>
-    communicator.sendCommand({
-      type: 'READ_MEASUREMENT',
-      payload: { name: 'humidity' }
-    })
-  );
+communicator.connect('/dev/ttyUSB1').then(() =>
+  communicator.sendCommand({
+    type: 'READ_MEASUREMENT',
+    payload: { name: 'humidity' }
+  })
+);
 ```
