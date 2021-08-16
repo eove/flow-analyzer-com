@@ -1,4 +1,5 @@
 import * as debugLib from 'debug';
+import * as _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
 import * as SerialPort from 'serialport';
 
@@ -18,6 +19,9 @@ interface TransportCreationOptions {
   debugEnabled?: boolean;
 }
 
+interface ConnOptions {
+  force?: boolean;
+}
 export interface Device {
   name: string;
 }
@@ -47,9 +51,10 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     discover
   };
 
-  function connect(portName: string): Promise<void> {
-    if (isConnected) {
-      return Promise.reject(new Error('already connected'));
+  function connect(portName: string, options?: ConnOptions): Promise<void> {
+    const { force } = _.defaults({}, options, { force: false });
+    if (isConnected && !force) {
+      return Promise.resolve();
     }
     const baudRate = 19200;
     port = new SerialPort(portName, { autoOpen: false, baudRate });
@@ -98,9 +103,10 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     }
   }
 
-  function disconnect(): Promise<void> {
-    if (!isConnected) {
-      return Promise.reject(new Error('already disconnected'));
+  function disconnect(options?: ConnOptions): Promise<void> {
+    const { force } = _.defaults({}, options, { force: false });
+    if (!isConnected && !force) {
+      return Promise.resolve();
     }
 
     return runDisconnect().then(() => {
