@@ -81,24 +81,34 @@ export function createCommunicator(
   };
 
   async function open(portName: string): Promise<void> {
-    await transport.connect(portName);
-    await sendCommand({
-      type: 'EXEC_SET_RS232_ECHO',
-      payload: { echoOn: rs232echoOn }
-    });
-    const serial = await sendCommand({
-      type: 'READ_SERIAL_NUMBER'
-    });
-    if (_.isEmpty(serial)) {
-      throw new Error('flow analyzer not responding');
-    }
-    _sendEvent({
-      type: 'COMMUNICATION_STARTED',
-      payload: {
-        portName,
-        serial
+    try {
+      await transport.connect(portName);
+      await sendCommand({
+        type: 'EXEC_SET_RS232_ECHO',
+        payload: { echoOn: rs232echoOn }
+      });
+      const serial = await sendCommand({
+        type: 'READ_SERIAL_NUMBER'
+      });
+      if (_.isEmpty(serial)) {
+        throw new Error('flow analyzer not responding');
       }
-    });
+      _sendEvent({
+        type: 'COMMUNICATION_STARTED',
+        payload: {
+          portName,
+          serial
+        }
+      });
+    } catch (error) {
+      _sendEvent({
+        type: 'COMMUNICATION_START_FAILED',
+        payload: {
+          portName
+        }
+      });
+      throw error;
+    }
   }
 
   function close(): Promise<void> {
