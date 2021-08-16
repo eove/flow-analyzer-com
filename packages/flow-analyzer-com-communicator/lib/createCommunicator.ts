@@ -132,6 +132,7 @@ export function createCommunicator(
   }
 
   function _sendEvent(event: { type: string; payload: any }) {
+    debug(`sent event ${event.type}`);
     eventSource.next(event);
   }
 }
