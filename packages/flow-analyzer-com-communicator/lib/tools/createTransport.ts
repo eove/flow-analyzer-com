@@ -51,8 +51,8 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     discover
   };
 
-  function connect(portName: string, options?: ConnOptions): Promise<void> {
-    const { force } = _.defaults({}, options, { force: false });
+  function connect(portName: string, connOptions?: ConnOptions): Promise<void> {
+    const { force } = _.defaults({}, connOptions, { force: false });
     if (isConnected && !force) {
       return Promise.resolve();
     }
@@ -103,8 +103,8 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     }
   }
 
-  function disconnect(options?: ConnOptions): Promise<void> {
-    const { force } = _.defaults({}, options, { force: false });
+  function disconnect(connOptions?: ConnOptions): Promise<void> {
+    const { force } = _.defaults({}, connOptions, { force: false });
     if (!isConnected && !force) {
       return Promise.resolve();
     }
