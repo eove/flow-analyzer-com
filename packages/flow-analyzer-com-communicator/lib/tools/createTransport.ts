@@ -115,7 +115,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
       }
     });
 
-    function runDisconnect() {
+    function runDisconnect(): Promise<void> {
       return new Promise((resolve, reject) => {
         port.close(error => {
           if (error) {
@@ -130,7 +130,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     }
   }
 
-  function write(bytes: string): Promise<any> {
+  function write(bytes: string): Promise<void> {
     const escapedBytes = bytes.replace('\r', '\\r');
     debug(`sending: ${escapedBytes}`);
     return new Promise((resolve, reject) => {
