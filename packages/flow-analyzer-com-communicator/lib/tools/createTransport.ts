@@ -96,9 +96,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
       port.on('data', onDataHandler);
       port.on('close', onCloseHandler);
       return () => {
-        port.removeListener('open', onOpenHandler);
-        port.removeListener('data', onDataHandler);
-        port.removeListener('close', onCloseHandler);
+        port.removeAllListeners();
       };
     }
   }
