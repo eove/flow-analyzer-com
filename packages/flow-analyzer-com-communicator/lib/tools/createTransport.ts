@@ -19,9 +19,6 @@ interface TransportCreationOptions {
   debugEnabled?: boolean;
 }
 
-interface ConnOptions {
-  force?: boolean;
-}
 export interface Device {
   name: string;
 }
@@ -32,7 +29,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
   const dataSource = new Subject();
   const eventSource = new Subject();
   let port: SerialPort;
-  let uninstallPortListeners: UninstallHandler;
+  let uninstallPortListeners: UninstallHandler | undefined;
   let isConnected = false;
 
   return {
@@ -51,11 +48,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     discover
   };
 
-  function connect(portName: string, connOptions?: ConnOptions): Promise<void> {
-    const { force } = _.defaults({}, connOptions, { force: false });
-    if (isConnected && !force) {
-      return Promise.resolve();
-    }
+  function connect(portName: string): Promise<void> {
     const baudRate = 19200;
     port = new SerialPort(portName, { autoOpen: false, baudRate });
     uninstallPortListeners = installPortListeners();
@@ -101,15 +94,11 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     }
   }
 
-  function disconnect(connOptions?: ConnOptions): Promise<void> {
-    const { force } = _.defaults({}, connOptions, { force: false });
-    if (!isConnected && !force) {
-      return Promise.resolve();
-    }
-
+  function disconnect(): Promise<void> {
     return runDisconnect().then(() => {
       if (uninstallPortListeners) {
         uninstallPortListeners();
+        uninstallPortListeners = undefined;
       }
     });
 
