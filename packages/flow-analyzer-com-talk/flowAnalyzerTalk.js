@@ -42,7 +42,7 @@ program
   )
   .action(options => {
     const { portName } = options;
-    const logErrorAndExit = makeLogErrorAndMayExit(options.exitOnError);
+    const logAndExit = makeLogAndMayExit(options.exitOnError);
     try {
       debug.enabled = options.debugEnabled;
       options.deviceType = options.analyzer;
@@ -64,9 +64,9 @@ program
         .then(() => {
           server.start();
         })
-        .catch(e => logErrorAndExit(e));
+        .catch(e => logAndExit({error: e}));
     } catch (e) {
-      logErrorAndExit(e);
+      logAndExit({error: e});
     }
   });
 
@@ -110,17 +110,25 @@ program
 
 program.version(version).parse(process.argv);
 
-process.on('unhandledRejection', e => {
-  const logErrorAndExit = makeLogErrorAndMayExit(globalOptions.exitOnError);
-  logErrorAndExit(e, 'Oops! unhandled rejection!');
+process.on('unhandledRejection', (reason, promise) => {
+  const logAndExit = makeLogAndMayExit(true);
+  logAndExit({reason, promise, msg: 'Oops! unhandled rejection!'});
 });
 
-function makeLogErrorAndMayExit(exitOnError) {
-  return (e, msg = undefined, rc = 1) => {
+function makeLogAndMayExit(exitOnError) {
+  return ({reason, promise, error, msg = undefined}, rc = 1) => {
     if (msg) {
       console.error(msg);
     }
-    console.error(e);
+    if (error) {
+      console.error(error);
+    }
+    if (reason) {
+      console.error(reason);
+    }
+    if (promise) {
+      console.error(promise);
+    }
     if (exitOnError) {
       process.exit(rc);
     }
