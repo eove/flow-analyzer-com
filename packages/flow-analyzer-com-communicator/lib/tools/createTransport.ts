@@ -24,8 +24,9 @@ export interface Device {
 }
 
 export function createTransport(options?: TransportCreationOptions): Transport {
-  const { debugEnabled = false } = options || {};
-  const debug = Object.assign(debugLib('transport'), { enabled: debugEnabled });
+  const { debugEnabled } = _.defaults({}, options, { debugEnabled: false });
+  const debug = debugLib('serial-transport');
+  debug.enabled = debugEnabled;
   const dataSource = new Subject();
   const eventSource = new Subject();
   let port: SerialPort;
@@ -106,10 +107,9 @@ export function createTransport(options?: TransportCreationOptions): Transport {
       return new Promise((resolve, reject) => {
         port.close(error => {
           if (error) {
-            const err = new Error(
-              `Error when disconnecting (${error.message})`
+            return reject(
+              new Error(`Error when disconnecting (${error.message})`)
             );
-            return reject(err);
           }
           return resolve();
         });
@@ -123,20 +123,18 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     return new Promise((resolve, reject) => {
       port.write(Buffer.from(bytes), writeError => {
         if (writeError) {
-          const err = new Error(
-            `Error when writing data (${writeError.message})`
+          return reject(
+            new Error(`Error when writing data (${writeError.message})`)
           );
-          reject(err);
         } else {
           port.drain(flushError => {
             if (flushError) {
-              const err = new Error(
-                `Error when flushing data (${flushError.message})`
+              return reject(
+                new Error(`Error when flushing data (${flushError.message})`)
               );
-              reject(err);
             } else {
               debug(`wrote: ${escapedBytes}`);
-              resolve();
+              return resolve();
             }
           });
         }
