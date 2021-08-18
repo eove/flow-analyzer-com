@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { createMessageBus, MessageBus } from '@arpinum/messaging';
 import { createQueue } from '@arpinum/promising';
 import { from, Observable, Subject, throwError } from 'rxjs';
@@ -27,10 +28,24 @@ import {
 } from '../protocol';
 import { Transport } from './createTransport';
 
+export interface ErrorEvent {
+  type: CommandError;
+  payload: any;
+}
+
 interface CommandRunner {
   postCommand: (cmd: DomainCommand) => Promise<{}>;
   answer$: Observable<ProtocolAnswer>;
+  error$: Observable<ErrorEvent>;
   command$: Observable<unknown>;
+}
+
+interface CommandRunnerOptions {
+  maxSequentialErrors?: number;
+}
+
+export enum CommandError {
+  WriteError = 'maxSequentialErrorsReached'
 }
 
 interface CommandRunnerDependencies {
@@ -41,6 +56,7 @@ interface CommandRunnerDependencies {
   findAnswers: any;
   transport: Transport;
   data$: Observable<unknown>;
+  options?: CommandRunnerOptions;
 }
 
 export function createCommandRunner(
@@ -56,11 +72,20 @@ export function createCommandRunner(
     handlerFactories,
     buildCommand,
     transport,
-    debug
+    debug,
+    options
   } = dependencies;
+  const { maxSequentialErrors } = _.defaults({}, options, {
+    maxSequentialErrors: 3
+  });
   const commandQueue = createQueue({ concurrency: 1 });
   const commandSource = new Subject();
+  const errorSource = new Subject();
+  const errorCounters = {
+    sequentialWriteErrors: 0
+  };
 
+  const error$ = errorSource.asObservable() as Observable<ErrorEvent>;
   const answer$ = data$.pipe(
     scan(
       (acc: FindAnswerResult, byte: any) => {
@@ -87,6 +112,7 @@ export function createCommandRunner(
   return {
     postCommand,
     answer$,
+    error$,
     get command$() {
       return commandSource.asObservable();
     }
@@ -96,13 +122,22 @@ export function createCommandRunner(
     return commandBus.post(cmd);
   }
 
-  function runCommand(cmd: ProtocolCommand) {
+  function runCommand(cmd: ProtocolCommand): Promise<any> {
     const { raw, answerTimeout } = cmd;
-    return commandQueue.enqueue(() => {
-      commandSource.next(cmd);
-      const answer = waitAnswer(cmd);
-      return transport.write(raw).then(() => answer);
-    });
+    return commandQueue
+      .enqueue(() => {
+        commandSource.next(cmd);
+        const answer = waitAnswer(cmd);
+        return transport.write(raw).then(() => answer);
+      })
+      .then(result => {
+        initializeErrorCounter();
+        return result;
+      })
+      .catch(e => {
+        mayFireSequentialWriteErrors();
+        throw e;
+      });
 
     function waitAnswer(currentCmd: ProtocolCommand) {
       return commandAnswer$()
@@ -122,13 +157,26 @@ export function createCommandRunner(
               ? a
               : throwError(new Error('device answer says: invalid! :('))
           ),
-          first()
+          first(),
+          catchError(error => throwError(error))
         );
       }
 
       function isAnswerRelatedToCommand(a: ProtocolAnswer) {
         return a.type === currentCmd.type && a.id === currentCmd.id;
       }
+    }
+
+    function mayFireSequentialWriteErrors() {
+      if (errorCounters.sequentialWriteErrors >= maxSequentialErrors) {
+        errorSource.next({ type: CommandError.WriteError });
+        initializeErrorCounter();
+      }
+      errorCounters.sequentialWriteErrors += 1;
+    }
+
+    function initializeErrorCounter() {
+      errorCounters.sequentialWriteErrors = 0;
     }
   }
 

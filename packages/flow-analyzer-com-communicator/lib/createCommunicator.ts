@@ -1,15 +1,22 @@
 import * as debugLib from 'debug';
 import * as _ from 'lodash';
 import { merge, Observable, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { DeviceTypes, DomainCommand } from './domain';
 import { commandHandlerFactories } from './domain';
 import { buildCommand, findAnswers } from './protocol';
-import { createCommandRunner, createTransport, Device } from './tools';
+import {
+  CommandError,
+  createCommandRunner,
+  createTransport,
+  Device
+} from './tools';
 
 export interface Communicator {
   open: (portName: string) => Promise<void>;
   close: () => Promise<void>;
+  dispose: () => Promise<void>;
   listPorts: () => Promise<Device[]>;
   sendCommand: (command: DomainCommand) => Promise<{}>;
   request: (commandType: string, args: any) => Promise<{}>;
@@ -59,10 +66,21 @@ export function createCommunicator(
     data$: transport.data$,
     transport
   });
+  const runnerErrorSubscription = commandRunner.error$
+    .pipe(filter(e => e.type === CommandError.WriteError))
+    .subscribe(async e => {
+      try {
+        debug(`${e.type} error, closing connection`);
+        await close();
+      } catch (error) {
+        debug(`could not close connection (${error.message})`);
+      }
+    });
 
   return {
     open,
     close,
+    dispose,
     listPorts,
     get data$() {
       return transport.data$;
@@ -116,6 +134,11 @@ export function createCommunicator(
       _sendEvent({ type: 'COMMUNICATION_STOPPED', payload: undefined });
       return result;
     });
+  }
+
+  function dispose(): Promise<void> {
+    runnerErrorSubscription.unsubscribe();
+    return Promise.resolve();
   }
 
   function sendCommand(command: DomainCommand): Promise<any> {
