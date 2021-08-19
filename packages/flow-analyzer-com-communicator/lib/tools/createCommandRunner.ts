@@ -3,13 +3,12 @@ import { createMessageBus, MessageBus } from '@arpinum/messaging';
 import { createQueue } from '@arpinum/promising';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import {
-  catchError,
+  // catchError,
   filter,
   first,
   map,
+  tap,
   mergeMap,
-  publish,
-  refCount,
   scan,
   timeout
 } from 'rxjs/operators';
@@ -124,33 +123,28 @@ export function createCommandRunner(
 
   function runCommand(cmd: ProtocolCommand): Promise<any> {
     const { raw, answerTimeout } = cmd;
+    const answer = waitAnswer(cmd);
+    console.log('runCommand > enqueing command:', cmd);
     return commandQueue
       .enqueue(() => {
         commandSource.next(cmd);
-        const answer = waitAnswer(cmd);
-        return transport.write(raw).then(() => answer);
+        return transport.write(raw);
       })
+      .then(() => answer)
       .then(result => {
+        console.log('runCommand > OK, result:', result);
         initializeErrorCounter();
         return result;
       })
       .catch(e => {
+        console.log('runCommand > KO !!! , error:', e);
         mayFireSequentialWriteErrors();
         throw e;
       });
 
     function waitAnswer(currentCmd: ProtocolCommand) {
-      return commandAnswer$()
+      return answer$
         .pipe(
-          timeout(answerTimeout),
-          catchError(error => throwError(error))
-        )
-        .toPromise();
-
-      function commandAnswer$() {
-        return answer$.pipe(
-          publish(),
-          refCount(),
           filter(isAnswerRelatedToCommand),
           map(a =>
             isAnswerValid(a)
@@ -158,9 +152,14 @@ export function createCommandRunner(
               : throwError(new Error('device answer says: invalid! :('))
           ),
           first(),
-          catchError(error => throwError(error))
-        );
-      }
+          timeout(answerTimeout),
+          tap(
+            () => undefined,
+            (error: Error) => console.log('runCommand > error when waiting answer', error)
+          ),
+          // catchError((error) => throwError(error))
+        )
+        .toPromise();
 
       function isAnswerRelatedToCommand(a: ProtocolAnswer) {
         return a.type === currentCmd.type && a.id === currentCmd.id;
