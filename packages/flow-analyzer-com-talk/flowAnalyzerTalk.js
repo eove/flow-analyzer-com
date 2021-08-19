@@ -50,7 +50,6 @@ program
       const communicator = createCommunicator(options);
       communicator.event$.subscribe(event => debug('event:', event));
       communicator.answer$.subscribe(answer => debug('answer:', answer));
-      communicator.command$.subscribe(event => debug('command:', event));
       const server = createShellServer(
         {
           communicator,
