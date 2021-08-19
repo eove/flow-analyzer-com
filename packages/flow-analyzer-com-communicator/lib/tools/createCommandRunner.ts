@@ -8,8 +8,6 @@ import {
   first,
   map,
   mergeMap,
-  publish,
-  refCount,
   scan,
   timeout
 } from 'rxjs/operators';
@@ -127,6 +125,9 @@ export function createCommandRunner(
     return commandQueue
       .enqueue(() => {
         commandSource.next(cmd);
+        if (!transport.connected) {
+          return Promise.reject(new Error('cannot run command (not connected)'))
+        }
         const answer = waitAnswer(cmd);
         return transport.write(raw).then(() => answer);
       })
@@ -140,17 +141,8 @@ export function createCommandRunner(
       });
 
     function waitAnswer(currentCmd: ProtocolCommand) {
-      return commandAnswer$()
+      return answer$
         .pipe(
-          timeout(answerTimeout),
-          catchError(error => throwError(error))
-        )
-        .toPromise();
-
-      function commandAnswer$() {
-        return answer$.pipe(
-          publish(),
-          refCount(),
           filter(isAnswerRelatedToCommand),
           map(a =>
             isAnswerValid(a)
@@ -158,9 +150,10 @@ export function createCommandRunner(
               : throwError(new Error('device answer says: invalid! :('))
           ),
           first(),
+          timeout(answerTimeout),
           catchError(error => throwError(error))
-        );
-      }
+        )
+        .toPromise();
 
       function isAnswerRelatedToCommand(a: ProtocolAnswer) {
         return a.type === currentCmd.type && a.id === currentCmd.id;
