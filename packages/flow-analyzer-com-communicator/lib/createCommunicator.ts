@@ -27,28 +27,35 @@ export interface Communicator {
 }
 
 interface CommunicatiorOptions {
+  label?: string;
   deviceType?: DeviceTypes;
   debugEnabled?: boolean;
   transportDebugEnabled?: boolean;
   rs232echoOn?: boolean;
+  translate?: (msg: string) => string;
 }
 
 export function createCommunicator(
   options?: CommunicatiorOptions
 ): Communicator {
-  const debug = debugLib('analyzer');
   const {
+    label,
     debugEnabled,
     transportDebugEnabled,
     rs232echoOn,
-    deviceType
+    deviceType,
+    translate
   } = _.defaults(options, {
+    label: 'analyzer',
     debugEnabled: false,
     transportDebugEnabled: false,
     rs232echoOn: false,
-    deviceType: DeviceTypes.PF300
+    deviceType: DeviceTypes.PF300,
+    translate: (msg: string) => msg
   });
+  const debug = debugLib(label);
   debug.enabled = debugEnabled;
+
   const eventSource = new Subject();
 
   const transport = createTransport({ debugEnabled: transportDebugEnabled });
@@ -64,7 +71,8 @@ export function createCommunicator(
       ...commandHandlerFactories.execute
     ],
     data$: transport.data$,
-    transport
+    transport,
+    translate
   });
   const runnerErrorSubscription = commandRunner.error$
     .pipe(filter(e => e.type === CommandError.WriteError))
@@ -109,7 +117,7 @@ export function createCommunicator(
         type: 'READ_SERIAL_NUMBER'
       });
       if (_.isEmpty(serial)) {
-        throw new Error('flow analyzer not responding');
+        throw new Error(translate('flow analyzer not responding'));
       }
       _sendEvent({
         type: 'COMMUNICATION_STARTED',

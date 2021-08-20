@@ -54,6 +54,7 @@ interface CommandRunnerDependencies {
   findAnswers: any;
   transport: Transport;
   data$: Observable<unknown>;
+  translate?: (msg: string) => string;
   options?: CommandRunnerOptions;
 }
 
@@ -71,8 +72,9 @@ export function createCommandRunner(
     buildCommand,
     transport,
     debug,
+    translate,
     options
-  } = dependencies;
+  } = _.defaults({}, dependencies, { translate: (msg: string) => msg });
   const { maxSequentialErrors } = _.defaults({}, options, {
     maxSequentialErrors: 3
   });
@@ -126,10 +128,17 @@ export function createCommandRunner(
       .enqueue(() => {
         commandSource.next(cmd);
         if (!transport.connected) {
-          return Promise.reject(new Error('cannot run command (not connected)'))
+          return Promise.reject(
+            new Error(translate('Flow analyzer disconnected'))
+          );
         }
         const answer = waitAnswer(cmd);
-        return transport.write(raw).then(() => answer);
+        return transport
+          .write(raw)
+          .then(() => answer)
+          .catch(() => {
+            throw new Error(translate('Cannot communicate with flow analyzer'));
+          });
       })
       .then(result => {
         initializeErrorCounter();
