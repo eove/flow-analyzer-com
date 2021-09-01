@@ -1,4 +1,4 @@
-# flow-analyzer-com 
+# `flow-analyzer-com`
 
 [![Build Status](https://github.com/eove/flow-analyzer-com/workflows/CI/badge.svg)](https://github.com/eove/flow-analyzer-com/actions?query=workflow%3ACI)
 
