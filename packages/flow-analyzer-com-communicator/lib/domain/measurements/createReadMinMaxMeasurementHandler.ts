@@ -3,7 +3,7 @@ import { FrameType } from '../../protocol';
 import {
   DomainCommand,
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import getMeasurementInfos from './getMeasurementInfos';
 import makeFormatMeasurementAnswer from './makeFormatMeasurementAnswer';
@@ -24,7 +24,7 @@ For big exchanges (command and corresponding null-value answer):
 
 const MIN_SAMPLE_DELAY_MS = 20;
 
-const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
+const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function createReadMinMaxMeasurementHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
@@ -34,37 +34,32 @@ export default function createReadMinMaxMeasurementHandler(
     type: 'READ_MIN_MAX_MEASUREMENT',
     handle: ({ type, payload }: DomainCommand) => {
       debug(`running ${type} command handler...`);
-      const {
-        sampleDelayMS,
-        samplesNb,
-        name,
-        durationMS,
-        sampleRate
-      } = extractFromPayload(payload);
+      const { sampleDelayMS, samplesNb, name, durationMS, sampleRate } =
+        extractFromPayload(payload);
       const { divider, unit, id } = getMeasurementInfos(name);
       const format = makeFormatMeasurementAnswer({ name, id, divider, unit });
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,
-        id
+        id,
       });
       debug(
         `will read '${name}' ${samplesNb} times over ${durationMS} ms (sample delay: ${sampleDelayMS} ms, sample rate: ${sampleRate}/s)`
       );
       return Promise.all(
-        _.range(samplesNb).map(i =>
+        _.range(samplesNb).map((i) =>
           delay(sampleDelayMS * i).then(() => readMeasurement())
         )
-      ).then(answers => ({
+      ).then((answers) => ({
         id,
         name,
         min: minFrom(answers),
         max: maxFrom(answers),
         unit,
-        values: answers
+        values: answers,
       }));
 
       function readMeasurement(): any {
-        return runCommand(command).then(answer => format(answer));
+        return runCommand(command).then((answer) => format(answer));
       }
 
       function minFrom(answers: any[]) {
@@ -76,7 +71,7 @@ export default function createReadMinMaxMeasurementHandler(
         const max = _.maxBy(answers, 'value');
         return max ? max.value : undefined;
       }
-    }
+    },
   };
 }
 

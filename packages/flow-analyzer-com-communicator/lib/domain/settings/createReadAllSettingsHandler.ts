@@ -2,7 +2,7 @@ import { FrameType } from '../../protocol';
 import {
   DomainCommand,
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import getSettingInfos, { getAllSettingInfos } from './getSettingInfos';
 import makeFormatSettingAnswer from './makeFormatSettingAnswer';
@@ -23,16 +23,16 @@ export default function createReadSettingHandler(
             name,
             unit,
             id,
-            valueToName
+            valueToName,
           });
 
           const command = buildCommand({
             type: FrameType.READ_SETTING,
-            id
+            id,
           });
-          return runCommand(command).then(answer => format(answer));
+          return runCommand(command).then((answer) => format(answer));
         })
       );
-    }
+    },
   };
 }

@@ -6,5 +6,5 @@ import createReadMinMaxMeasurementHandler from './createReadMinMaxMeasurementHan
 export const factories: DomainCommandHandlerFactory[] = [
   createReadMeasurementHandler,
   createReadMeasurementsHandler,
-  createReadMinMaxMeasurementHandler
+  createReadMinMaxMeasurementHandler,
 ];

@@ -1,6 +1,6 @@
-import * as _ from 'lodash';
 import { createMessageBus, MessageBus } from '@arpinum/messaging';
 import { createQueue } from '@arpinum/promising';
+import * as _ from 'lodash';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import {
   catchError,
@@ -9,20 +9,19 @@ import {
   map,
   mergeMap,
   scan,
-  timeout
+  timeout,
 } from 'rxjs/operators';
-
 import {
   DeviceTypes,
   DomainCommand,
-  DomainCommandHandlerFactory
+  DomainCommandHandlerFactory,
 } from '../domain';
 import {
   FindAnswerResult,
   findAnswers,
   isAnswerValid,
   ProtocolAnswer,
-  ProtocolCommand
+  ProtocolCommand,
 } from '../protocol';
 import { Transport } from './createTransport';
 
@@ -43,7 +42,7 @@ interface CommandRunnerOptions {
 }
 
 export enum CommandError {
-  WriteError = 'maxSequentialErrorsReached'
+  WriteError = 'maxSequentialErrorsReached',
 }
 
 interface CommandRunnerDependencies {
@@ -63,7 +62,7 @@ export function createCommandRunner(
 ): CommandRunner {
   const commandBus = createMessageBus({
     ensureAtLeastOneHandler: true,
-    exclusiveHandlers: true
+    exclusiveHandlers: true,
   });
   const {
     deviceType,
@@ -73,16 +72,16 @@ export function createCommandRunner(
     transport,
     debug,
     translate,
-    options
+    options,
   } = _.defaults({}, dependencies, { translate: (msg: string) => msg });
   const { maxSequentialErrors } = _.defaults({}, options, {
-    maxSequentialErrors: 3
+    maxSequentialErrors: 3,
   });
   const commandQueue = createQueue({ concurrency: 1 });
   const commandSource = new Subject();
   const errorSource = new Subject();
   const errorCounters = {
-    sequentialWriteErrors: 0
+    sequentialWriteErrors: 0,
   };
 
   const error$ = errorSource.asObservable() as Observable<ErrorEvent>;
@@ -96,7 +95,7 @@ export function createCommandRunner(
       },
       {
         remaining: [],
-        answers: []
+        answers: [],
       }
     ),
     filter((result: FindAnswerResult) => result.answers.length !== 0),
@@ -115,7 +114,7 @@ export function createCommandRunner(
     error$,
     get command$() {
       return commandSource.asObservable();
-    }
+    },
   };
 
   function postCommand(cmd: DomainCommand): Promise<{}> {
@@ -140,11 +139,11 @@ export function createCommandRunner(
             throw new Error(translate('Cannot communicate with flow analyzer'));
           });
       })
-      .then(result => {
+      .then((result) => {
         initializeErrorCounter();
         return result;
       })
-      .catch(e => {
+      .catch((e) => {
         mayFireSequentialWriteErrors();
         throw e;
       });
@@ -153,14 +152,14 @@ export function createCommandRunner(
       return answer$
         .pipe(
           filter(isAnswerRelatedToCommand),
-          map(a =>
+          map((a) =>
             isAnswerValid(a)
               ? a
               : throwError(new Error('device answer says: invalid! :('))
           ),
           first(),
           timeout(answerTimeout),
-          catchError(error => throwError(error))
+          catchError((error) => throwError(error))
         )
         .toPromise();
 

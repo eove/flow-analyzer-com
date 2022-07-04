@@ -12,13 +12,13 @@ describe('Format setting answser', () => {
         value: 100,
         type: FrameType.READ_MEASUREMENT,
         id: 8,
-        raw: 'RRRRRRR'
+        raw: 'RRRRRRR',
       })
     ).toEqual({
       valueAsString: '100',
       id: 8,
       name: 'o2',
-      value: 100
+      value: 100,
     });
   });
 
@@ -27,7 +27,7 @@ describe('Format setting answser', () => {
       name: 'o2',
       id: 8,
       valueToName,
-      unit: '%'
+      unit: '%',
     });
 
     expect(
@@ -35,14 +35,14 @@ describe('Format setting answser', () => {
         value: null,
         type: FrameType.READ_MEASUREMENT,
         id: 8,
-        raw: 'RRRRRRR'
+        raw: 'RRRRRRR',
       })
     ).toEqual({
       valueAsString: '-',
       id: 8,
       name: 'o2',
       value: null,
-      unit: '%'
+      unit: '%',
     });
   });
 });

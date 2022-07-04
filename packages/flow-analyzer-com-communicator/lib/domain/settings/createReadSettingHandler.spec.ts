@@ -1,7 +1,7 @@
 import { stub } from 'sinon';
 import {
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import createReadSettingHandler from './createReadSettingHandler';
 
@@ -13,7 +13,7 @@ describe('Read setting handler', () => {
       id: 3,
       type: 'RS',
       value: 1,
-      raw: 'RRRRRRR'
+      raw: 'RRRRRRR',
     });
     const buildCommand = stub().returns({});
     const debug = (msg: any) => msg;
@@ -22,21 +22,21 @@ describe('Read setting handler', () => {
       deviceType: 'h4',
       runCommand,
       buildCommand,
-      debug
+      debug,
     } as DomainCommandHandlerFactoryDependencies);
   });
 
   it('should return a formatted setting', async () => {
     const result = await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'gazType' }
+      payload: { name: 'gazType' },
     });
 
     expect(result).toEqual({
       valueAsString: 'Air/O2-man.',
       id: 3,
       name: 'gazType',
-      value: 1
+      value: 1,
     });
   });
 
@@ -44,7 +44,7 @@ describe('Read setting handler', () => {
     return expect(() => {
       handler.handle({
         type: 'A_TYPE',
-        payload: { name: 'unknown' }
+        payload: { name: 'unknown' },
       });
     }).toThrow('Invalid unknown setting');
   });

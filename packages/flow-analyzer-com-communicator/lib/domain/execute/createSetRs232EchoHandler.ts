@@ -2,7 +2,7 @@ import { FrameType } from '../../protocol';
 import {
   DomainCommand,
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 
 export default function createSetRs232EchoHandler(
@@ -19,10 +19,10 @@ export default function createSetRs232EchoHandler(
       const command = buildCommand({
         type: FrameType.EXECUTE_COMMAND,
         id: 5,
-        value: echoOn ? '1' : '0'
+        value: echoOn ? '1' : '0',
       });
 
       return runCommand(command);
-    }
+    },
   };
 }

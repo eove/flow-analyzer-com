@@ -7,7 +7,7 @@ export default function getSettingInfos(
 ): SettingInfo {
   const supportedSettings = getSupportedSettingInfos(deviceType);
 
-  const found = supportedSettings.filter(s => s.name === name);
+  const found = supportedSettings.filter((s) => s.name === name);
   if (found.length) {
     return found[0];
   }
@@ -23,7 +23,7 @@ export function getAllSettingInfos(deviceType: string): SettingInfo[] {
 }
 
 function getSupportedSettingInfos(deviceType: string): SettingInfo[] {
-  return settingsInfos.filter(s => _.includes(s.supportedBy, deviceType));
+  return settingsInfos.filter((s) => _.includes(s.supportedBy, deviceType));
 }
 
 interface SettingInfo {
@@ -45,13 +45,13 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => GAZ_TYPE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(GAZ_TYPE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(GAZ_TYPE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'manualOxygenConcentration',
     id: 2,
     unit: '%',
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'gazStandards',
@@ -60,7 +60,7 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => GAZ_STANDARDS_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(GAZ_STANDARDS_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(GAZ_STANDARDS_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'respMode',
@@ -69,7 +69,7 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => RESP_MODE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(RESP_MODE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(RESP_MODE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'triggerSource',
@@ -78,7 +78,7 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => TRIGGER_SOURCE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(TRIGGER_SOURCE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(TRIGGER_SOURCE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'startTriggerSignal',
@@ -89,7 +89,7 @@ const settingsInfos: SettingInfo[] = [
       START_TRIGGER_SIGNAL_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(START_TRIGGER_SIGNAL_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(START_TRIGGER_SIGNAL_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'startTriggerEdge',
@@ -100,12 +100,12 @@ const settingsInfos: SettingInfo[] = [
       START_TRIGGER_EDGE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(START_TRIGGER_EDGE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(START_TRIGGER_EDGE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'startTriggerSignalValue',
     id: 8,
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'endTriggerSignal',
@@ -116,7 +116,7 @@ const settingsInfos: SettingInfo[] = [
       END_TRIGGER_SIGNAL_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(END_TRIGGER_SIGNAL_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(END_TRIGGER_SIGNAL_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'endTriggerEdge',
@@ -126,17 +126,17 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => END_TRIGGER_EDGE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(END_TRIGGER_EDGE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(END_TRIGGER_EDGE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'endTriggerSignalValue',
     id: 11,
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'triggerDelay',
     id: 12,
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'baseFlowEnabled',
@@ -147,12 +147,12 @@ const settingsInfos: SettingInfo[] = [
       BASE_FLOW_ENABLED_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(BASE_FLOW_ENABLED_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(BASE_FLOW_ENABLED_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'baseFlowValue',
     id: 14,
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'filterType',
@@ -161,28 +161,28 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => FILTER_TYPE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(FILTER_TYPE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(FILTER_TYPE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300]
+    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
   },
   {
     name: 'startTriggerDelay',
     id: 19,
-    supportedBy: [DeviceTypes.CITREX_H4]
+    supportedBy: [DeviceTypes.CITREX_H4],
   },
   {
     name: 'endTriggerDelay',
     id: 20,
-    supportedBy: [DeviceTypes.CITREX_H4]
+    supportedBy: [DeviceTypes.CITREX_H4],
   },
   {
     name: 'gazHumidity',
     id: 21,
-    supportedBy: [DeviceTypes.CITREX_H4]
+    supportedBy: [DeviceTypes.CITREX_H4],
   },
   {
     name: 'respParamPressureSource',
     id: 22,
-    supportedBy: [DeviceTypes.CITREX_H4]
-  }
+    supportedBy: [DeviceTypes.CITREX_H4],
+  },
 ];
 
 const GAZ_TYPE_VALUE_TO_NAME: any = {
@@ -196,7 +196,7 @@ const GAZ_TYPE_VALUE_TO_NAME: any = {
   '7': 'He/O2-aut.',
   '8': 'N2',
   '9': 'CO2',
-  '10': 'Custom gas'
+  '10': 'Custom gas',
 };
 const GAZ_TYPE_NAME_TO_VALUE = _.invert(GAZ_TYPE_VALUE_TO_NAME);
 
@@ -213,7 +213,7 @@ const GAZ_STANDARDS_VALUE_TO_NAME: any = {
   '9': 'Ambient Pressure 21°, Dry',
   '10': 'Standard Temperature and Pressure - Humid',
   '11': 'Ambient Temperature and Pressure - Dry',
-  '12': 'Ambient Temperature and Pressure - Saturated'
+  '12': 'Ambient Temperature and Pressure - Saturated',
 };
 
 const GAZ_STANDARDS_NAME_TO_VALUE = _.invert(GAZ_STANDARDS_VALUE_TO_NAME);
@@ -221,7 +221,7 @@ const GAZ_STANDARDS_NAME_TO_VALUE = _.invert(GAZ_STANDARDS_VALUE_TO_NAME);
 const RESP_MODE_VALUE_TO_NAME: any = {
   '0': 'Adult',
   '1': 'Pediatric',
-  '2': 'High Frequency'
+  '2': 'High Frequency',
 };
 const RESP_MODE_NAME_TO_VALUE = _.invert(RESP_MODE_VALUE_TO_NAME);
 
@@ -229,13 +229,13 @@ const TRIGGER_SOURCE_VALUE_TO_NAME: any = {
   '1': 'internal High Flow Channel',
   '2': 'internal Low Flow Channel (FlowAnalyser only)',
   '3': 'external High Flow Channel',
-  '4': 'external Low Flow Channel (FlowAnalyser only)'
+  '4': 'external Low Flow Channel (FlowAnalyser only)',
 };
 const TRIGGER_SOURCE_NAME_TO_VALUE = _.invert(TRIGGER_SOURCE_VALUE_TO_NAME);
 
 const START_TRIGGER_SIGNAL_VALUE_TO_NAME: any = {
   '0': 'Flow',
-  '1': 'Pressure'
+  '1': 'Pressure',
 };
 const START_TRIGGER_SIGNAL_NAME_TO_VALUE = _.invert(
   START_TRIGGER_SIGNAL_VALUE_TO_NAME
@@ -243,7 +243,7 @@ const START_TRIGGER_SIGNAL_NAME_TO_VALUE = _.invert(
 
 const START_TRIGGER_EDGE_VALUE_TO_NAME: any = {
   '0': 'Rising',
-  '1': 'Falling'
+  '1': 'Falling',
 };
 const START_TRIGGER_EDGE_NAME_TO_VALUE = _.invert(
   START_TRIGGER_EDGE_VALUE_TO_NAME
@@ -251,7 +251,7 @@ const START_TRIGGER_EDGE_NAME_TO_VALUE = _.invert(
 
 const END_TRIGGER_SIGNAL_VALUE_TO_NAME: any = {
   '0': 'Flow',
-  '1': 'Pressure'
+  '1': 'Pressure',
 };
 const END_TRIGGER_SIGNAL_NAME_TO_VALUE = _.invert(
   END_TRIGGER_SIGNAL_VALUE_TO_NAME
@@ -259,13 +259,13 @@ const END_TRIGGER_SIGNAL_NAME_TO_VALUE = _.invert(
 
 const END_TRIGGER_EDGE_VALUE_TO_NAME: any = {
   '0': 'Rising',
-  '1': 'Falling'
+  '1': 'Falling',
 };
 const END_TRIGGER_EDGE_NAME_TO_VALUE = _.invert(END_TRIGGER_EDGE_VALUE_TO_NAME);
 
 const BASE_FLOW_ENABLED_VALUE_TO_NAME: any = {
   '0': 'False',
-  '1': 'True'
+  '1': 'True',
 };
 const BASE_FLOW_ENABLED_NAME_TO_VALUE = _.invert(
   BASE_FLOW_ENABLED_VALUE_TO_NAME
@@ -275,6 +275,6 @@ const FILTER_TYPE_VALUE_TO_NAME: any = {
   '0': 'None',
   '1': 'Filter Low',
   '2': 'Filter Medium',
-  '3': 'Filter High'
+  '3': 'Filter High',
 };
 const FILTER_TYPE_NAME_TO_VALUE = _.invert(FILTER_TYPE_VALUE_TO_NAME);

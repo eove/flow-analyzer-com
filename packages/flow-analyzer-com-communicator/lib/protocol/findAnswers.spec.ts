@@ -9,7 +9,7 @@ describe('Finding answers', () => {
 
     expect(result).toEqual({
       answers: [],
-      remaining: ['%', 'W', 'S']
+      remaining: ['%', 'W', 'S'],
     });
   });
 
@@ -25,16 +25,16 @@ describe('Finding answers', () => {
           type: FrameType.READ_SETTING,
           id: 12,
           value: 124,
-          raw: '%RS#12$124\r'
+          raw: '%RS#12$124\r',
         },
         {
           type: FrameType.READ_MEASUREMENT,
           id: 25,
           value: 100,
-          raw: '%RM#25$100\r'
-        }
+          raw: '%RM#25$100\r',
+        },
       ],
-      remaining: []
+      remaining: [],
     });
   });
 
@@ -49,10 +49,10 @@ describe('Finding answers', () => {
           type: FrameType.READ_SETTING,
           id: 12,
           value: -124,
-          raw: '%RS#12$-124\r'
-        }
+          raw: '%RS#12$-124\r',
+        },
       ],
-      remaining: []
+      remaining: [],
     });
   });
 
@@ -67,10 +67,10 @@ describe('Finding answers', () => {
           type: FrameType.EXECUTE_COMMAND,
           id: 5,
           value: undefined,
-          raw: '%CM#5\r'
-        }
+          raw: '%CM#5\r',
+        },
       ],
-      remaining: []
+      remaining: [],
     });
   });
 
@@ -87,16 +87,16 @@ describe('Finding answers', () => {
           type: FrameType.READ_SETTING,
           id: 12,
           value: 124,
-          raw: '%RS#12$124\r'
+          raw: '%RS#12$124\r',
         },
         {
           type: FrameType.READ_MEASUREMENT,
           id: 25,
           value: 100,
-          raw: '%RM#25$100\r'
-        }
+          raw: '%RM#25$100\r',
+        },
       ],
-      remaining: []
+      remaining: [],
     });
   });
 
@@ -112,10 +112,10 @@ describe('Finding answers', () => {
           type: FrameType.READ_SETTING,
           id: 12,
           value: 124,
-          raw: '%RS#12$124\r'
-        }
+          raw: '%RS#12$124\r',
+        },
       ],
-      remaining: ['%', 'R', 'M', '#', '2', '5']
+      remaining: ['%', 'R', 'M', '#', '2', '5'],
     });
   });
 
@@ -132,20 +132,20 @@ describe('Finding answers', () => {
           type: FrameType.READ_SETTING,
           id: 12,
           value: 124,
-          raw: '%RS#12$124\r'
+          raw: '%RS#12$124\r',
         },
         {
           type: FrameType.INVALID,
-          raw: '?'
+          raw: '?',
         },
         {
           type: FrameType.WRITE_SETTING,
           id: 25,
           value: 100,
-          raw: '%WS#25$100\r'
-        }
+          raw: '%WS#25$100\r',
+        },
       ],
-      remaining: []
+      remaining: [],
     });
   });
 
@@ -163,10 +163,10 @@ describe('Finding answers', () => {
           type: FrameType.READ_MEASUREMENT,
           id: 12,
           value: null,
-          raw: '%RM#12$-2147483648\r'
-        }
+          raw: '%RM#12$-2147483648\r',
+        },
       ],
-      remaining: []
+      remaining: [],
     });
   });
 });

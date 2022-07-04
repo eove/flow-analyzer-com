@@ -2,15 +2,13 @@ import * as debugLib from 'debug';
 import * as _ from 'lodash';
 import { merge, Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
-import { DeviceTypes, DomainCommand } from './domain';
-import { commandHandlerFactories } from './domain';
+import { commandHandlerFactories, DeviceTypes, DomainCommand } from './domain';
 import { buildCommand, findAnswers } from './protocol';
 import {
   CommandError,
   createCommandRunner,
   createTransport,
-  Device
+  Device,
 } from './tools';
 
 export interface Communicator {
@@ -44,14 +42,14 @@ export function createCommunicator(
     transportDebugEnabled,
     rs232echoOn,
     deviceType,
-    translate
+    translate,
   } = _.defaults(options, {
     label: 'analyzer',
     debugEnabled: false,
     transportDebugEnabled: false,
     rs232echoOn: false,
     deviceType: DeviceTypes.PF300,
-    translate: (msg: string) => msg
+    translate: (msg: string) => msg,
   });
   const debug = debugLib(label);
   debug.enabled = debugEnabled;
@@ -68,15 +66,15 @@ export function createCommunicator(
       ...commandHandlerFactories.measurements,
       ...commandHandlerFactories.settings,
       ...commandHandlerFactories.system,
-      ...commandHandlerFactories.execute
+      ...commandHandlerFactories.execute,
     ],
     data$: transport.data$,
     transport,
-    translate
+    translate,
   });
   const runnerErrorSubscription = commandRunner.error$
-    .pipe(filter(e => e.type === CommandError.WriteError))
-    .subscribe(async e => {
+    .pipe(filter((e) => e.type === CommandError.WriteError))
+    .subscribe(async (e) => {
       try {
         debug(`${e.type} error, closing connection`);
         await close();
@@ -103,7 +101,7 @@ export function createCommunicator(
       return merge(transport.event$, eventSource.asObservable());
     },
     sendCommand,
-    request
+    request,
   };
 
   async function open(portName: string): Promise<void> {
@@ -111,10 +109,10 @@ export function createCommunicator(
       await transport.connect(portName);
       await sendCommand({
         type: 'EXEC_SET_RS232_ECHO',
-        payload: { echoOn: rs232echoOn }
+        payload: { echoOn: rs232echoOn },
       });
       const serial = await sendCommand({
-        type: 'READ_SERIAL_NUMBER'
+        type: 'READ_SERIAL_NUMBER',
       });
       if (_.isEmpty(serial)) {
         throw new Error(translate('flow analyzer not responding'));
@@ -123,22 +121,22 @@ export function createCommunicator(
         type: 'COMMUNICATION_STARTED',
         payload: {
           portName,
-          serial
-        }
+          serial,
+        },
       });
     } catch (error) {
       _sendEvent({
         type: 'COMMUNICATION_START_FAILED',
         payload: {
-          portName
-        }
+          portName,
+        },
       });
       throw error;
     }
   }
 
   function close(): Promise<void> {
-    return transport.disconnect().then(result => {
+    return transport.disconnect().then((result) => {
       _sendEvent({ type: 'COMMUNICATION_STOPPED', payload: undefined });
       return result;
     });

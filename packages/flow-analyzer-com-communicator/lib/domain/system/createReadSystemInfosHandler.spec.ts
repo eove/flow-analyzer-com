@@ -2,7 +2,7 @@ import { SinonStub, stub } from 'sinon';
 import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import createReadSystemInfosHandler from './createReadSystemInfosHandler';
 
@@ -13,19 +13,19 @@ describe('Read system infos handler', () => {
   beforeEach(() => {
     runCommand = stub();
     runCommand.onCall(0).resolves({
-      value: 6
+      value: 6,
     });
     runCommand.onCall(1).resolves({
-      value: 2
+      value: 2,
     });
     runCommand.onCall(2).resolves({
-      value: 3
+      value: 3,
     });
     runCommand.onCall(3).resolves({
-      value: '001'
+      value: '001',
     });
     runCommand.onCall(4).resolves({
-      value: '898'
+      value: '898',
     });
 
     const buildCommand = stub().returns({ id: 3, value: 1, raw: 'RRRRRRR' });
@@ -35,20 +35,20 @@ describe('Read system infos handler', () => {
       deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
-      debug
+      debug,
     } as DomainCommandHandlerFactoryDependencies);
   });
 
   it('should run many commands before returning', async () => {
     const result = await handler.handle({
-      type: 'A_TYPE'
+      type: 'A_TYPE',
     });
 
     expect(runCommand.callCount).toEqual(5);
     expect(result).toEqual({
       hardwareVersion: '6',
       serialNumber: '898',
-      softwareVersion: '2.3.001'
+      softwareVersion: '2.3.001',
     });
   });
 });

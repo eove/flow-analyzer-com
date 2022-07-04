@@ -22,7 +22,7 @@ export default function makeFormatSettingAnswer(
       name,
       value,
       unit,
-      valueAsString
+      valueAsString,
     };
   };
 }

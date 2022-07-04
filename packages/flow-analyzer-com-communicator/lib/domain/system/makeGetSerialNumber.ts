@@ -9,8 +9,8 @@ export function makeGetSerialNumber(
   return function getSerialNumber(): Promise<string> {
     const command = buildCommand({
       type: FrameType.READ_SYSTEM_INFO,
-      id: 8
+      id: 8,
     });
-    return runCommand(command).then(answer => `${answer.value}`);
+    return runCommand(command).then((answer) => `${answer.value}`);
   };
 }

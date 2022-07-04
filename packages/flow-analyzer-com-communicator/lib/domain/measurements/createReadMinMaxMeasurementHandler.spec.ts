@@ -2,7 +2,7 @@ import { stub } from 'sinon';
 import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import createReadMinMaxMeasurementHandler from './createReadMinMaxMeasurementHandler';
 
@@ -15,13 +15,13 @@ describe('Read min/max measurement handler', () => {
       id: 3,
       type: 'RM',
       value: 100,
-      raw: 'RRRRRRR'
+      raw: 'RRRRRRR',
     });
     runCommand.onCall(1).resolves({
       id: 3,
       type: 'RM',
       value: -10,
-      raw: 'RRRRRRR'
+      raw: 'RRRRRRR',
     });
     const buildCommand = stub().returns({});
     const debug = (msg: any) => msg;
@@ -30,14 +30,14 @@ describe('Read min/max measurement handler', () => {
       deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
-      debug
+      debug,
     } as DomainCommandHandlerFactoryDependencies);
   });
 
   it('should return a formatted min max measurement', async () => {
     const result = await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'o2', durationMS: 50, samplesNb: 2 }
+      payload: { name: 'o2', durationMS: 50, samplesNb: 2 },
     });
 
     expect(result).toEqual({
@@ -52,16 +52,16 @@ describe('Read min/max measurement handler', () => {
           id: 9,
           unit: '%',
           value: 10,
-          valueAsString: '10'
+          valueAsString: '10',
         },
         {
           name: 'o2',
           id: 9,
           unit: '%',
           value: -1,
-          valueAsString: '-1'
-        }
-      ]
+          valueAsString: '-1',
+        },
+      ],
     });
   });
 
@@ -69,7 +69,7 @@ describe('Read min/max measurement handler', () => {
     return expect(() => {
       handler.handle({
         type: 'A_TYPE',
-        payload: { name: 'o2', durationMS: 50, samplesNb: 20 }
+        payload: { name: 'o2', durationMS: 50, samplesNb: 20 },
       });
     }).toThrow(
       'samplesNb (20) and durationMS (50) result in a sampleDelayMS (2.5) < 20 ms'

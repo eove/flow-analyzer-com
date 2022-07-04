@@ -6,5 +6,5 @@ import createWriteSettingHandler from './createWriteSettingHandler';
 export const factories: DomainCommandHandlerFactory[] = [
   createReadSettingHandler,
   createReadAllSettingsHandler,
-  createWriteSettingHandler
+  createWriteSettingHandler,
 ];

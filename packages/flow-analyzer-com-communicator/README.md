@@ -20,11 +20,11 @@ const communicator = createCommunicator();
 
 communicator
   .open('/dev/ttyUSB0')
-  .then(() => 
+  .then(() =>
     communicator
       .sendCommand({
         type: 'READ_MEASUREMENT',
-        payload: { name: 'o2' } 
+        payload: { name: 'o2' }
       })
   )
   .then(console.log)

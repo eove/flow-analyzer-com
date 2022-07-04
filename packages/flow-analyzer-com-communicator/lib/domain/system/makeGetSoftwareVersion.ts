@@ -15,25 +15,25 @@ export function makeGetSoftwareVersion(
     function getMajorVersion(): Promise<any> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: 2
+        id: 2,
       });
-      return runCommand(command).then(answer => `${answer.value}`);
+      return runCommand(command).then((answer) => `${answer.value}`);
     }
 
     function getMinorVersion(): Promise<string> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: 3
+        id: 3,
       });
-      return runCommand(command).then(answer => `${answer.value}`);
+      return runCommand(command).then((answer) => `${answer.value}`);
     }
 
     function getRelease(): Promise<string> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: 4
+        id: 4,
       });
-      return runCommand(command).then(answer => `${answer.value}`);
+      return runCommand(command).then((answer) => `${answer.value}`);
     }
   };
 }

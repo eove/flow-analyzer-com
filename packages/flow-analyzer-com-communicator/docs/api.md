@@ -30,7 +30,7 @@ communicator
   .then(() =>
     communicator.sendCommand({
       type: 'READ_MEASUREMENT',
-      payload: { name: 'humidity' }
+      payload: { name: 'humidity' },
     })
   )
   .then(console.log);
@@ -126,12 +126,12 @@ const { createCommunicator } = require('@eove/flow-analyzer-com');
 
 const communicator = createCommunicator();
 
-communicator.command$.subscribe(command => console.log(command));
+communicator.command$.subscribe((command) => console.log(command));
 
 communicator.connect('/dev/ttyUSB1').then(() =>
   communicator.sendCommand({
     type: 'READ_MEASUREMENT',
-    payload: { name: 'humidity' }
+    payload: { name: 'humidity' },
   })
 );
 ```
@@ -149,12 +149,12 @@ const { createCommunicator } = require('@eove/flow-analyzer-com');
 
 const communicator = createCommunicator();
 
-communicator.answer$.subscribe(answer => console.log(answer));
+communicator.answer$.subscribe((answer) => console.log(answer));
 
 communicator.connect('/dev/ttyUSB1').then(() =>
   communicator.sendCommand({
     type: 'READ_MEASUREMENT',
-    payload: { name: 'humidity' }
+    payload: { name: 'humidity' },
   })
 );
 ```
@@ -172,12 +172,12 @@ const { createCommunicator } = require('@eove/flow-analyzer-com');
 
 const communicator = createCommunicator();
 
-communicator.data$.subscribe(data => console.log(data));
+communicator.data$.subscribe((data) => console.log(data));
 
 communicator.connect('/dev/ttyUSB1').then(() =>
   communicator.sendCommand({
     type: 'READ_MEASUREMENT',
-    payload: { name: 'humidity' }
+    payload: { name: 'humidity' },
   })
 );
 ```
@@ -195,12 +195,12 @@ const { createCommunicator } = require('@eove/flow-analyzer-com');
 
 const communicator = createCommunicator();
 
-communicator.event$.subscribe(data => console.log(data));
+communicator.event$.subscribe((data) => console.log(data));
 
 communicator.connect('/dev/ttyUSB1').then(() =>
   communicator.sendCommand({
     type: 'READ_MEASUREMENT',
-    payload: { name: 'humidity' }
+    payload: { name: 'humidity' },
   })
 );
 ```

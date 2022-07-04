@@ -22,7 +22,7 @@ export default function makeFormatMeasurementAnswer(
       name,
       value: computedValue,
       unit,
-      valueAsString: computedValue ? `${computedValue}` : '-'
+      valueAsString: computedValue ? `${computedValue}` : '-',
     };
   };
 }

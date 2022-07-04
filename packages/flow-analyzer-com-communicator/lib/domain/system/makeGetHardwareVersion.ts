@@ -9,8 +9,8 @@ export function makeGetHardwareVersion(
   return function getHardwareVersion(): Promise<string> {
     const command = buildCommand({
       type: FrameType.READ_SYSTEM_INFO,
-      id: 1
+      id: 1,
     });
-    return runCommand(command).then(answer => `${answer.value}`);
+    return runCommand(command).then((answer) => `${answer.value}`);
   };
 }

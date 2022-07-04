@@ -1,9 +1,8 @@
-import * as _ from 'lodash';
 import { FrameType, ProtocolAnswer, ProtocolCommand } from '../../protocol';
 import {
   DomainCommand,
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import getSettingInfos from './getSettingInfos';
 
@@ -22,17 +21,17 @@ export default function createWriteSettingHandler(
         nameToValue = (v: any) => v,
         valueToName = (v: any) => v,
         allNames = () => [],
-        allValues = () => []
+        allValues = () => [],
       } = getSettingInfos(name, deviceType);
 
       const builtValue = buildValue(value);
       const command = buildCommand({
         type: FrameType.WRITE_SETTING,
         id,
-        value: builtValue
+        value: builtValue,
       });
 
-      return runCommand(command).then(answer =>
+      return runCommand(command).then((answer) =>
         isAnswerOk(answer, command)
           ? Promise.resolve(answer)
           : Promise.reject(
@@ -58,6 +57,6 @@ export default function createWriteSettingHandler(
       function isAnswerOk(ans: ProtocolAnswer, cmd: ProtocolCommand): boolean {
         return ans.raw === cmd.raw;
       }
-    }
+    },
   };
 }

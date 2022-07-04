@@ -1,7 +1,7 @@
 import { SinonStub, stub } from 'sinon';
 import {
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import createWriteSettingHandler from './createWriteSettingHandler';
 
@@ -16,7 +16,7 @@ describe('Write setting handler', () => {
       id: 3,
       type: 'WS',
       value: 1,
-      raw: 'RRRRRRR'
+      raw: 'RRRRRRR',
     });
     buildCommand = stub();
     buildCommand.returns({ id: 3, value: 1, raw: 'RRRRRRR' });
@@ -26,47 +26,47 @@ describe('Write setting handler', () => {
       deviceType: 'h4',
       runCommand,
       buildCommand,
-      debug
+      debug,
     } as DomainCommandHandlerFactoryDependencies);
   });
 
   it('should build command when value is a positive number', async () => {
     await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'startTriggerSignalValue', value: 60 }
+      payload: { name: 'startTriggerSignalValue', value: 60 },
     });
     expect(buildCommand.called).toEqual(true);
     expect(buildCommand.getCall(0).args[0]).toEqual({
       id: 8,
       type: 'WRITE SETTING',
-      value: '60'
+      value: '60',
     });
   });
 
   it('should build command when value is a negative number', async () => {
     await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'startTriggerSignalValue', value: -60 }
+      payload: { name: 'startTriggerSignalValue', value: -60 },
     });
     expect(buildCommand.called).toEqual(true);
     expect(buildCommand.getCall(0).args[0]).toEqual({
       id: 8,
       type: 'WRITE SETTING',
-      value: '-60'
+      value: '-60',
     });
   });
 
   it('should build command when value is a string', async () => {
     await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'gazType', value: 'Air/O2-man.' }
+      payload: { name: 'gazType', value: 'Air/O2-man.' },
     });
 
     expect(buildCommand.called).toEqual(true);
     expect(buildCommand.getCall(0).args[0]).toEqual({
       id: 1,
       type: 'WRITE SETTING',
-      value: '1'
+      value: '1',
     });
   });
 
@@ -75,7 +75,7 @@ describe('Write setting handler', () => {
     return expect(
       handler.handle({
         type: 'A_TYPE',
-        payload: { name: 'gazType', value: 1 }
+        payload: { name: 'gazType', value: 1 },
       })
     ).rejects.toThrow('Failed to write value: 1 to id: gazType');
   });
@@ -84,7 +84,7 @@ describe('Write setting handler', () => {
     return expect(() => {
       handler.handle({
         type: 'A_TYPE',
-        payload: { name: 'gazType', value: 'unsupported' }
+        payload: { name: 'gazType', value: 'unsupported' },
       });
     }).toThrow(`'unsupported' is not a valid value`);
   });
@@ -93,7 +93,7 @@ describe('Write setting handler', () => {
     return expect(() => {
       handler.handle({
         type: 'A_TYPE',
-        payload: { name: 'unknown', value: 1 }
+        payload: { name: 'unknown', value: 1 },
       });
     }).toThrow('Invalid unknown setting');
   });

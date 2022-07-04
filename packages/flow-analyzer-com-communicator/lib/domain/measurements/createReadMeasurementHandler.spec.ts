@@ -2,7 +2,7 @@ import { stub } from 'sinon';
 import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import createReadMeasurementHandler from './createReadMeasurementHandler';
 
@@ -14,7 +14,7 @@ describe('Read measurement handler', () => {
       id: 3,
       type: 'RM',
       value: 100,
-      raw: 'RRRRRRR'
+      raw: 'RRRRRRR',
     });
     const buildCommand = stub().returns({});
     const debug = (msg: any) => msg;
@@ -23,14 +23,14 @@ describe('Read measurement handler', () => {
       deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
-      debug
+      debug,
     } as DomainCommandHandlerFactoryDependencies);
   });
 
   it('should return a formatted measurement', async () => {
     const result = await handler.handle({
       type: 'A_TYPE',
-      payload: { name: 'o2' }
+      payload: { name: 'o2' },
     });
 
     expect(result).toEqual({
@@ -38,7 +38,7 @@ describe('Read measurement handler', () => {
       id: 9,
       name: 'o2',
       unit: '%',
-      value: 10
+      value: 10,
     });
   });
 
@@ -46,7 +46,7 @@ describe('Read measurement handler', () => {
     return expect(() => {
       handler.handle({
         type: 'A_TYPE',
-        payload: { name: 'unknown' }
+        payload: { name: 'unknown' },
       });
     }).toThrow('Invalid unknown measurement');
   });

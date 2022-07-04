@@ -1,7 +1,7 @@
 import {
   DomainCommand,
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import { makeGetHardwareVersion } from './makeGetHardwareVersion';
 import { makeGetSerialNumber } from './makeGetSerialNumber';
@@ -25,6 +25,6 @@ export default function createReadSystemInfosHandler(
       const softwareVersion = await getSoftwareVersion();
       const serialNumber = await getSerialNumber();
       return { hardwareVersion, softwareVersion, serialNumber };
-    }
+    },
   };
 }

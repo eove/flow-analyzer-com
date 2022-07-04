@@ -18,7 +18,7 @@ export function findAnswers(data: string[]): FindAnswerResult {
     if (data[index] === '?') {
       answers.push({
         type: FrameType.INVALID,
-        raw: '?'
+        raw: '?',
       });
       lastFoundEndIndex = index;
     }
@@ -31,7 +31,7 @@ export function findAnswers(data: string[]): FindAnswerResult {
           type: mapToFrameType(type),
           id: Number(id),
           value: formatValue(value),
-          raw
+          raw,
         });
         index += raw.length - 1;
         lastFoundEndIndex = index;
@@ -43,7 +43,7 @@ export function findAnswers(data: string[]): FindAnswerResult {
   }
   return {
     answers,
-    remaining: data.slice(lastFoundEndIndex + 1)
+    remaining: data.slice(lastFoundEndIndex + 1),
   };
 }
 
@@ -64,8 +64,5 @@ function findAnswerAtIndex(d: string[], i: number) {
 
   return foundWithPayload
     ? foundWithPayload
-    : d
-        .slice(i)
-        .join('')
-        .match(ANSWER_PATTERN_WITHOUT_PAYLOAD);
+    : d.slice(i).join('').match(ANSWER_PATTERN_WITHOUT_PAYLOAD);
 }

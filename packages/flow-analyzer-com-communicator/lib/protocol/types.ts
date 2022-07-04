@@ -6,7 +6,7 @@ export enum FrameType {
   READ_SETTING = 'READ SETTING',
   EXECUTE_COMMAND = 'EXECUTE COMMAND',
   INVALID = 'INVALID',
-  UNKOWN = 'UNKNOWN'
+  UNKOWN = 'UNKNOWN',
 }
 
 export interface ProtocolAnswer {

@@ -4,7 +4,7 @@ import getSettingInfos from './getSettingInfos';
 describe('Get setting infos', () => {
   it('should return setting infos for a given name', () => {
     expect(getSettingInfos('gazType', DeviceTypes.CITREX_H4)).toMatchObject({
-      id: 1
+      id: 1,
     });
   });
 

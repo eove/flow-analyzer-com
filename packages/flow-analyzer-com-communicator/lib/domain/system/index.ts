@@ -4,5 +4,5 @@ import createReadSystemInfosHandler from './createReadSystemInfosHandler';
 
 export const factories: DomainCommandHandlerFactory[] = [
   createReadSystemInfosHandler,
-  createReadSerialNumberHandler
+  createReadSerialNumberHandler,
 ];

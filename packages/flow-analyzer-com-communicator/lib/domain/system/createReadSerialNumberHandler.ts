@@ -1,7 +1,7 @@
 import {
   DomainCommand,
   DomainCommandHandler,
-  DomainCommandHandlerFactoryDependencies
+  DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import { makeGetSerialNumber } from './makeGetSerialNumber';
 
@@ -17,6 +17,6 @@ export default function createReadSerialNumberHandler(
     handle: async ({ type }: DomainCommand) => {
       debug(`running ${type} command handler...`);
       return await getSerialNumber();
-    }
+    },
   };
 }

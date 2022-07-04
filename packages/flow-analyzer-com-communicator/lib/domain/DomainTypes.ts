@@ -2,7 +2,7 @@ import {
   ProtocolAnswer,
   ProtocolCommand,
   ProtocolCommandInput,
-  ProtocolCommandOptions
+  ProtocolCommandOptions,
 } from '../protocol';
 import { DeviceTypes } from './DeviceTypes';
 
