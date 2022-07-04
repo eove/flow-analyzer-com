@@ -20,10 +20,7 @@ class ShellCommands {
   }
 
   start() {
-    vorpal
-      .delimiter('talk >')
-      .history('talk-to-analyzer')
-      .show();
+    vorpal.delimiter('talk >').history('talk-to-analyzer').show();
   }
 }
 

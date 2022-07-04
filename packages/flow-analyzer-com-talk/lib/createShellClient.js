@@ -10,7 +10,7 @@ module.exports = (dependencies, options) => {
     if (inet) {
       return {
         host: inet.split(':')[0],
-        port: inet.split(':')[1]
+        port: inet.split(':')[1],
       };
     }
     return {};

@@ -20,7 +20,7 @@ function create() {
     handle: (run, callback) => {
       console.log(HELP_MSG);
       callback();
-    }
+    },
   };
 }
 

@@ -1,4 +1,4 @@
 module.exports = {
   ShellClient: require('./ShellClient'),
-  ShellServer: require('./ShellServer')
+  ShellServer: require('./ShellServer'),
 };

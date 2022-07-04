@@ -11,12 +11,12 @@ class ShellServer {
     this._debug = debug;
     this._communicator = communicator;
     this._server = new zerorpc.Server({
-      run: function(command, args, reply) {
+      run: function (command, args, reply) {
         self._communicator
           .request(command, args)
-          .then(result => reply(null, result))
-          .catch(e => reply(e));
-      }
+          .then((result) => reply(null, result))
+          .catch((e) => reply(e));
+      },
     });
   }
 
@@ -24,7 +24,7 @@ class ShellServer {
     const inet = `${this._opts.host}:${this._opts.port}`;
     this._debug(`shell server: listening requests on ${inet}`);
     this._server.bind(`tcp://${inet}`);
-    this._server.on('error', error => {
+    this._server.on('error', (error) => {
       this._debug('shell server error:', error);
     });
   }

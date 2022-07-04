@@ -10,7 +10,7 @@ class ShellClient {
     this._opts = _.defaults({}, options, {
       host: HOST,
       port: PORT,
-      timeout: TIMEOUT
+      timeout: TIMEOUT,
     });
     this._debug = debug;
     this._client = new zerorpc.Client({ timeout: this._opts.timeout });

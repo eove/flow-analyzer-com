@@ -8,7 +8,7 @@ const { version } = require('./package.json');
 const {
   createShellClient,
   createShellServer,
-  DEFAULT_CONFIG
+  DEFAULT_CONFIG,
 } = require('./lib');
 
 program
@@ -40,7 +40,7 @@ program
     'ANALYZER is the analyzer type, one of [h4, pf300]',
     DEFAULT_CONFIG.DEVICE_TYPE
   )
-  .action(options => {
+  .action((options) => {
     const { portName } = options;
     const logAndExit = makeLogAndMayExit(options.exitOnError);
     try {
@@ -48,12 +48,12 @@ program
       options.deviceType = options.analyzer;
       debug(`creating communicator for device type: ${options.analyzer}`);
       const communicator = createCommunicator(options);
-      communicator.event$.subscribe(event => debug('event:', event));
-      communicator.answer$.subscribe(answer => debug('answer:', answer));
+      communicator.event$.subscribe((event) => debug('event:', event));
+      communicator.answer$.subscribe((answer) => debug('answer:', answer));
       const server = createShellServer(
         {
           communicator,
-          debug: (...args) => debug(...args)
+          debug: (...args) => debug(...args),
         },
         options
       );
@@ -63,9 +63,9 @@ program
         .then(() => {
           server.start();
         })
-        .catch(e => logAndExit({error: e}));
+        .catch((e) => logAndExit({ error: e }));
     } catch (e) {
-      logAndExit({error: e});
+      logAndExit({ error: e });
     }
   });
 
@@ -74,8 +74,8 @@ program
   .description('list avaiable ports')
   .action(() => {
     const communicator = createCommunicator();
-    communicator.listPorts().then(ports => {
-      ports.map(p => console.log(p.name));
+    communicator.listPorts().then((ports) => {
+      ports.map((p) => console.log(p.name));
     });
   });
 
@@ -92,11 +92,11 @@ program
     'TIMEOUT is the number of seconds to wait for the com answer',
     DEFAULT_CONFIG.ZMQ_TIMEOUT
   )
-  .action(options => {
+  .action((options) => {
     try {
       const client = createShellClient(
         {
-          debug: (...args) => debug(...args)
+          debug: (...args) => debug(...args),
         },
         options
       );
@@ -111,11 +111,11 @@ program.version(version).parse(process.argv);
 
 process.on('unhandledRejection', (reason, promise) => {
   const logAndExit = makeLogAndMayExit(true);
-  logAndExit({reason, promise, msg: 'Oops! unhandled rejection!'});
+  logAndExit({ reason, promise, msg: 'Oops! unhandled rejection!' });
 });
 
 function makeLogAndMayExit(exitOnError) {
-  return ({reason, promise, error, msg = undefined}, rc = 1) => {
+  return ({ reason, promise, error, msg = undefined }, rc = 1) => {
     if (msg) {
       console.error(msg);
     }

@@ -16,14 +16,14 @@ function create() {
 
       client
         .invoke(command, cmdArgs)
-        .then(result => {
+        .then((result) => {
           if (!isResultEmpty(result)) {
             console.log(prettyjson.render(result));
           }
           callback();
         })
-        .catch(e => callback(e.toString()));
-    }
+        .catch((e) => callback(e.toString()));
+    },
   };
 
   function isResultEmpty(result) {

@@ -6,6 +6,6 @@ module.exports = {
     ZMQ_HOST: require('./shell/config').HOST,
     ZMQ_TIMEOUT: require('./shell/config').TIMEOUT,
     USB_PORT: '/dev/tty.usbserial-14101',
-    DEVICE_TYPE: 'pf300'
-  }
+    DEVICE_TYPE: 'pf300',
+  },
 };
