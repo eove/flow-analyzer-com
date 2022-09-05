@@ -56,7 +56,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     debug(`connecting to: ${portName}, baud rate: ${baudRate}`);
 
     return new Promise((resolve, reject) => {
-      port.open((error) => {
+      port.open((error: Error | null) => {
         if (error) {
           const err = new Error(
             `Error when opening port ${portName} (${error.message})`
@@ -105,7 +105,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
 
     function runDisconnect(): Promise<void> {
       return new Promise((resolve, reject) => {
-        port.close((error) => {
+        port.close((error: Error | null) => {
           if (error) {
             return reject(
               new Error(`Error when disconnecting (${error.message})`)
@@ -121,13 +121,13 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     const escapedBytes = bytes.replace('\r', '\\r');
     debug(`sending: ${escapedBytes}`);
     return new Promise((resolve, reject) => {
-      port.write(Buffer.from(bytes), (writeError) => {
+      port.write(Buffer.from(bytes), (writeError: Error | null | undefined) => {
         if (writeError) {
           return reject(
             new Error(`Error when writing data (${writeError.message})`)
           );
         } else {
-          port.drain((flushError) => {
+          port.drain((flushError: Error | null) => {
             if (flushError) {
               return reject(
                 new Error(`Error when flushing data (${flushError.message})`)
