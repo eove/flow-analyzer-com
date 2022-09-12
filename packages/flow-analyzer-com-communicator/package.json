@@ -76,6 +76,6 @@
     "debug": "4.1.1",
     "lodash": "4.17.15",
     "rxjs": "6.5.4",
-    "serialport": "10.3.0"
+    "serialport": "10.4.0"
   }
 }
