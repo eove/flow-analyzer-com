@@ -27,6 +27,27 @@ describe('Read system infos handler', () => {
     runCommand.onCall(4).resolves({
       value: '898',
     });
+    runCommand.onCall(5).resolves({
+      value: '26',
+    });
+    runCommand.onCall(6).resolves({
+      value: '12',
+    });
+    runCommand.onCall(7).resolves({
+      value: '23',
+    });
+    runCommand.onCall(8).resolves({
+      value: '26',
+    });
+    runCommand.onCall(9).resolves({
+      value: '12',
+    });
+    runCommand.onCall(10).resolves({
+      value: '24',
+    });
+    runCommand.onCall(11).resolves({
+      value: '2',
+    });
 
     const buildCommand = stub().returns({ id: 3, value: 1, raw: 'RRRRRRR' });
     const debug = (msg: any) => msg;
@@ -44,11 +65,15 @@ describe('Read system infos handler', () => {
       type: 'A_TYPE',
     });
 
-    expect(runCommand.callCount).toEqual(5);
+    expect(runCommand.callCount).toEqual(12);
     expect(result).toEqual({
       hardwareVersion: '6',
       serialNumber: '898',
       softwareVersion: '2.3.001',
+      deviceType: 'vt305',
+
+      lastCalibrationDate: '23-12-26',
+      nextCalibrationDate: '24-12-26',
     });
   });
 });
