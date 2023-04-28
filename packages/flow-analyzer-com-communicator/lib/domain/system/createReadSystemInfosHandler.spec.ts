@@ -63,6 +63,14 @@ describe('Read system infos handler', () => {
   it('should run many commands before returning', async () => {
     const result = await handler.handle({
       type: 'A_TYPE',
+      payload: {
+        deviceType: true,
+        hardwareVersion: true,
+        softwareVersion: true,
+        serialNumber: true,
+        lastCalibrationDate: true,
+        nextCalibrationDate: true,
+      },
     });
 
     expect(runCommand.callCount).toEqual(12);
@@ -71,7 +79,6 @@ describe('Read system infos handler', () => {
       serialNumber: '898',
       softwareVersion: '2.3.001',
       deviceType: 'vt305',
-
       lastCalibrationDate: '23-12-26',
       nextCalibrationDate: '24-12-26',
     });

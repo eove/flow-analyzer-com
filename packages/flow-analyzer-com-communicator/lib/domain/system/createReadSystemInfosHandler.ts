@@ -44,9 +44,7 @@ export default function createReadSystemInfosHandler(
       });
 
       const result = {};
-      if (deviceType) {
-        Object.assign(result, { deviceType: await getDeviceType() });
-      }
+
       if (hardwareVersion) {
         Object.assign(result, { hardwareVersion: await getHardwareVersion() });
       }
@@ -65,6 +63,9 @@ export default function createReadSystemInfosHandler(
         Object.assign(result, {
           nextCalibrationDate: await getNextCalibrationDate(),
         });
+      }
+      if (deviceType) {
+        Object.assign(result, { deviceType: await getDeviceType() });
       }
 
       return result;
