@@ -11,6 +11,7 @@ const HELP_MSG =
     run WRITE_SETTING \'{"name": "gazType", "value": "Air"}\'\n\
   system:\n\
     run READ_SYSTEM_INFOS\n\
+    run READ_SYSTEM_INFOS \'{"lastCalibrationDate": true}\'\n\
   execute:\n\
     run EXEC_SET_RS232_ECHO \'{"echoOn": true}\'\n\
   \n';
