@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { FrameType } from '../../protocol';
 import { DomainCommandHandlerFactoryDependencies } from '../DomainTypes';
 
@@ -21,7 +22,9 @@ export function makeGetLastCalibrationDate(
         type: FrameType.READ_SYSTEM_INFO,
         id: 5,
       });
-      return runCommand(command).then((answer) => `${answer.value}`);
+      return runCommand(command).then((answer) =>
+        _.padStart(`${answer.value}`, 2, '0')
+      );
     }
 
     function getLastCalibrationMonth(): Promise<any> {
@@ -29,7 +32,9 @@ export function makeGetLastCalibrationDate(
         type: FrameType.READ_SYSTEM_INFO,
         id: 6,
       });
-      return runCommand(command).then((answer) => `${answer.value}`);
+      return runCommand(command).then((answer) =>
+        _.padStart(`${answer.value}`, 2, '0')
+      );
     }
 
     function getLastCalibrationYear(): Promise<any> {
