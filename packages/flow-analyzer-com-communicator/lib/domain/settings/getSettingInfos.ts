@@ -45,13 +45,23 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => GAZ_TYPE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(GAZ_TYPE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(GAZ_TYPE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'manualOxygenConcentration',
     id: 2,
     unit: '%',
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'gazStandards',
@@ -60,7 +70,12 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => GAZ_STANDARDS_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(GAZ_STANDARDS_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(GAZ_STANDARDS_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'respMode',
@@ -69,7 +84,12 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => RESP_MODE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(RESP_MODE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(RESP_MODE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'triggerSource',
@@ -78,7 +98,12 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => TRIGGER_SOURCE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(TRIGGER_SOURCE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(TRIGGER_SOURCE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'startTriggerSignal',
@@ -89,7 +114,12 @@ const settingsInfos: SettingInfo[] = [
       START_TRIGGER_SIGNAL_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(START_TRIGGER_SIGNAL_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(START_TRIGGER_SIGNAL_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'startTriggerEdge',
@@ -100,12 +130,22 @@ const settingsInfos: SettingInfo[] = [
       START_TRIGGER_EDGE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(START_TRIGGER_EDGE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(START_TRIGGER_EDGE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'startTriggerSignalValue',
     id: 8,
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'endTriggerSignal',
@@ -116,7 +156,12 @@ const settingsInfos: SettingInfo[] = [
       END_TRIGGER_SIGNAL_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(END_TRIGGER_SIGNAL_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(END_TRIGGER_SIGNAL_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'endTriggerEdge',
@@ -126,17 +171,32 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => END_TRIGGER_EDGE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(END_TRIGGER_EDGE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(END_TRIGGER_EDGE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'endTriggerSignalValue',
     id: 11,
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'triggerDelay',
     id: 12,
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'baseFlowEnabled',
@@ -147,12 +207,22 @@ const settingsInfos: SettingInfo[] = [
       BASE_FLOW_ENABLED_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(BASE_FLOW_ENABLED_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(BASE_FLOW_ENABLED_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'baseFlowValue',
     id: 14,
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'filterType',
@@ -161,7 +231,12 @@ const settingsInfos: SettingInfo[] = [
     nameToValue: (name: string): string => FILTER_TYPE_NAME_TO_VALUE[name],
     allNames: (): string[] => _.values(FILTER_TYPE_VALUE_TO_NAME),
     allValues: (): string[] => _.keys(FILTER_TYPE_VALUE_TO_NAME),
-    supportedBy: [DeviceTypes.CITREX_H4, DeviceTypes.PF300],
+    supportedBy: [
+      DeviceTypes.CITREX_H4,
+      DeviceTypes.PF300,
+      DeviceTypes.CITREX_H5,
+      DeviceTypes.PF300_PRO,
+    ],
   },
   {
     name: 'startTriggerDelay',
@@ -222,14 +297,13 @@ const RESP_MODE_VALUE_TO_NAME: any = {
   '0': 'Adult',
   '1': 'Pediatric',
   '2': 'High Frequency',
+  '3': 'Auto',
 };
 const RESP_MODE_NAME_TO_VALUE = _.invert(RESP_MODE_VALUE_TO_NAME);
 
 const TRIGGER_SOURCE_VALUE_TO_NAME: any = {
   '1': 'internal High Flow Channel',
-  '2': 'internal Low Flow Channel (FlowAnalyser only)',
   '3': 'external High Flow Channel',
-  '4': 'external Low Flow Channel (FlowAnalyser only)',
 };
 const TRIGGER_SOURCE_NAME_TO_VALUE = _.invert(TRIGGER_SOURCE_VALUE_TO_NAME);
 
