@@ -1,5 +1,4 @@
 import { stub } from 'sinon';
-import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies,
@@ -20,7 +19,6 @@ describe('Read measurements handler', () => {
     const debug = (msg: any) => msg;
 
     handler = createReadMeasurementsHandler({
-      deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
       debug,

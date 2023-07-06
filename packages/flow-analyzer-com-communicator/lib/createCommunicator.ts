@@ -26,7 +26,6 @@ export interface Communicator {
 
 interface CommunicatiorOptions {
   label?: string;
-  deviceType?: DeviceTypes;
   debugEnabled?: boolean;
   transportDebugEnabled?: boolean;
   rs232echoOn?: boolean;
@@ -36,21 +35,15 @@ interface CommunicatiorOptions {
 export function createCommunicator(
   options?: CommunicatiorOptions
 ): Communicator {
-  const {
-    label,
-    debugEnabled,
-    transportDebugEnabled,
-    rs232echoOn,
-    deviceType,
-    translate,
-  } = _.defaults(options, {
-    label: 'analyzer',
-    debugEnabled: false,
-    transportDebugEnabled: false,
-    rs232echoOn: false,
-    deviceType: DeviceTypes.PF300,
-    translate: (msg: string) => msg,
-  });
+  const { label, debugEnabled, transportDebugEnabled, rs232echoOn, translate } =
+    _.defaults(options, {
+      label: 'analyzer',
+      debugEnabled: false,
+      transportDebugEnabled: false,
+      rs232echoOn: false,
+      translate: (msg: string) => msg,
+    });
+  let deviceType: DeviceTypes = DeviceTypes.PF300;
   const debug = debugLib(label);
   debug.enabled = debugEnabled;
 
@@ -58,7 +51,6 @@ export function createCommunicator(
 
   const transport = createTransport({ debugEnabled: transportDebugEnabled });
   const commandRunner = createCommandRunner({
-    deviceType,
     debug,
     buildCommand,
     findAnswers,
@@ -117,11 +109,15 @@ export function createCommunicator(
       if (_.isEmpty(serial)) {
         throw new Error(translate('flow analyzer not responding'));
       }
+      deviceType = await sendCommand({
+        type: 'READ_DEVICE_TYPE',
+      });
       _sendEvent({
         type: 'COMMUNICATION_STARTED',
         payload: {
           portName,
           serial,
+          deviceType,
         },
       });
     } catch (error) {
@@ -148,7 +144,9 @@ export function createCommunicator(
   }
 
   function sendCommand(command: DomainCommand): Promise<any> {
-    return commandRunner.postCommand(command);
+    return commandRunner.postCommand(
+      Object.assign({}, command, { deviceType })
+    );
   }
 
   function request(commandType: string, args: any) {

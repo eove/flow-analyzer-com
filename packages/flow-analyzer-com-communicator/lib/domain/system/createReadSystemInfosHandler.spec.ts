@@ -1,5 +1,4 @@
 import { SinonStub, stub } from 'sinon';
-import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies,
@@ -53,7 +52,6 @@ describe('Read system infos handler', () => {
     const debug = (msg: any) => msg;
 
     handler = createReadSystemInfosHandler({
-      deviceType: DeviceTypes.CITREX_H4,
       runCommand,
       buildCommand,
       debug,

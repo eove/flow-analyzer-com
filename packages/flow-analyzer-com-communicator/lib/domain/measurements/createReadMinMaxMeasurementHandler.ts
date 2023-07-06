@@ -5,6 +5,7 @@ import {
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
+import { DeviceTypes } from '../DeviceTypes';
 import getMeasurementInfos from './getMeasurementInfos';
 import makeFormatMeasurementAnswer from './makeFormatMeasurementAnswer';
 
@@ -32,11 +33,15 @@ export default function createReadMinMaxMeasurementHandler(
   const { runCommand, buildCommand, debug } = dependencies;
   return {
     type: 'READ_MIN_MAX_MEASUREMENT',
-    handle: ({ type, payload }: DomainCommand) => {
+    handle: ({
+      type,
+      deviceType = DeviceTypes.PF300,
+      payload,
+    }: DomainCommand) => {
       debug(`running ${type} command handler...`);
       const { sampleDelayMS, samplesNb, name, durationMS, sampleRate } =
         extractFromPayload(payload);
-      const { divider, unit, id } = getMeasurementInfos(name);
+      const { divider, unit, id } = getMeasurementInfos(name, deviceType);
       const format = makeFormatMeasurementAnswer({ name, id, divider, unit });
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,

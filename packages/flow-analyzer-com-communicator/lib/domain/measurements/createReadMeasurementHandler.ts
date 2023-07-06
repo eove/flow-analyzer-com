@@ -1,4 +1,5 @@
 import { FrameType } from '../../protocol';
+import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommand,
   DomainCommandHandler,
@@ -13,11 +14,15 @@ export default function createReadMeasurementHandler(
   const { runCommand, buildCommand, debug } = dependencies;
   return {
     type: 'READ_MEASUREMENT',
-    handle: ({ type, payload }: DomainCommand) => {
+    handle: ({
+      type,
+      deviceType = DeviceTypes.PF300,
+      payload,
+    }: DomainCommand) => {
       debug(`running ${type} command handler...`);
 
       const { name } = payload;
-      const { divider, unit, id } = getMeasurementInfos(name);
+      const { divider, unit, id } = getMeasurementInfos(name, deviceType);
       const format = makeFormatMeasurementAnswer({ name, id, divider, unit });
       const command = buildCommand({
         type: FrameType.READ_MEASUREMENT,

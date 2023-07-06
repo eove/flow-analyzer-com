@@ -35,7 +35,7 @@ export default function createReadSystemInfosHandler(
         lastCalibrationDate,
         nextCalibrationDate,
       } = _.defaults({}, payload, {
-        deviceType: false,
+        deviceType: true,
         hardwareVersion: true,
         softwareVersion: true,
         serialNumber: true,

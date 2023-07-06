@@ -1,4 +1,5 @@
 import { FrameType } from '../../protocol';
+import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommand,
   DomainCommandHandler,
@@ -13,22 +14,26 @@ export default function createReadMeasurementsHandler(
   const { runCommand, buildCommand, debug } = dependencies;
   return {
     type: 'READ_MEASUREMENTS',
-    handle: ({ type, payload }: DomainCommand) => {
+    handle: ({
+      type,
+      payload,
+      deviceType = DeviceTypes.CITREX_H4,
+    }: DomainCommand) => {
       debug(`running ${type} command handler...`);
       const { names } = payload;
 
       return Promise.all(names.map((name: string) => createReadPromise(name)));
+
+      function createReadPromise(name: string) {
+        const { divider, unit, id } = getMeasurementInfos(name, deviceType);
+        const format = makeFormatMeasurementAnswer({ name, id, divider, unit });
+        const command = buildCommand({
+          type: FrameType.READ_MEASUREMENT,
+          id,
+        });
+
+        return runCommand(command).then((answer) => format(answer));
+      }
     },
   };
-
-  function createReadPromise(name: string) {
-    const { divider, unit, id } = getMeasurementInfos(name);
-    const format = makeFormatMeasurementAnswer({ name, id, divider, unit });
-    const command = buildCommand({
-      type: FrameType.READ_MEASUREMENT,
-      id,
-    });
-
-    return runCommand(command).then((answer) => format(answer));
-  }
 }

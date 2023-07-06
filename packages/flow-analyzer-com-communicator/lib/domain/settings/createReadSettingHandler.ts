@@ -1,4 +1,5 @@
 import { FrameType } from '../../protocol';
+import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommand,
   DomainCommandHandler,
@@ -10,10 +11,14 @@ import makeFormatSettingAnswer from './makeFormatSettingAnswer';
 export default function createReadSettingHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
-  const { runCommand, buildCommand, debug, deviceType } = dependencies;
+  const { runCommand, buildCommand, debug } = dependencies;
   return {
     type: 'READ_SETTING',
-    handle: ({ type, payload }: DomainCommand) => {
+    handle: ({
+      type,
+      payload,
+      deviceType = DeviceTypes.PF300,
+    }: DomainCommand) => {
       debug(`running ${type} command handler...`);
 
       const { name } = payload;

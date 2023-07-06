@@ -35,17 +35,11 @@ program
     'output low level debug messages to the console',
     false
   )
-  .option(
-    '-a, --analyzer [ANALYZER]',
-    'ANALYZER is the analyzer type, one of [h4, pf300]',
-    DEFAULT_CONFIG.DEVICE_TYPE
-  )
   .action((options) => {
     const { portName } = options;
     const logAndExit = makeLogAndMayExit(options.exitOnError);
     try {
       debug.enabled = options.debugEnabled;
-      options.deviceType = options.analyzer;
       debug(`creating communicator for device type: ${options.analyzer}`);
       const communicator = createCommunicator(options);
       communicator.event$.subscribe((event) => debug('event:', event));

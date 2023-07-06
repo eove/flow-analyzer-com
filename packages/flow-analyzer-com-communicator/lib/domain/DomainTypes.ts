@@ -10,6 +10,7 @@ type DomainCommandPayload = any;
 
 export interface DomainCommand {
   type: string;
+  deviceType?: DeviceTypes;
   payload?: DomainCommandPayload;
 }
 
@@ -19,7 +20,6 @@ export interface DomainCommandHandler {
 }
 
 export interface DomainCommandHandlerFactoryDependencies {
-  deviceType: DeviceTypes;
   runCommand: (command: ProtocolCommand) => Promise<ProtocolAnswer>;
   buildCommand: (
     command: ProtocolCommandInput,

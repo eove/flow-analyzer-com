@@ -11,11 +11,7 @@ import {
   scan,
   timeout,
 } from 'rxjs/operators';
-import {
-  DeviceTypes,
-  DomainCommand,
-  DomainCommandHandlerFactory,
-} from '../domain';
+import { DomainCommand, DomainCommandHandlerFactory } from '../domain';
 import {
   FindAnswerResult,
   findAnswers,
@@ -46,7 +42,6 @@ export enum CommandError {
 }
 
 interface CommandRunnerDependencies {
-  deviceType: DeviceTypes;
   handlerFactories: DomainCommandHandlerFactory[];
   buildCommand: any;
   debug: any;
@@ -65,7 +60,6 @@ export function createCommandRunner(
     exclusiveHandlers: true,
   });
   const {
-    deviceType,
     data$,
     handlerFactories,
     buildCommand,
@@ -122,7 +116,7 @@ export function createCommandRunner(
   }
 
   function runCommand(cmd: ProtocolCommand): Promise<any> {
-    const { raw, answerTimeout } = cmd;
+    const { raw, answerTimeout } = _.defaults({}, cmd, { answerTimeout: 2000 });
     return commandQueue
       .enqueue(() => {
         commandSource.next(cmd);
@@ -151,12 +145,13 @@ export function createCommandRunner(
     function waitAnswer(currentCmd: ProtocolCommand) {
       return answer$
         .pipe(
+          map((a) => {
+            if (isAnswerValid(a)) {
+              return a;
+            }
+            throw new Error(`answer is invalid: ${a}`);
+          }),
           filter(isAnswerRelatedToCommand),
-          map((a) =>
-            isAnswerValid(a)
-              ? a
-              : throwError(new Error('device answer says: invalid! :('))
-          ),
           first(),
           timeout(answerTimeout),
           catchError((error) => throwError(error))
@@ -187,7 +182,7 @@ export function createCommandRunner(
   ) {
     const unregisterHandlers: any[] = [];
     for (const factory of factories) {
-      const instance = factory({ runCommand, buildCommand, debug, deviceType });
+      const instance = factory({ runCommand, buildCommand, debug });
       bus.register(instance.type, instance.handle);
       unregisterHandlers.push(() => bus.unregisterAll(instance.type));
     }

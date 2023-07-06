@@ -1,4 +1,5 @@
 import { FrameType, ProtocolAnswer, ProtocolCommand } from '../../protocol';
+import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommand,
   DomainCommandHandler,
@@ -9,10 +10,14 @@ import getSettingInfos from './getSettingInfos';
 export default function createWriteSettingHandler(
   dependencies: DomainCommandHandlerFactoryDependencies
 ): DomainCommandHandler {
-  const { runCommand, buildCommand, debug, deviceType } = dependencies;
+  const { runCommand, buildCommand, debug } = dependencies;
   return {
     type: 'WRITE_SETTING',
-    handle: ({ type, payload }: DomainCommand) => {
+    handle: ({
+      type,
+      deviceType = DeviceTypes.PF300,
+      payload,
+    }: DomainCommand) => {
       debug(`running ${type} command handler...`);
 
       const { name, value } = payload;
