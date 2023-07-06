@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 import { FrameType } from '../../protocol';
+import { DeviceTypes } from '../DeviceTypes';
 import {
   DomainCommand,
   DomainCommandHandler,
   DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
-import { DeviceTypes } from '../DeviceTypes';
 import getMeasurementInfos from './getMeasurementInfos';
 import makeFormatMeasurementAnswer from './makeFormatMeasurementAnswer';
 

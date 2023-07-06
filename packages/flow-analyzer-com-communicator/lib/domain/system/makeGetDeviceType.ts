@@ -7,7 +7,7 @@ export function makeGetDeviceType(
 ) {
   const { runCommand, buildCommand } = dependencies;
 
-  return async function getDeviceType(): Promise<string> {
+  return async function getDeviceType(): Promise<string | undefined> {
     try {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
@@ -18,7 +18,7 @@ export function makeGetDeviceType(
       );
       return decodeDeviceType(deviceType);
     } catch (error) {
-      return '';
+      return undefined;
     }
   };
 }

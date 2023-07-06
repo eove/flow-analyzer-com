@@ -16,7 +16,7 @@ export interface DomainCommand {
 
 export interface DomainCommandHandler {
   type: string;
-  handle: (payload: any) => Promise<{}>;
+  handle: (payload: any) => Promise<{} | undefined>;
 }
 
 export interface DomainCommandHandlerFactoryDependencies {
