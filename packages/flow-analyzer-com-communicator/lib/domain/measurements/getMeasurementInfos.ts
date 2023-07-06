@@ -1,8 +1,8 @@
-import { DeviceTypes } from '../DeviceTypes';
+import { DeviceType } from '../DeviceType';
 
 export default function getMeasurementInfos(
   name: string,
-  deviceType: DeviceTypes
+  deviceType: DeviceType
 ): MeasurementInfo {
   const supportedMeasurements = getSupportedMeasurementInfos();
 
@@ -32,14 +32,14 @@ interface MeasurementInfo {
   id: number;
   unit?: string;
   divider?: number;
-  deviceTypes: DeviceTypes[];
+  deviceTypes: DeviceType[];
 }
 
 const allDeviceTypes = [
-  DeviceTypes.CITREX_H4,
-  DeviceTypes.CITREX_H5,
-  DeviceTypes.PF300,
-  DeviceTypes.PF300_PRO,
+  DeviceType.CITREX_H4,
+  DeviceType.CITREX_H5,
+  DeviceType.PF300,
+  DeviceType.PF300_PRO,
 ];
 
 const measurementsInfos: MeasurementInfo[] = [
@@ -48,18 +48,14 @@ const measurementsInfos: MeasurementInfo[] = [
     id: 0,
     unit: 'l/min',
     divider: 10,
-    deviceTypes: [
-      DeviceTypes.CITREX_H4,
-      DeviceTypes.CITREX_H5,
-      DeviceTypes.PF300,
-    ],
+    deviceTypes: [DeviceType.CITREX_H4, DeviceType.CITREX_H5, DeviceType.PF300],
   },
   {
     name: 'highFlow',
     id: 0,
     unit: 'l/min',
     divider: 100,
-    deviceTypes: [DeviceTypes.PF300_PRO],
+    deviceTypes: [DeviceType.PF300_PRO],
   },
   {
     name: 'lowFlow',

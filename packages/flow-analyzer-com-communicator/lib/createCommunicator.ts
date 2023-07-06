@@ -2,7 +2,7 @@ import * as debugLib from 'debug';
 import * as _ from 'lodash';
 import { merge, Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { commandHandlerFactories, DeviceTypes, DomainCommand } from './domain';
+import { commandHandlerFactories, DeviceType, DomainCommand } from './domain';
 import { buildCommand, findAnswers } from './protocol';
 import {
   CommandError,
@@ -43,7 +43,7 @@ export function createCommunicator(
       rs232echoOn: false,
       translate: (msg: string) => msg,
     });
-  let deviceType: DeviceTypes = DeviceTypes.PF300;
+  let deviceType: DeviceType = DeviceType.PF300;
   const debug = debugLib(label);
   debug.enabled = debugEnabled;
 

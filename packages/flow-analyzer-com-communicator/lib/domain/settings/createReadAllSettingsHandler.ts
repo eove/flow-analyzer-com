@@ -1,5 +1,5 @@
 import { FrameType } from '../../protocol';
-import { DeviceTypes } from '../DeviceTypes';
+import { DeviceType } from '../DeviceType';
 import {
   DomainCommand,
   DomainCommandHandler,
@@ -14,7 +14,7 @@ export default function createReadSettingHandler(
   const { runCommand, buildCommand, debug } = dependencies;
   return {
     type: 'READ_ALL_SETTINGS',
-    handle: ({ type, deviceType = DeviceTypes.PF300 }: DomainCommand) => {
+    handle: ({ type, deviceType = DeviceType.PF300 }: DomainCommand) => {
       debug(`running ${type} command handler...`);
 
       return Promise.all(

@@ -1,5 +1,5 @@
 import { FrameType } from '../../protocol';
-import { DeviceTypes } from '../DeviceTypes';
+import { DeviceType } from '../DeviceType';
 import {
   DomainCommand,
   DomainCommandHandler,
@@ -17,7 +17,7 @@ export default function createReadMeasurementsHandler(
     handle: ({
       type,
       payload,
-      deviceType = DeviceTypes.CITREX_H4,
+      deviceType = DeviceType.CITREX_H4,
     }: DomainCommand) => {
       debug(`running ${type} command handler...`);
       const { names } = payload;

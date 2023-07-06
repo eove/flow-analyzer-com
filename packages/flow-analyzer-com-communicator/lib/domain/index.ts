@@ -1,4 +1,4 @@
-export * from './DeviceTypes';
+export * from './DeviceType';
 export * from './DomainTypes';
 
 import { factories as executeFactories } from './execute';

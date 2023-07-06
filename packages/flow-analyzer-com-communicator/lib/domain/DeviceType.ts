@@ -1,4 +1,4 @@
-export enum DeviceTypes {
+export enum DeviceType {
   INVALID = 'invalid',
   CITREX_H4 = 'h4',
   CITREX_H5 = 'h5',

@@ -1,5 +1,5 @@
 import { FrameType } from '../../protocol';
-import { DeviceTypes } from '../DeviceTypes';
+import { DeviceType } from '../DeviceType';
 import {
   DomainCommand,
   DomainCommandHandler,
@@ -16,7 +16,7 @@ export default function createReadMeasurementHandler(
     type: 'READ_MEASUREMENT',
     handle: ({
       type,
-      deviceType = DeviceTypes.PF300,
+      deviceType = DeviceType.PF300,
       payload,
     }: DomainCommand) => {
       debug(`running ${type} command handler...`);

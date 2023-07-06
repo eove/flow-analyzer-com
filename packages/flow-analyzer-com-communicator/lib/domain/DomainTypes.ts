@@ -4,13 +4,13 @@ import {
   ProtocolCommandInput,
   ProtocolCommandOptions,
 } from '../protocol';
-import { DeviceTypes } from './DeviceTypes';
+import { DeviceType } from './DeviceType';
 
 type DomainCommandPayload = any;
 
 export interface DomainCommand {
   type: string;
-  deviceType?: DeviceTypes;
+  deviceType?: DeviceType;
   payload?: DomainCommandPayload;
 }
 

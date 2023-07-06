@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { FrameType } from '../../protocol';
-import { DeviceTypes } from '../DeviceTypes';
+import { DeviceType } from '../DeviceType';
 import {
   DomainCommand,
   DomainCommandHandler,
@@ -35,7 +35,7 @@ export default function createReadMinMaxMeasurementHandler(
     type: 'READ_MIN_MAX_MEASUREMENT',
     handle: ({
       type,
-      deviceType = DeviceTypes.PF300,
+      deviceType = DeviceType.PF300,
       payload,
     }: DomainCommand) => {
       debug(`running ${type} command handler...`);

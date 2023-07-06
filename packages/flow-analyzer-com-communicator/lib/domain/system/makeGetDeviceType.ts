@@ -1,5 +1,5 @@
 import { FrameType } from '../../protocol';
-import { DeviceTypes } from '../DeviceTypes';
+import { DeviceType } from '../DeviceType';
 import { DomainCommandHandlerFactoryDependencies } from '../DomainTypes';
 
 export function makeGetDeviceType(
@@ -26,21 +26,21 @@ export function makeGetDeviceType(
 function decodeDeviceType(value: string): string {
   switch (value) {
     case '1':
-      return DeviceTypes.CITREX_H4;
+      return DeviceType.CITREX_H4;
     case '2':
-      return DeviceTypes.VT305;
+      return DeviceType.VT305;
     case '3':
-      return DeviceTypes.CITREX_H5;
+      return DeviceType.CITREX_H5;
     case '4':
-      return DeviceTypes.CITREX_H3;
+      return DeviceType.CITREX_H3;
     case '5':
-      return DeviceTypes.PF300_PRO;
+      return DeviceType.PF300_PRO;
     case '6':
-      return DeviceTypes.FLOW_METER_F1;
+      return DeviceType.FLOW_METER_F1;
     case '7':
-      return DeviceTypes.FLOW_METER_F2;
+      return DeviceType.FLOW_METER_F2;
 
     default:
-      return DeviceTypes.INVALID;
+      return DeviceType.INVALID;
   }
 }
