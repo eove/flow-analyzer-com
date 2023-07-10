@@ -1,6 +1,6 @@
 {
   "name": "@eove/flow-analyzer-com-communicator",
-  "version": "3.0.0-dev.1",
+  "version": "3.0.0-dev.2",
   "description": "Communicator to communicate to flow analyzer",
   "main": "build/index.js",
   "types": "build/index.d.ts",
