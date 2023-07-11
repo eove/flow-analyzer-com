@@ -16,7 +16,7 @@ export default function createReadSerialNumberHandler(
     type: 'READ_DEVICE_TYPE',
     handle: async ({ type }: DomainCommand) => {
       debug(`running ${type} command handler...`);
-      return await getDeviceType();
+      return getDeviceType();
     },
   };
 }
