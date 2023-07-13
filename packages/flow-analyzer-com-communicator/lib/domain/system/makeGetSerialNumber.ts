@@ -6,11 +6,13 @@ export function makeGetSerialNumber(
 ) {
   const { runCommand, buildCommand } = dependencies;
 
-  return function getSerialNumber(): Promise<string> {
+  return function getSerialNumber(): Promise<string | undefined> {
     const command = buildCommand({
       type: FrameType.READ_SYSTEM_INFO,
       id: 8,
     });
-    return runCommand(command).then((answer) => `${answer.value}`);
+    return runCommand(command)
+      .then((answer) => `${answer.value}`)
+      .catch(() => undefined);
   };
 }

@@ -1,12 +1,12 @@
 import { FrameType } from '../../protocol';
 import { DomainCommandHandlerFactoryDependencies } from '../DomainTypes';
 
-export function makeGetSoftwareVersion(
+export function makeGetFPGAVersion(
   dependencies: DomainCommandHandlerFactoryDependencies
 ) {
   const { runCommand, buildCommand } = dependencies;
 
-  return async function getSoftwareVersion(): Promise<string | undefined> {
+  return async function getFPGAVersion(): Promise<string | undefined> {
     try {
       const major = await getMajorVersion();
       const minor = await getMinorVersion();
@@ -19,7 +19,7 @@ export function makeGetSoftwareVersion(
     function getMajorVersion(): Promise<any> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: 2,
+        id: 13,
       });
       return runCommand(command).then((answer) => `${answer.value}`);
     }
@@ -27,7 +27,7 @@ export function makeGetSoftwareVersion(
     function getMinorVersion(): Promise<string> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: 3,
+        id: 14,
       });
       return runCommand(command).then((answer) => `${answer.value}`);
     }
@@ -35,7 +35,7 @@ export function makeGetSoftwareVersion(
     function getRelease(): Promise<string> {
       const command = buildCommand({
         type: FrameType.READ_SYSTEM_INFO,
-        id: 4,
+        id: 15,
       });
       return runCommand(command).then((answer) => `${answer.value}`);
     }

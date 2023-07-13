@@ -7,14 +7,14 @@ export function makeGetLastCalibrationDate(
 ) {
   const { runCommand, buildCommand } = dependencies;
 
-  return async function getLastCalibrationDate(): Promise<string> {
+  return async function getLastCalibrationDate(): Promise<string | undefined> {
     try {
       const day = await getLastCalibrationDay();
       const month = await getLastCalibrationMonth();
       const year = await getLastCalibrationYear();
       return `${year}-${month}-${day}`;
     } catch (error) {
-      return '';
+      return undefined;
     }
 
     function getLastCalibrationDay(): Promise<any> {

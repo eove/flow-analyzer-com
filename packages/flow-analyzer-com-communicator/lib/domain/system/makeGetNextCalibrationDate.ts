@@ -6,14 +6,14 @@ export function makeGetNextCalibrationDate(
 ) {
   const { runCommand, buildCommand } = dependencies;
 
-  return async function getNextCalibrationDate(): Promise<string> {
+  return async function getNextCalibrationDate(): Promise<string | undefined> {
     try {
       const day = await getNextCalibrationDay();
       const month = await getNextCalibrationMonth();
       const year = await getNextCalibrationYear();
       return `${year}-${month}-${day}`;
     } catch (error) {
-      return '';
+      return undefined;
     }
 
     function getNextCalibrationDay(): Promise<any> {

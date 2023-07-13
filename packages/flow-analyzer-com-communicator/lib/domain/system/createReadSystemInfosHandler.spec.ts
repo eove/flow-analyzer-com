@@ -24,16 +24,16 @@ describe('Read system infos handler', () => {
       value: '001',
     });
     runCommand.onCall(4).resolves({
-      value: '898',
+      value: 1,
     });
     runCommand.onCall(5).resolves({
-      value: '26',
+      value: 5,
     });
     runCommand.onCall(6).resolves({
-      value: '12',
+      value: 8,
     });
     runCommand.onCall(7).resolves({
-      value: '23',
+      value: '898',
     });
     runCommand.onCall(8).resolves({
       value: '26',
@@ -42,9 +42,18 @@ describe('Read system infos handler', () => {
       value: '12',
     });
     runCommand.onCall(10).resolves({
-      value: '24',
+      value: '23',
     });
     runCommand.onCall(11).resolves({
+      value: '26',
+    });
+    runCommand.onCall(12).resolves({
+      value: '12',
+    });
+    runCommand.onCall(13).resolves({
+      value: '24',
+    });
+    runCommand.onCall(14).resolves({
       value: '2',
     });
 
@@ -65,17 +74,19 @@ describe('Read system infos handler', () => {
         deviceType: true,
         hardwareVersion: true,
         softwareVersion: true,
+        fgpaVersion: true,
         serialNumber: true,
         lastCalibrationDate: true,
         nextCalibrationDate: true,
       },
     });
 
-    expect(runCommand.callCount).toEqual(12);
+    expect(runCommand.callCount).toEqual(15);
     expect(result).toEqual({
       hardwareVersion: '6',
       serialNumber: '898',
       softwareVersion: '2.3.001',
+      fpgaVersion: '1.5.8',
       deviceType: 'vt305',
       lastCalibrationDate: '23-12-26',
       nextCalibrationDate: '24-12-26',

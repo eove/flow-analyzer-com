@@ -5,6 +5,7 @@ import {
   DomainCommandHandlerFactoryDependencies,
 } from '../DomainTypes';
 import { makeGetDeviceType } from './makeGetDeviceType';
+import { makeGetFPGAVersion } from './makeGetFPGAVersion';
 import { makeGetHardwareVersion } from './makeGetHardwareVersion';
 import { makeGetLastCalibrationDate } from './makeGetLastCalibrationDate';
 import { makeGetNextCalibrationDate } from './makeGetNextCalibrationDate';
@@ -19,6 +20,7 @@ export default function createReadSystemInfosHandler(
   const getSerialNumber = makeGetSerialNumber(dependencies);
   const getHardwareVersion = makeGetHardwareVersion(dependencies);
   const getSoftwareVersion = makeGetSoftwareVersion(dependencies);
+  const getFPGAVersion = makeGetFPGAVersion(dependencies);
   const getLastCalibrationDate = makeGetLastCalibrationDate(dependencies);
   const getNextCalibrationDate = makeGetNextCalibrationDate(dependencies);
   const getDeviceType = makeGetDeviceType(dependencies);
@@ -31,6 +33,7 @@ export default function createReadSystemInfosHandler(
         deviceType,
         hardwareVersion,
         softwareVersion,
+        fpgaVersion,
         serialNumber,
         lastCalibrationDate,
         nextCalibrationDate,
@@ -38,6 +41,7 @@ export default function createReadSystemInfosHandler(
         deviceType: true,
         hardwareVersion: true,
         softwareVersion: true,
+        fpgaVersion: true,
         serialNumber: true,
         lastCalibrationDate: false,
         nextCalibrationDate: false,
@@ -50,6 +54,9 @@ export default function createReadSystemInfosHandler(
       }
       if (softwareVersion) {
         Object.assign(result, { softwareVersion: await getSoftwareVersion() });
+      }
+      if (fpgaVersion) {
+        Object.assign(result, { fpgaVersion: await getFPGAVersion() });
       }
       if (serialNumber) {
         Object.assign(result, { serialNumber: await getSerialNumber() });
