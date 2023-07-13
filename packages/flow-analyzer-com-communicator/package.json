@@ -22,7 +22,7 @@
     "jest": "jest --verbose",
     "testw": "jest --watch",
     "coverage": "jest --coverage",
-    "prettier": "prettier --write '**/*.{js,json,md,ts}'",
+    "prettier": "prettier --write '**/*.{js,json,md,ts}' --ignore-path ../../.prettierignore",
     "compile": "tsc -p tsconfig.test.json",
     "test": "run-s -c jest tslint",
     "prebuild": "rm -rf ./build",
