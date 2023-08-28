@@ -178,14 +178,7 @@ const measurementsInfos: MeasurementInfo[] = [
     id: 22,
     unit: 'breath/min',
     divider: 10,
-    deviceTypes: [DeviceType.CITREX_H4, DeviceType.CITREX_H5, DeviceType.PF300],
-  },
-  {
-    name: 'breathRate',
-    id: 22,
-    unit: 'breath/min',
-    divider: 1,
-    deviceTypes: [DeviceType.PF300_PRO],
+    deviceTypes: allDeviceTypes,
   },
   {
     name: 'vti',
