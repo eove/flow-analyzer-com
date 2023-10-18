@@ -18,7 +18,7 @@ export function makeGetDeviceType(
       );
       return decodeDeviceType(deviceType);
     } catch (error) {
-      return undefined;
+      return DeviceType.PF300;
     }
   };
 }
