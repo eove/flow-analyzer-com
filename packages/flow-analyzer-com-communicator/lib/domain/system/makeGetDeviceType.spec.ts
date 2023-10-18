@@ -8,9 +8,6 @@ describe('Get device type', () => {
 
   beforeEach(() => {
     runCommand = stub();
-    runCommand.onCall(0).resolves({
-      value: 6,
-    });
     const buildCommand = stub().returns({ id: 3, value: 1, raw: 'RRRRRRR' });
     const debug = (msg: any) => msg;
 
