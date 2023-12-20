@@ -121,6 +121,11 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     const escapedBytes = bytes.replace('\r', '\\r');
     debug(`sending: ${escapedBytes}`);
     return new Promise((resolve, reject) => {
+      /**
+       * HACK:
+       * serialnode `write` function type is broken, see issue: https://github.com/serialport/node-serialport/issues/2566
+       * For now the changes included in the following pull request has be to done manually until https://github.com/serialport/node-serialport/pull/2643 is merged
+       */
       port.write(Buffer.from(bytes), (writeError) => {
         if (writeError) {
           return reject(
