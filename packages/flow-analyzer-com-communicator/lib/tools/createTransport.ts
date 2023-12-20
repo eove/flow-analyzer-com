@@ -1,7 +1,7 @@
 import * as debugLib from 'debug';
 import * as _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
-import * as SerialPort from 'serialport';
+import { SerialPort } from 'serialport';
 
 type UninstallHandler = () => void;
 
@@ -51,7 +51,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
 
   function connect(portName: string): Promise<void> {
     const baudRate = 19200;
-    port = new SerialPort(portName, { autoOpen: false, baudRate });
+    port = new SerialPort({ path: portName, ...{ autoOpen: false, baudRate } });
     uninstallPortListeners = installPortListeners();
     debug(`connecting to: ${portName}, baud rate: ${baudRate}`);
 
@@ -147,7 +147,9 @@ export function createTransport(options?: TransportCreationOptions): Transport {
       const devices = await SerialPort.list();
       return devices.map((serialPort: any) => ({ name: serialPort.comName }));
     } catch (error) {
-      throw new Error(`Error when discovering ports (${error.message})`);
+      throw new Error(
+        `Error when discovering ports (${(error as Error).message})`
+      );
     }
   }
 
