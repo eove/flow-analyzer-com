@@ -14,9 +14,11 @@ export interface DomainCommand {
   payload?: DomainCommandPayload;
 }
 
+type DomaindAnswerPayload = any;
+
 export interface DomainCommandHandler {
   type: string;
-  handle: (payload: any) => Promise<{} | undefined>;
+  handle: (payload: any) => Promise<DomaindAnswerPayload | undefined>;
 }
 
 export interface DomainCommandHandlerFactoryDependencies {
