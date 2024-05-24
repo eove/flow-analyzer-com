@@ -8,6 +8,7 @@ const HELP_MSG =
     run READ_MIN_MAX_MEASUREMENT \'{"name": "humidity", "samplesNb": 100, "durationMS": 2000}\'\n\
   settings:\n\
     run READ_SETTING \'{"name": "gazType"}\'\n\
+    run READ_ALL_SETTINGS\n\
     run WRITE_SETTING \'{"name": "gazType", "value": "Air"}\'\n\
   system:\n\
     run READ_SYSTEM_INFOS\n\
