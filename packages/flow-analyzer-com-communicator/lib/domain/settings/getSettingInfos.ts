@@ -192,7 +192,6 @@ const settingsInfos: SettingInfo[] = [
     name: 'triggerDelay',
     id: 12,
     supportedBy: [
-      DeviceType.CITREX_H4,
       DeviceType.PF300,
       DeviceType.CITREX_H5,
       DeviceType.PF300_PRO,
