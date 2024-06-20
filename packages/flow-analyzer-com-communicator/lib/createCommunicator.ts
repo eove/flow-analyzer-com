@@ -71,7 +71,7 @@ export function createCommunicator(
         debug(`${e.type} error, closing connection`);
         await close();
       } catch (error) {
-        debug(`could not close connection (${error.message})`);
+        debug(`could not close connection (${(error as Error).message})`);
       }
     });
 
