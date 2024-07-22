@@ -1,3 +1,4 @@
+import { PortInfo } from '@serialport/bindings-interface';
 import * as debugLib from 'debug';
 import * as _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
@@ -150,7 +151,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
   async function discover(): Promise<Device[]> {
     try {
       const devices = await SerialPort.list();
-      return devices.map((serialPort: any) => ({ name: serialPort.comName }));
+      return devices.map((serialPort: PortInfo) => ({ name: serialPort.path }));
     } catch (error) {
       throw new Error(
         `Error when discovering ports (${(error as Error).message})`
