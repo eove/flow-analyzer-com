@@ -1,7 +1,8 @@
+import { PortInfo } from '@serialport/bindings-interface';
 import * as debugLib from 'debug';
 import * as _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
-import * as SerialPort from 'serialport';
+import { SerialPort } from 'serialport';
 
 type UninstallHandler = () => void;
 
@@ -51,7 +52,7 @@ export function createTransport(options?: TransportCreationOptions): Transport {
 
   function connect(portName: string): Promise<void> {
     const baudRate = 19200;
-    port = new SerialPort(portName, { autoOpen: false, baudRate });
+    port = new SerialPort({ path: portName, ...{ autoOpen: false, baudRate } });
     uninstallPortListeners = installPortListeners();
     debug(`connecting to: ${portName}, baud rate: ${baudRate}`);
 
@@ -121,6 +122,11 @@ export function createTransport(options?: TransportCreationOptions): Transport {
     const escapedBytes = bytes.replace('\r', '\\r');
     debug(`sending: ${escapedBytes}`);
     return new Promise((resolve, reject) => {
+      /**
+       * HACK:
+       * serialnode `write` function type is broken, see issue: https://github.com/serialport/node-serialport/issues/2566
+       * For now the changes included in the following pull request has be to done manually until https://github.com/serialport/node-serialport/pull/2643 is merged
+       */
       port.write(Buffer.from(bytes), (writeError) => {
         if (writeError) {
           return reject(
@@ -145,9 +151,11 @@ export function createTransport(options?: TransportCreationOptions): Transport {
   async function discover(): Promise<Device[]> {
     try {
       const devices = await SerialPort.list();
-      return devices.map((serialPort: any) => ({ name: serialPort.comName }));
+      return devices.map((serialPort: PortInfo) => ({ name: serialPort.path }));
     } catch (error) {
-      throw new Error(`Error when discovering ports (${error.message})`);
+      throw new Error(
+        `Error when discovering ports (${(error as Error).message})`
+      );
     }
   }
 
