@@ -1,6 +1,6 @@
 {
   "name": "@eove/flow-analyzer-com-talk",
-  "version": "3.0.3-pr13.1",
+  "version": "3.0.3",
   "description": "CLI to talk to flow analyzers (pf300, citrex)",
   "main": "flowAnalyzerTalk.js",
   "bin": {
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/eove/flow-analyzer-com#readme",
   "dependencies": {
-    "@eove/flow-analyzer-com-communicator": "^3.0.3-pr13.1",
+    "@eove/flow-analyzer-com-communicator": "^3.0.3",
     "commander": "2.19.0",
     "cross-env": "5.2.0",
     "debug": "4.1.1",
